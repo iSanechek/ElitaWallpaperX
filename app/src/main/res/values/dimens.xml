@@ -1,0 +1,42 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="stroke_width">8dp</dimen>
+    <dimen name="gallery_spacing">1dp</dimen>
+
+    <!--PHONE ROOT-->
+    <!--About Activity-->
+    <dimen name="about_iv_padding">5dp</dimen>
+    <dimen name="about_iv_marginTop">10dp</dimen>
+
+    <dimen name="about_tv_marginTop">20dp</dimen>
+    <dimen name="tv_textSize">30sp</dimen>
+
+    <dimen name="tv_three_layout_marginTop">10dp</dimen>
+    <dimen name="tv_three_padding">30dp</dimen>
+    <dimen name="tv_three_textSize">20sp</dimen>
+
+    <dimen name="tv_one_marginTop">25dp</dimen>
+    <dimen name="tv_one_textSize">12sp</dimen>
+
+    <dimen name="tv_a_textSize">25sp</dimen>
+
+    <!--Activity Wallpaper-->
+
+    <!--Splash Activity-->
+    <dimen name="splash_text_one_textSize">100sp</dimen>
+
+    <dimen name="tv_am_textSize">30sp</dimen>
+
+    <dimen name="tv_by_textSize">12sp</dimen>
+
+    <!--Toolbar-->
+    <dimen name="btn_layout_marginRight">10dp</dimen>
+
+    <!--Wallpaper Item-->
+    <dimen name="item_layout_width">100dp</dimen>
+    <dimen name="item_layout_height">100dp</dimen>
+    <dimen name="dp8">8dp</dimen>
+    <dimen name="dp16">16dp</dimen>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lini">#424242</color>
+    <color name="black">#000000</color>
+    <color name="viivi">#f9fbe7</color>
+    <color name="btn_pressed">#009688</color>
+    <color name="btn_normal">#212121</color>
+
+    <!--Main color-->
+    <color name="my_white_color">#ffffff</color>
+
+    <!--Wallpaper Chooser Activity-->
+    <color name="background_liner_layout">#212121</color>
+    <color name="background_relative_layout">#212121</color>
+
+
+    <!-- New Colors -->
+    <color name="my_primary_color">#2e7d32</color>
+    <color name="my_primary_dark_color">#1b5e20</color>
+    <color name="my_accent_color">#4caf50</color>
+    <color name="my_light_primary_color">#D1C4E9</color>
+    <color name="my_text_color">#ffffff</color>
+    <color name="my_primary_text_color">#212121</color>
+    <color name="my_secondary_text_color">#727272</color>
+    <color name="my_divider_color">#B6B6B6</color>
+</resources>

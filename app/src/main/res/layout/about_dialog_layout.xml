@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:background="@color/my_white_color" >
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/imge_circle_bordure"
+            android:padding="@dimen/about_iv_padding"
+            android:src="@drawable/ic_launcher"
+            android:layout_marginTop="@dimen/about_iv_marginTop" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/about_tv_marginTop"
+            android:text="@string/about_moto"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/my_primary_text_color"
+            android:textIsSelectable="false"
+            android:textSize="@dimen/tv_textSize" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:text="@string/about_moto_second"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/my_primary_text_color"
+            android:textSize="@dimen/tv_textSize" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/tv_three_layout_marginTop"
+            android:gravity="center"
+            android:padding="@dimen/tv_three_padding"
+            android:text="@string/about_text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/my_secondary_text_color"
+            android:textSize="@dimen/tv_three_textSize" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/tv_one_marginTop"
+            android:text="@string/by"
+            android:textColor="@color/my_light_primary_color"
+            android:textSize="@dimen/tv_one_textSize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView1"
+            android:layout_centerHorizontal="true"
+            android:text="@string/awerd"
+            android:textColor="@color/my_primary_text_color"
+            android:textSize="@dimen/tv_a_textSize"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>
