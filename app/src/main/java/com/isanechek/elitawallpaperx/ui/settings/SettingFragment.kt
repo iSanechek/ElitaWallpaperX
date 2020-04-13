@@ -1,4 +1,4 @@
-package com.isanechek.elitawallpaperx.settings
+package com.isanechek.elitawallpaperx.ui.settings
 
 import android.os.Bundle
 import android.webkit.WebView

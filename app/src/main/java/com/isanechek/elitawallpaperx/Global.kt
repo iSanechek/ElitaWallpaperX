@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+typealias _color = R.color
 typealias _xml = R.xml
 typealias _layout = R.layout
 typealias _id = R.id

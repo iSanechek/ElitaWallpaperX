@@ -39,4 +39,5 @@
     <dimen name="item_layout_height">100dp</dimen>
     <dimen name="dp8">8dp</dimen>
     <dimen name="dp16">16dp</dimen>
+    <dimen name="dp0">0dp</dimen>
 </resources>

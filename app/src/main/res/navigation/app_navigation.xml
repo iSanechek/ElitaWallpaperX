@@ -3,11 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/setting_fragment">
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.isanechek.elitawallpaperx.ui.main.MainFragment"
+        android:label="main"
+        tools:layout="@layout/main_fragment_layout" />
 
     <fragment
         android:id="@+id/setting_fragment"
-        android:name="com.isanechek.elitawallpaperx.settings.ParentSettingFragment"
+        android:name="com.isanechek.elitawallpaperx.ui.settings.ParentSettingFragment"
         android:label="settings"
         tools:layout="@layout/parent_settings_fragment_layout" />
 

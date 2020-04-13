@@ -2,8 +2,7 @@ package com.isanechek.elitawallpaperx
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.isanechek.elitawallpaperx.settings.SettingFragment
-import kotlinx.android.synthetic.main.debug_activity.*
+import com.isanechek.elitawallpaperx.ui.settings.SettingFragment
 
 class DebugActivity : AppCompatActivity(_layout.debug_activity) {
 
