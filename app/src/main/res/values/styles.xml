@@ -1,6 +1,6 @@
 <resources>
     <!-- New Theme -->
-    <style name="Theme.NewMotoTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.NewMotoTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <item name="colorPrimary">@color/my_primary_color</item>
         <item name="colorPrimaryDark">@color/my_primary_dark_color</item>
         <item name="colorAccent">@color/my_accent_color</item>

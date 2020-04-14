@@ -8,14 +8,21 @@ import com.isanechek.elitawallpaperx.d
 import com.isanechek.elitawallpaperx.inflate
 import com.isanechek.elitawallpaperx.ui.base.BaseViewHolder
 import com.squareup.picasso.Picasso
+import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.main_pager_item_layout.*
 
 class MainPagerAdapter : RecyclerView.Adapter<MainPagerAdapter.PagerHolder>() {
 
-    inner class PagerHolder(itemView: View) : BaseViewHolder<String>(itemView) {
+    private var listener: ListenerCallback? = null
 
-        override fun bind(data: String) {
-            Picasso.get().load(data).into(mpi_iv)
+    inner class PagerHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+        fun bind(data: String, position: Int, callback: ListenerCallback?) {
+            Picasso.get().load(data).into(mpi_background_iv)
+            mpi_background_iv.setOnLongClickListener {
+                callback?.onItemClick(data, position)
+                true
+            }
         }
     }
 
@@ -27,7 +34,7 @@ class MainPagerAdapter : RecyclerView.Adapter<MainPagerAdapter.PagerHolder>() {
     override fun getItemCount(): Int = paths.size
 
     override fun onBindViewHolder(holder: PagerHolder, position: Int) {
-        holder.bind(paths[position])
+        holder.bind(paths[position], position, listener)
     }
 
     fun submit(data: List<String>) {
@@ -35,4 +42,13 @@ class MainPagerAdapter : RecyclerView.Adapter<MainPagerAdapter.PagerHolder>() {
         paths.addAll(data)
         notifyDataSetChanged()
     }
+
+    fun setOnListenerCallback(callback: ListenerCallback) {
+        this.listener = callback
+    }
+
+    interface ListenerCallback {
+        fun onItemClick(data: String, position: Int)
+    }
+
 }
