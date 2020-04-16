@@ -9,12 +9,20 @@
         android:id="@+id/main_fragment"
         android:name="com.isanechek.elitawallpaperx.ui.main.MainFragment"
         android:label="main"
-        tools:layout="@layout/main_fragment_layout" />
+        tools:layout="@layout/main_fragment_layout" >
+        <action android:id="@+id/main_go_detail_fragment" app:destination="@id/debug_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/setting_fragment"
         android:name="com.isanechek.elitawallpaperx.ui.settings.ParentSettingFragment"
         android:label="settings"
         tools:layout="@layout/parent_settings_fragment_layout" />
+
+    <fragment
+        android:id="@+id/debug_fragment"
+        android:name="com.isanechek.elitawallpaperx.ui.crop.CropWallpaperFragment"
+        android:label="debug"
+        tools:layout="@layout/croup_wallpaper_fragment_layout" />
 
 </navigation>

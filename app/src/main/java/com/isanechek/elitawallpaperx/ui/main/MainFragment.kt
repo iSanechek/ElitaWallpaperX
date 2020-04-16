@@ -2,9 +2,14 @@ package com.isanechek.elitawallpaperx.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -14,17 +19,15 @@ import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.isanechek.elitawallpaperx._id
-import com.isanechek.elitawallpaperx._layout
-import com.isanechek.elitawallpaperx.d
+import com.isanechek.elitawallpaperx.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.main_fragment_layout.*
 
 
 class MainFragment : Fragment(_layout.main_fragment_layout) {
 
-    private var positionState = 0
     private val vm: MainViewModel by viewModels()
+    private val pagerAdapter by lazy { MainPagerAdapter() }
     private val mainAdapter by lazy { MainWallpapersAdapter() }
     private val pagerListener = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(
@@ -33,22 +36,18 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mf_toolbar.apply {
-            title = ""
-            setBackOrCloseButton {
-                mf_container.transitionToStart()
-                d { "load pos $positionState" }
-                mf_pager.currentItem = positionState
-            }
+            title = "WallpaperX"
+            setTitleTextColor(ContextCompat.getColor(requireContext(), _color.my_white_color))
         }
 
         // pager
-        val pagerAdapter = MainPagerAdapter()
         with(mf_pager) {
             orientation = ViewPager2.ORIENTATION_VERTICAL
             adapter = pagerAdapter
@@ -61,15 +60,13 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         })
         pagerAdapter.setOnListenerCallback(object : MainPagerAdapter.ListenerCallback {
             override fun onItemClick(data: String, position: Int) {
-                Picasso.get().load(data).into(mf_detail_iv)
-                positionState = position
-                if (pagerAdapter.itemCount != 0) {
-                    positionState.plus(1)
-                }
-                d { "save pos $positionState" }
-                mf_container.transitionToEnd()
+                findNavController().navigate(_id.main_go_detail_fragment, bundleOf("path" to data))
             }
         })
+
+        mf_fab.onClick {
+            showDialog()
+        }
 
     }
 
@@ -92,7 +89,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             })
         }
     }
-
 
     override fun onResume() {
         super.onResume()

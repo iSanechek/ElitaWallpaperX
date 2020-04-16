@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.isanechek.elitawallpaperx._layout
 import com.isanechek.elitawallpaperx.d
 import com.isanechek.elitawallpaperx.inflate
+import com.isanechek.elitawallpaperx.onClick
 import com.isanechek.elitawallpaperx.ui.base.BaseViewHolder
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
@@ -19,10 +20,7 @@ class MainPagerAdapter : RecyclerView.Adapter<MainPagerAdapter.PagerHolder>() {
 
         fun bind(data: String, position: Int, callback: ListenerCallback?) {
             Picasso.get().load(data).into(mpi_background_iv)
-            mpi_background_iv.setOnLongClickListener {
-                callback?.onItemClick(data, position)
-                true
-            }
+            mpi_background_iv.onClick { callback?.onItemClick(data, position) }
         }
     }
 
@@ -34,7 +32,8 @@ class MainPagerAdapter : RecyclerView.Adapter<MainPagerAdapter.PagerHolder>() {
     override fun getItemCount(): Int = paths.size
 
     override fun onBindViewHolder(holder: PagerHolder, position: Int) {
-        holder.bind(paths[position], position, listener)
+        val path = paths[position]
+        holder.bind(path, position, listener)
     }
 
     fun submit(data: List<String>) {

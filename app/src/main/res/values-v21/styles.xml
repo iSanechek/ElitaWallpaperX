@@ -1,41 +1,10 @@
 <resources>
 
-    <!-- New Theme -->
     <style name="Theme.NewMotoTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <item name="colorPrimary">@color/my_primary_color</item>
         <item name="colorPrimaryDark">@color/my_primary_dark_color</item>
         <item name="colorAccent">@color/my_accent_color</item>
         <item name="md_corner_radius">16dp</item>
-    </style>
-    
-    <style name="ActionBarHide" parent="Theme.AppCompat">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:colorPrimaryDark">@color/my_primary_dark_color</item>
-    </style>
-
-    <!--TOOLBAR-->
-    <style name="MyToolbartheme" parent="">
-        <item name="android:textColorPrimary">#fff</item>
-        <item name="colorControlNormal">#fff</item>
-        <item name="colorControlHighlight">#3fff</item>
-    </style>
-    <style name="MyThemePopUp" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:background">#fff</item>
-        <item name="android:textColorPrimary">#212121</item>
-    </style>
-
-    <!--DIALOGS-->
-    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/my_accent_color</item>
-        <!-- Used for the title and text -->
-        <item name="android:windowTitleStyle">@style/MyTitleTextStyle</item>
-        <item name="android:textColorPrimary">@color/my_primary_text_color</item>
-        <!-- Used for the background -->
-        <item name="android:background">@color/my_text_color</item>
-    </style>
-    <style name="MyTitleTextStyle">
-        <item name="android:textColor">@color/my_primary_text_color</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:navigationBarColor">@color/my_primary_color</item>
     </style>
 </resources>

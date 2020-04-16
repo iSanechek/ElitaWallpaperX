@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mf_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutDescription="@xml/main_fragment_layout_scene">
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/mf_pager"
-        android:layout_width="@dimen/dp0"
-        android:layout_height="@dimen/dp0"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    android:layout_height="match_parent">
 
     <com.isanechek.elitawallpaperx.widgets.SuperToolbar
         android:id="@+id/mf_toolbar"
         android:layout_width="@dimen/dp0"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent"
+        android:background="@color/my_primary_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:superToolbar_showElevationAtStart="true" />
 
-    <com.github.chrisbanes.photoview.PhotoView
-        android:id="@+id/mf_detail_iv"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/mf_pager"
         android:layout_width="@dimen/dp0"
         android:layout_height="@dimen/dp0"
-        android:background="@color/my_accent_color"
+        android:background="@color/my_primary_dark_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/mf_toolbar" />
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/mf_bottom_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/my_primary_color"
+            app:fabAlignmentMode="end"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/mf_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_view"
+            app:layout_anchor="@id/mf_bottom_appbar"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

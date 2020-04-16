@@ -156,6 +156,10 @@ open class SuperToolbar : Toolbar {
         }
     }
 
+    fun hideBackOrCloseButton() {
+        if (closeOrBackBtn.isVisible) closeOrBackBtn.isInvisible = true
+    }
+
     fun setSettingButton(
         isSettings: Boolean = true,
         @DrawableRes iconId: Int? = null,
