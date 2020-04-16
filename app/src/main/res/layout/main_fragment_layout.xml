@@ -36,6 +36,7 @@
                 tools:text="WallpaperX" />
 
             <ImageButton
+                android:id="@+id/mf_toolbar_ads_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"

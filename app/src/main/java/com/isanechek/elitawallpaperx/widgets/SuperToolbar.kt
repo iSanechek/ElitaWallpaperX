@@ -145,7 +145,7 @@ open class SuperToolbar : Toolbar {
         }
     }
 
-    fun setBackOrCloseButton(isClose: Boolean = true, callback: () -> Unit) {
+    fun setBackOrCloseButton(isClose: Boolean = true, tintColor: Int? = null, callback: () -> Unit) {
         if (closeOrBackBtn.isInvisible) closeOrBackBtn.isInvisible = false
         if (isClose) {
             closeOrBackBtn.setImageDrawable(getDrawable(_drawable.ic_baseline_close_24))
@@ -153,6 +153,10 @@ open class SuperToolbar : Toolbar {
         } else {
             closeOrBackBtn.setImageDrawable(getDrawable(_drawable.ic_baseline_arrow_back_24))
             closeOrBackBtn.onClick { callback.invoke() }
+        }
+
+        tintColor?.let {
+            closeOrBackBtn.setColorFilter(ContextCompat.getColor(this.context, it))
         }
     }
 

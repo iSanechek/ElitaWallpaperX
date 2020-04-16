@@ -9,8 +9,14 @@
         android:id="@+id/main_fragment"
         android:name="com.isanechek.elitawallpaperx.ui.main.MainFragment"
         android:label="main"
-        tools:layout="@layout/main_fragment_layout" >
-        <action android:id="@+id/main_go_detail_fragment" app:destination="@id/detail_fragment" />
+        tools:layout="@layout/main_fragment_layout">
+        <action
+            android:id="@+id/main_go_detail_fragment"
+            app:destination="@id/detail_fragment" />
+
+        <action
+            android:id="@+id/main_go_ads_fragment"
+            app:destination="@id/ads_fragment" />
     </fragment>
 
     <fragment
@@ -18,5 +24,11 @@
         android:name="com.isanechek.elitawallpaperx.ui.crop.CropWallpaperFragment"
         android:label="debug"
         tools:layout="@layout/croup_wallpaper_fragment_layout" />
+
+    <fragment
+        android:id="@+id/ads_fragment"
+        android:name="com.isanechek.elitawallpaperx.ui.ads.AdsFragment"
+        android:label="ads"
+        tools:layout="@layout/ads_fragment_layout" />
 
 </navigation>

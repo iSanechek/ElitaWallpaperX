@@ -85,6 +85,9 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             // тут надо заимплементить посхалку
         }
 
+        mf_toolbar_ads_btn.onClick {
+            findNavController().navigate(_id.main_go_ads_fragment)
+        }
     }
 
     private fun showDialog() {
