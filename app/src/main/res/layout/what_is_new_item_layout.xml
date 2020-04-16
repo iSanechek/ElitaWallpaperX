@@ -7,6 +7,7 @@
     android:layout_marginStart="@dimen/dp8"
     android:layout_marginEnd="@dimen/dp8"
     android:layout_marginBottom="@dimen/dp8"
+    android:id="@+id/wni_container"
     app:cardBackgroundColor="@color/my_primary_color"
     app:cardCornerRadius="@dimen/dp8"
     app:cardElevation="@dimen/dp0"

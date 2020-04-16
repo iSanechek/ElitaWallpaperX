@@ -178,19 +178,35 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                 this.bind(testData, _layout.what_is_new_item_layout) { item: NewInfo ->
                     wni_title_tv.text = item.version
                     wni_date_tv.text = item.date
-                    val sb = StringBuilder()
-                    val d = item.description
-                    d.forEachIndexed { index, s ->
-                        sb.append(s)
-                        if (d.size.minus(1) != index) {
-                            sb.append("\n")
-                        }
+                    wni_description_tv.text = descriptionToString(item.description)
+                    wni_container.onClick {
+                        showWhatNewDetailDialog(item)
                     }
-
-                    wni_description_tv.text = sb.toString()
                 }
             }
         }
+    }
+
+    private fun showWhatNewDetailDialog(item: NewInfo) {
+        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            lifecycleOwner(this@MainFragment)
+            title(text = item.version)
+            message(text = descriptionToString(item.description))
+            positiveButton(text = "close") {
+                it.dismiss()
+            }
+        }
+    }
+
+    private fun descriptionToString(data: List<String>): String {
+        val sb = StringBuilder()
+        data.forEachIndexed { index, s ->
+            sb.append(s)
+            if (data.size.minus(1) != index) {
+                sb.append("\n")
+            }
+        }
+        return sb.toString()
     }
 
     override fun onResume() {
