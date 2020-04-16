@@ -6,5 +6,6 @@
         <item name="colorAccent">@color/my_accent_color</item>
         <item name="md_corner_radius">16dp</item>
         <item name="android:navigationBarColor">@color/my_primary_color</item>
+        <item name="md_background_color">@color/my_primary_color</item>
     </style>
 </resources>

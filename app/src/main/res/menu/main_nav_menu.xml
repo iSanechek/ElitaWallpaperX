@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/mf_nav_no_wallpaper"
+        android:title="remove wallpaper"
+        app:showAsAction="never"
+        android:orderInCategory="100"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/mf_nav_settings"
+        android:title="settings"
+        app:showAsAction="never"
+        android:orderInCategory="100"
+        tools:ignore="HardcodedText" />
+
+</menu>

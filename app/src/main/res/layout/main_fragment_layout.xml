@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mf_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,7 +14,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:superToolbar_showElevationAtStart="true" />
+        app:superToolbar_showElevationAtStart="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/mf_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginBottom="@dimen/dp8"
+                android:textColor="@color/my_white_color"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="WallpaperX" />
+
+            <TextView
+                android:id="@+id/mf_toolbar_counter"
+                android:textSize="14sp"
+                android:textColor="@color/my_white_color"
+                android:textStyle="normal"
+                tools:text="10/99"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginBottom="@dimen/dp8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.isanechek.elitawallpaperx.widgets.SuperToolbar>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/mf_pager"
@@ -28,19 +65,46 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mf_bottom_appbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
+            app:menu="@menu/main_nav_menu"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
             app:backgroundTint="@color/my_primary_color"
-            app:fabAlignmentMode="end"/>
+            app:fabAlignmentMode="end">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="70dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mf_counter_tv"
+                    android:text="awerd soft"
+                    android:textAllCaps="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:textColor="@color/my_white_color"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/mf_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_view"
-            app:layout_anchor="@id/mf_bottom_appbar"/>
+            android:tint="@color/my_white_color"
+            app:layout_anchor="@id/mf_bottom_appbar"
+            app:srcCompat="@drawable/ic_baseline_collections_24" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

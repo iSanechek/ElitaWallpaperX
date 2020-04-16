@@ -36,16 +36,14 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-
+            mf_toolbar_counter.text = String.format("%d/%d", position.plus(1), pagerAdapter.itemCount)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mf_toolbar.apply {
-            title = "WallpaperX"
-            setTitleTextColor(ContextCompat.getColor(requireContext(), _color.my_white_color))
-        }
+        mf_toolbar.hideCustomLayout()
+        mf_toolbar_title.text = "WallpaperX"
 
         // pager
         with(mf_pager) {
