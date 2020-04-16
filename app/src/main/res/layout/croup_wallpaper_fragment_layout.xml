@@ -8,14 +8,14 @@
     <com.isanechek.elitawallpaperx.widgets.SuperToolbar
         android:id="@+id/cwf_toolbar"
         android:layout_width="@dimen/dp0"
-        android:background="@color/my_primary_color"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/my_primary_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:superToolbar_showElevationAtStart="true" />
 
-    <com.yashoid.instacropper.InstaCropperView
+    <com.theartofdev.edmodo.cropper.CropImageView
         android:id="@+id/cwf_crop_view"
         android:layout_width="@dimen/dp0"
         android:layout_height="@dimen/dp0"

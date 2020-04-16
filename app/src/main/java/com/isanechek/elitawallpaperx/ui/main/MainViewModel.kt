@@ -1,6 +1,7 @@
 package com.isanechek.elitawallpaperx.ui.main
 
 import android.app.Application
+import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -34,14 +35,8 @@ class MainViewModel(application: Application) :
         filesManager = FilesManagerImpl()
     }
 
-    fun installWallpaper(path: String) {
-        d { "Path $path" }
-        viewModelScope.launch(Dispatchers.Main) {
-            val uri = filesManager?.getBitmapUri(context, path)
-            if (uri != null && uri != Uri.EMPTY) {
-                WallpaperUtils.installWallpaperSystem(context, uri)
-            } else d { "URI IS NULL OR EMPTY!" }
-        }
+    fun installWallpaper(bitmap: Bitmap) {
+
     }
 
     private val _uri = MutableLiveData<Uri>()

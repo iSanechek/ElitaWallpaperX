@@ -3,6 +3,7 @@
 package com.isanechek.elitawallpaperx.widgets
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.AttributeSet
@@ -156,7 +157,7 @@ open class SuperToolbar : Toolbar {
         }
 
         tintColor?.let {
-            closeOrBackBtn.setColorFilter(ContextCompat.getColor(this.context, it))
+            closeOrBackBtn.setColorFilter(ContextCompat.getColor(this.context, it), PorterDuff.Mode.SRC_IN)
         }
     }
 

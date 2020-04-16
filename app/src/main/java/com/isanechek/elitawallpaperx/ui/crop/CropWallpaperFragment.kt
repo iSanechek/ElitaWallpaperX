@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.isanechek.elitawallpaperx._layout
 import com.isanechek.elitawallpaperx.d
+import com.isanechek.elitawallpaperx.onClick
 import com.isanechek.elitawallpaperx.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.croup_wallpaper_fragment_layout.*
 
@@ -18,6 +19,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         get() = arguments?.getString("path", "") ?: ""
 
     private val vm: MainViewModel by viewModels()
+    private val vm2: CropViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,18 +37,17 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 
 
     private fun setupCropView(uri: Uri) {
-        with(cwf_crop_view) {
-            setImageUri(uri)
-            setRatios(2.1f, 0.8f, 2.1f)
-        }
-        cwf_crop_btn.apply {
-            cwf_crop_view.crop(
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-            ) { resultBitmap ->
-                d { "w ${resultBitmap.width}" }
-                d { "h ${resultBitmap.height}" }
+        cwf_crop_view.apply {
+            setImageUriAsync(uri)
+            setAspectRatio(9, 18)
+            setOnCropImageCompleteListener { _, result ->
+                if (result.isSuccessful) {
+                    vm2.setWallpaper(result.bitmap)
+                }
             }
+        }
+        cwf_crop_btn.onClick {
+            cwf_crop_view.getCroppedImageAsync()
         }
     }
 
