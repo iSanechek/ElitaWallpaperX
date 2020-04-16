@@ -3,29 +3,30 @@ package com.isanechek.elitawallpaperx.ui.main
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.isanechek.elitawallpaperx.*
-import com.squareup.picasso.Picasso
+import com.isanechek.elitawallpaperx.models.NewInfo
+import com.isanechek.elitawallpaperx.ui.base.bind
 import kotlinx.android.synthetic.main.main_fragment_layout.*
+import kotlinx.android.synthetic.main.what_is_new_item_layout.view.*
 
 
 class MainFragment : Fragment(_layout.main_fragment_layout) {
@@ -40,7 +41,9 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            mf_toolbar_counter.text = String.format("%d/%d", position.plus(1), pagerAdapter.itemCount)
+            d { "pos $position" }
+            mf_toolbar_counter.text =
+                String.format("%d/%d", position.plus(1), pagerAdapter.itemCount)
         }
     }
 
@@ -74,28 +77,38 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             showSettingsDialog()
         }
 
+        mf_company_tv.onClick {
+            showAboutDialog()
+        }
+
+        mf_toolbar_counter.onClick {
+            // тут надо заимплементить посхалку
+        }
+
     }
 
     private fun showDialog() {
         MaterialDialog(requireContext(), BottomSheet()).show {
-            customView(viewRes = _layout.wallpaper_dialog_layout)
+            customView(viewRes = _layout.base_list_dialog_layout)
             lifecycleOwner(this@MainFragment)
             positiveButton(text = "close") {
                 it.dismiss()
             }
         }.onShow {
-            val list = it.getCustomView().findViewById<RecyclerView>(_id.dialog_list)
-            with(list) {
+            mainAdapter.setClickListener(object : MainWallpapersAdapter.ClickListener {
+                override fun onItemClick(position: Int) {
+                    it.dismiss()
+                    it.onDismiss {
+                        mf_pager.currentItem = position
+                    }
+                }
+            })
+
+            with(it.findViewById<RecyclerView>(_id.dialog_list)) {
                 setHasFixedSize(true)
                 layoutManager = GridLayoutManager(requireContext(), 3)
                 adapter = mainAdapter
             }
-            mainAdapter.setClickListener(object : MainWallpapersAdapter.ClickListener {
-                override fun onItemClick(position: Int) {
-                    it.dismiss()
-                    mf_pager.currentItem = position
-                }
-            })
         }
     }
 
@@ -105,9 +118,9 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             lifecycleOwner(this@MainFragment)
             listItems(items = items) { d, i, _ ->
                 d.dismiss()
-                when(i) {
+                when (i) {
                     0 -> showNoWallpaperDialog()
-                    1 -> showWhatIsNewDialog()
+                    1 -> showWhatNewDialog()
                     2 -> showAboutDialog()
                     else -> Unit
                 }
@@ -142,17 +155,41 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         }
     }
 
-    private fun showWhatIsNewDialog() {
-        MaterialDialog(requireContext(), BottomSheet()).show {
-            lifecycleOwner(this@MainFragment)
+    private fun showWhatNewDialog() {
+        val testDescription = mutableListOf("Fix base lase", "Improve speed performance", "Add some bags")
+        val testData = mutableListOf(
+            NewInfo(version = "10.0.0", description = testDescription, date = "16.04.2020"),
+            NewInfo(version = "9.18.44", description = testDescription, date = "08.01.2020"),
+            NewInfo(version = "9.12.55", description = testDescription, date = "25.11.2019"),
+            NewInfo(version = "9.12.55", description = testDescription, date = "18.09.2019"),
+            NewInfo(version = "9.12.55", description = testDescription, date = "12.07.2019")
+        )
+        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             title(text = "What is new")
-            customView(viewRes = _layout.dialog_web_layout)
-            positiveButton(text = "ok") {
+            lifecycleOwner(this@MainFragment)
+            customView(viewRes = _layout.base_list_dialog_layout)
+            positiveButton(text = "close") {
                 it.dismiss()
             }
         }.onShow {
-            val wv = it.getCustomView().findViewById<WebView>(_id.dw_web)
-            wv.loadUrl("file:///android_asset/changelog.html")
+            with(it.findViewById<RecyclerView>(_id.dialog_list)) {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(requireContext())
+                this.bind(testData, _layout.what_is_new_item_layout) { item: NewInfo ->
+                    wni_title_tv.text = item.version
+                    wni_date_tv.text = item.date
+                    val sb = StringBuilder()
+                    val d = item.description
+                    d.forEachIndexed { index, s ->
+                        sb.append(s)
+                        if (d.size.minus(1) != index) {
+                            sb.append("\n")
+                        }
+                    }
+
+                    wni_description_tv.text = sb.toString()
+                }
+            }
         }
     }
 

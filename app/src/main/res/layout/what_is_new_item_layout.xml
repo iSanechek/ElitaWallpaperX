@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:layout_marginStart="@dimen/dp8"
+    android:layout_marginEnd="@dimen/dp8"
+    android:layout_marginBottom="@dimen/dp8"
+    app:cardBackgroundColor="@color/my_primary_color"
+    app:cardCornerRadius="@dimen/dp8"
+    app:cardElevation="@dimen/dp0"
+    app:cardUseCompatPadding="false"
+    app:strokeColor="@color/my_white_color"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/wni_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp16"
+            android:textColor="@color/my_white_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="version: 10.0.0" />
+
+        <TextView
+            android:id="@+id/wni_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:textColor="@color/my_white_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12.04.2020" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/wni_top_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.30" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/wni_start_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/wni_end_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.90" />
+
+        <TextView
+            android:id="@+id/wni_description_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:textColor="@color/my_white_color"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/wni_end_guideline"
+            app:layout_constraintStart_toEndOf="@id/wni_start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/wni_top_guideline"
+            tools:text="Super long text for test. Super long text for test.\nSuper long text for test.\nSuper long text for test. Super long text for test." />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginBottom="@dimen/dp16"
+            android:text="подробнее"
+            android:textColor="@color/my_white_color"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

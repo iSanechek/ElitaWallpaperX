@@ -4,10 +4,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.isanechek.elitawallpaperx._layout
-import com.isanechek.elitawallpaperx.d
 import com.isanechek.elitawallpaperx.inflate
 import com.isanechek.elitawallpaperx.onClick
-import com.isanechek.elitawallpaperx.ui.base.BaseViewHolder
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.main_pager_item_layout.*
