@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tv"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="16dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/my_white_color" >
+    android:background="@color/my_primary_color" >
 
     <RelativeLayout
         android:id="@+id/relative"
@@ -32,7 +31,7 @@
             android:layout_marginTop="@dimen/about_tv_marginTop"
             android:text="@string/about_moto"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/my_primary_text_color"
+            android:textColor="@color/my_white_color"
             android:textIsSelectable="false"
             android:textSize="@dimen/tv_textSize" />
 
@@ -44,7 +43,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/about_moto_second"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/my_primary_text_color"
+            android:textColor="@color/my_white_color"
             android:textSize="@dimen/tv_textSize" />
 
         <TextView
@@ -58,7 +57,7 @@
             android:padding="@dimen/tv_three_padding"
             android:text="@string/about_text"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/my_secondary_text_color"
+            android:textColor="@color/my_white_color"
             android:textSize="@dimen/tv_three_textSize" />
 
         <TextView
@@ -78,7 +77,7 @@
             android:layout_below="@+id/textView1"
             android:layout_centerHorizontal="true"
             android:text="@string/awerd"
-            android:textColor="@color/my_primary_text_color"
+            android:textColor="@color/my_white_color"
             android:textSize="@dimen/tv_a_textSize"
             android:textStyle="bold" />
     </RelativeLayout>

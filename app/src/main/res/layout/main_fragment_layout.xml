@@ -37,18 +37,18 @@
 
             <TextView
                 android:id="@+id/mf_toolbar_counter"
-                android:textSize="14sp"
-                android:textColor="@color/my_white_color"
-                android:textStyle="normal"
-                tools:text="10/99"
-                android:layout_marginEnd="@dimen/dp16"
-                android:layout_marginTop="@dimen/dp8"
-                android:layout_marginBottom="@dimen/dp8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp8"
+                android:textColor="@color/my_white_color"
+                android:textSize="14sp"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="10/99" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.isanechek.elitawallpaperx.widgets.SuperToolbar>
 
@@ -71,25 +71,31 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
-            app:menu="@menu/main_nav_menu"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
             app:backgroundTint="@color/my_primary_color"
             app:fabAlignmentMode="end">
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="50dp"
                 android:layout_marginEnd="70dp">
+
+                <ImageButton
+                    android:id="@+id/mf_menu_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_marginStart="@dimen/dp16"
+                    app:srcCompat="@drawable/settings_icon_24" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mf_counter_tv"
-                    android:text="awerd soft"
-                    android:textAllCaps="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/dp16"
+                    android:text="awerd soft"
+                    android:textAllCaps="true"
                     android:textColor="@color/my_white_color"
                     android:textSize="18sp"
                     android:textStyle="bold" />

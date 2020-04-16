@@ -2,6 +2,7 @@ package com.isanechek.elitawallpaperx.ui.main
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -13,12 +14,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.list.listItems
 import com.isanechek.elitawallpaperx.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.main_fragment_layout.*
@@ -66,12 +70,19 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             showDialog()
         }
 
+        mf_menu_btn.onClick {
+            showSettingsDialog()
+        }
+
     }
 
     private fun showDialog() {
         MaterialDialog(requireContext(), BottomSheet()).show {
             customView(viewRes = _layout.wallpaper_dialog_layout)
             lifecycleOwner(this@MainFragment)
+            positiveButton(text = "close") {
+                it.dismiss()
+            }
         }.onShow {
             val list = it.getCustomView().findViewById<RecyclerView>(_id.dialog_list)
             with(list) {
@@ -85,6 +96,63 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     mf_pager.currentItem = position
                 }
             })
+        }
+    }
+
+    private fun showSettingsDialog() {
+        val items = listOf<CharSequence>("No wallpaper", "What is new", "About as")
+        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            lifecycleOwner(this@MainFragment)
+            listItems(items = items) { d, i, _ ->
+                d.dismiss()
+                when(i) {
+                    0 -> showNoWallpaperDialog()
+                    1 -> showWhatIsNewDialog()
+                    2 -> showAboutDialog()
+                    else -> Unit
+                }
+            }
+            negativeButton(text = "Close") {
+                it.dismiss()
+            }
+        }
+    }
+
+    private fun showNoWallpaperDialog() {
+        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            title(text = "No wallpaper")
+            message(res = _string.no_wallpapers_message)
+            positiveButton(text = "remove") {
+                it.dismiss()
+            }
+            negativeButton(text = "close") {
+                it.dismiss()
+            }
+        }
+    }
+
+    private fun showAboutDialog() {
+        MaterialDialog(requireContext(), BottomSheet()).show {
+            lifecycleOwner(this@MainFragment)
+            customView(viewRes = _layout.about_dialog_layout)
+            setPeekHeight(literal = 1000)
+            negativeButton(text = "ok") {
+                it.dismiss()
+            }
+        }
+    }
+
+    private fun showWhatIsNewDialog() {
+        MaterialDialog(requireContext(), BottomSheet()).show {
+            lifecycleOwner(this@MainFragment)
+            title(text = "What is new")
+            customView(viewRes = _layout.dialog_web_layout)
+            positiveButton(text = "ok") {
+                it.dismiss()
+            }
+        }.onShow {
+            val wv = it.getCustomView().findViewById<WebView>(_id.dw_web)
+            wv.loadUrl("file:///android_asset/changelog.html")
         }
     }
 

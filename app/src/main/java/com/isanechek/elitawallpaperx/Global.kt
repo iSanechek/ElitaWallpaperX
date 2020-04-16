@@ -13,6 +13,7 @@ typealias _xml = R.xml
 typealias _layout = R.layout
 typealias _id = R.id
 typealias _drawable = R.drawable
+typealias _string = R.string
 
 infix fun ViewGroup.inflate(layoutResId: Int): View =
     LayoutInflater.from(this.context).inflate(layoutResId, this, false)
