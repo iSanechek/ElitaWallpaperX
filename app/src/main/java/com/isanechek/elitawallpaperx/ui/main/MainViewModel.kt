@@ -27,6 +27,10 @@ class MainViewModel(application: Application) :
     private val context: Context = getApplication()
     private var filesManager: FilesManager? = null
 
+    private val _toastState = MutableLiveData<String>()
+    val toastState: LiveData<String>
+        get() = _toastState
+
     private val _data = MutableLiveData<List<String>>()
     val data: LiveData<List<String>>
         get() = _data
@@ -65,6 +69,10 @@ class MainViewModel(application: Application) :
         val am = context.assets
         val paths = am.list("images")
         paths?.toList() ?: emptyList()
+    }
+
+    fun setRation(w: Int, h: Int) {
+
     }
 
 }

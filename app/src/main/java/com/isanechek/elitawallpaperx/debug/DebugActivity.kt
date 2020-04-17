@@ -9,5 +9,6 @@ class DebugActivity : AppCompatActivity(R.layout.debug_activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
     }
 }

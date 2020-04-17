@@ -13,7 +13,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:superToolbar_showElevationAtStart="true" />
+        app:superToolbar_showElevationAtStart="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/cwf_toolbar_close_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginBottom="@dimen/dp8"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/dp8"
+                android:tint="@color/my_white_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_close_24" />
+
+            <ImageButton
+                android:id="@+id/cwf_toolbar_menu_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp8"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/dp8"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/settings_icon_24" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.isanechek.elitawallpaperx.widgets.SuperToolbar>
 
     <com.theartofdev.edmodo.cropper.CropImageView
         android:id="@+id/cwf_crop_view"
@@ -23,17 +58,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/cwf_toolbar" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/cwf_crop_btn"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="@dimen/dp0"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="crop and install"
+        android:layout_marginBottom="@dimen/dp16"
+        android:text="установить"
+        android:textAllCaps="true"
+        android:textColor="@color/my_white_color"
+        app:cornerRadius="@dimen/dp16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/my_primary_dark_color"
+        app:strokeWidth="@dimen/dp1"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

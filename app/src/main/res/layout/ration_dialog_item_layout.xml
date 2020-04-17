@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rdi_container"
+    android:layout_width="120dp"
+    android:layout_height="120dp"
+    app:cardBackgroundColor="@color/my_primary_color"
+    app:cardCornerRadius="@dimen/dp8"
+    app:cardElevation="@dimen/dp0"
+    android:layout_marginStart="@dimen/dp2"
+    android:layout_marginEnd="@dimen/dp2"
+    app:cardUseCompatPadding="false"
+    app:strokeColor="@color/my_white_color"
+    app:strokeWidth="@dimen/dp1">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp8"
+            app:srcCompat="@drawable/ic_baseline_aspect_ratio_24"
+            app:tint="@color/my_white_color" />
+
+        <TextView
+            android:id="@+id/rdi_ration_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp16"
+            android:textColor="@color/my_white_color"
+            android:textSize="14sp"
+            tools:text="16:9" />
+
+    </FrameLayout>
+
+</com.google.android.material.card.MaterialCardView>

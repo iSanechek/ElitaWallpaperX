@@ -40,4 +40,6 @@
     <dimen name="dp8">8dp</dimen>
     <dimen name="dp16">16dp</dimen>
     <dimen name="dp0">0dp</dimen>
+    <dimen name="dp1">1dp</dimen>
+    <dimen name="dp2">2dp</dimen>
 </resources>
