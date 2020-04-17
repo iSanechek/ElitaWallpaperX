@@ -108,16 +108,12 @@ class FilesManagerImpl : FilesManager {
     override suspend fun getBitmapUri(context: Context, fileName: String): Uri =
         suspendCancellableCoroutine { c ->
             try {
-                val name = fileName.replaceBefore("images", "").trim()
-                d { "Name $name" }
+
                 val cachePath = context.filesDir.absolutePath + File.separator + "cache_images"
-                d { "Cache path $cachePath" }
                 if (createFolderIfEmpty(cachePath)) {
-                    d { "FOLDER CREATE" }
-                    val bitmap = context.assets.open(name).use {
+                    val bitmap = context.assets.open(fileName).use {
                         BitmapFactory.decodeStream(it)
                     }
-                    d { "Bitmap height ${bitmap.height}" }
                     val file = File("${cachePath}/temp.jpg")
                     if (file.exists()) {
                         file.delete()
@@ -133,7 +129,6 @@ class FilesManagerImpl : FilesManager {
 //                    )
                     c.resume(Uri.fromFile(file))
                 } else {
-                    d { "FOLDER HYI" }
                     c.resume(Uri.EMPTY)
                 }
             } catch (ex: Exception) {

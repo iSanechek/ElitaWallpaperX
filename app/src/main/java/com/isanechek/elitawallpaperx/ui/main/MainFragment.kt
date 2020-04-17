@@ -23,15 +23,17 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.isanechek.elitawallpaperx.*
+import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.NewInfo
 import com.isanechek.elitawallpaperx.ui.base.bind
 import kotlinx.android.synthetic.main.main_fragment_layout.*
 import kotlinx.android.synthetic.main.what_is_new_item_layout.view.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class MainFragment : Fragment(_layout.main_fragment_layout) {
 
-    private val vm: MainViewModel by viewModels()
+    private val vm: MainViewModel by sharedViewModel()
     private val pagerAdapter by lazy { MainPagerAdapter() }
     private val mainAdapter by lazy { MainWallpapersAdapter() }
     private val pagerListener = object : ViewPager2.OnPageChangeCallback() {
@@ -60,8 +62,16 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         }
 
         vm.data.observe(viewLifecycleOwner, Observer { data ->
-            pagerAdapter.submit(data)
-            mainAdapter.submit(data)
+            when (data) {
+                is ExecuteResult.Error -> {
+                }
+                is ExecuteResult.Loading -> {
+                }
+                is ExecuteResult.Done -> {
+                    pagerAdapter.submit(data.data)
+                    mainAdapter.submit(data.data)
+                }
+            }
         })
         pagerAdapter.setOnListenerCallback(object : MainPagerAdapter.ListenerCallback {
             override fun onItemClick(data: String, position: Int) {
@@ -159,7 +169,8 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     }
 
     private fun showWhatNewDialog() {
-        val testDescription = mutableListOf("Fix base lase", "Improve speed performance", "Add some bags")
+        val testDescription =
+            mutableListOf("Fix base lase", "Improve speed performance", "Add some bags")
         val testData = mutableListOf(
             NewInfo(version = "10.0.0", description = testDescription, date = "16.04.2020"),
             NewInfo(version = "9.18.44", description = testDescription, date = "08.01.2020"),
@@ -210,11 +221,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             }
         }
         return sb.toString()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        vm.loadWallpapers()
     }
 
     override fun onPause() {
