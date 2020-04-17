@@ -3,6 +3,7 @@ package com.isanechek.elitawallpaperx.ui.crop
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,13 +15,14 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.isanechek.elitawallpaperx._layout
 import com.isanechek.elitawallpaperx.d
 import com.isanechek.elitawallpaperx.models.ExecuteResult
-import com.isanechek.elitawallpaperx.models.RationInfo
 import com.isanechek.elitawallpaperx.onClick
 import com.isanechek.elitawallpaperx.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.croup_wallpaper_fragment_layout.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) {
+
+    private var currentUri: Uri = Uri.EMPTY
 
     private val path: String
         get() = arguments?.getString("path", "") ?: ""
@@ -33,19 +35,16 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         cwf_toolbar_close_btn.onClick { findNavController().navigateUp() }
         cwf_toolbar_menu_btn.onClick { showRationInfoDialog() }
 
-//        vm.loadUri(path).observe(viewLifecycleOwner, Observer { uri ->
-//            if (uri != Uri.EMPTY) {
-//                setupCropView(uri)
-//            } else d { "URI IS EMPTY" }
-//        })
-
         vm.uri.observe(viewLifecycleOwner, Observer { data ->
-            when(data) {
+            when (data) {
                 is ExecuteResult.Done -> {
-                    setupCropView(data.data)
+                    currentUri = data.data
+                    updateCropView()
                 }
-                is ExecuteResult.Loading -> {}
-                is ExecuteResult.Error -> {}
+                is ExecuteResult.Loading -> {
+                }
+                is ExecuteResult.Error -> {
+                }
             }
         })
     }
@@ -56,19 +55,25 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
     }
 
 
-    private fun setupCropView(uri: Uri) {
-        cwf_crop_view.apply {
-            setImageUriAsync(uri)
-            setAspectRatio(9, 18)
-            setFixedAspectRatio(true)
-            setOnCropImageCompleteListener { _, result ->
-                if (result.isSuccessful) {
+    private fun updateCropView() {
+        if (currentUri != Uri.EMPTY) {
+            val item = vm.getRationInfo
+            d { item.toString() }
+            cwf_crop_view.apply {
+                setImageUriAsync(currentUri)
+                setAspectRatio(item.w, item.h)
+                setFixedAspectRatio(true)
+                setOnCropImageCompleteListener { _, result ->
+                    if (result.isSuccessful) {
 
+                    }
                 }
             }
-        }
-        cwf_crop_btn.onClick {
-            cwf_crop_view.getCroppedImageAsync()
+            cwf_crop_btn.onClick {
+                cwf_crop_view.getCroppedImageAsync()
+            }
+        } else {
+            showToast("Uri is empty!")
         }
     }
 
@@ -88,22 +93,31 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
     }
 
     private fun showRationChangeDialog() {
-        val rationList = mutableListOf(
-            RationInfo(title = "18:9", w = 9, h = 18),
-            RationInfo(title = "9:18", w = 18, h = 9),
-            RationInfo(title = "16:9", w = 9, h = 16),
-            RationInfo(title = "9:16", w = 16, h = 9)
-        )
+        val rationList = vm.rations
         MaterialDialog(requireContext()).show {
             lifecycleOwner(this@CropWallpaperFragment)
-            title(text = "Ration")
-            listItemsSingleChoice(items = rationList.map { it.title }, initialSelection = 2) { dialog, index, text ->
-
+            title(text = "Select ration")
+            listItemsSingleChoice(
+                items = rationList.map { it.title },
+                initialSelection = vm.selectionRatio
+            ) { _, index, text ->
+                if (vm.selectionRatio != index) {
+                    showToast(String.format("Выбрано %s \n Значание обновлено!", text))
+                    vm.selectionRatio = index
+                    updateCropView()
+                }
+            }
+            positiveButton(text = "save") {
+                it.dismiss()
             }
             negativeButton(text = "close") {
                 it.dismiss()
             }
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
 }

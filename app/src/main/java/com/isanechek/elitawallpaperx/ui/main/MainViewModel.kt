@@ -8,14 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.isanechek.elitawallpaperx.data.AppRepository
 import com.isanechek.elitawallpaperx.models.ExecuteResult
+import com.isanechek.elitawallpaperx.models.RationInfo
 
 
 class MainViewModel(application: Application, private val repository: AppRepository) :
     AndroidViewModel(application) {
-
-    private val _toastState = MutableLiveData<String>()
-    val toastState: LiveData<String>
-        get() = _toastState
 
     val data: LiveData<ExecuteResult<List<String>>>
         get() = repository.loadImagesFromAssets()
@@ -30,4 +27,17 @@ class MainViewModel(application: Application, private val repository: AppReposit
         loadUri.value = path
     }
 
+    val rations: List<RationInfo>
+        get() = repository.loadRations()
+
+    val getRationInfo: RationInfo
+        get() = rations[selectionRatio]
+
+    fun isFirstStart(key: String): Boolean = repository.isFirstStart(key)
+
+    fun markFirstStartDone(key: String) {
+        repository.markDoneFirstStart(key)
+    }
+
+    var selectionRatio: Int = repository.selectionRation
 }
