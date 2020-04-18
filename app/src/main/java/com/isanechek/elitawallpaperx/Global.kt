@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 
 typealias _color = R.color
 typealias _xml = R.xml
@@ -29,3 +32,13 @@ inline fun d(message: () -> String) {
 }
 
 fun hasMinimumSdk(minimumSdk: Int): Boolean = Build.VERSION.SDK_INT >= minimumSdk
+
+val hasIsNotMiUi: Boolean
+    get() = getSystemProperty("ro.miui.ui.version.name").isEmpty()
+
+private fun getSystemProperty(propName: String): String = try {
+    val p = Runtime.getRuntime().exec("getprop $propName")
+    BufferedReader(InputStreamReader(p.inputStream), 1024).use {
+        it.readLine()
+    }
+} catch (ex: IOException) { "" }

@@ -1,15 +1,21 @@
 package com.isanechek.elitawallpaperx.data
 
+import android.app.WallpaperManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.isanechek.elitawallpaperx.d
+import com.isanechek.elitawallpaperx.hasMinimumSdk
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.RationInfo
 import com.isanechek.elitawallpaperx.utils.FilesManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 interface AppRepository {
@@ -19,6 +25,7 @@ interface AppRepository {
     fun markDoneFirstStart(key: String)
     var selectionRation: Int
     fun loadRations(): List<RationInfo>
+    suspend fun installWallpaper(bitmap: Bitmap, screens: Int): Flow<ExecuteResult<Int>>
 }
 
 class AppRepositoryImpl(
@@ -26,6 +33,10 @@ class AppRepositoryImpl(
     private val preferences: SharedPreferences,
     private val filesManager: FilesManager
 ) : AppRepository {
+
+    private val wallpaperManager: WallpaperManager by lazy {
+        WallpaperManager.getInstance(context)
+    }
 
     override fun loadImagesFromAssets(): LiveData<ExecuteResult<List<String>>> =
         liveData(Dispatchers.IO) {
@@ -52,11 +63,11 @@ class AppRepositoryImpl(
             }
         }
 
-    override fun isFirstStart(key: String): Boolean = preferences.getBoolean(key, false)
+    override fun isFirstStart(key: String): Boolean = preferences.getBoolean(key, true)
 
     override fun markDoneFirstStart(key: String) {
         preferences.edit {
-            putBoolean(key, true)
+            putBoolean(key, false)
         }
     }
 
@@ -74,6 +85,32 @@ class AppRepositoryImpl(
         RationInfo(title = "16:9", w = 9, h = 16),
         RationInfo(title = "9:16", w = 16, h = 9)
     )
+
+    /**
+     * 0 - all screens
+     * 1 - only system screen
+     * 2 - only lock screen
+     */
+    override suspend fun installWallpaper(bitmap: Bitmap, screens: Int): Flow<ExecuteResult<Int>> = flow {
+        emit(ExecuteResult.Loading)
+        if (hasMinimumSdk(24)) {
+            val result = when (screens) {
+                0 -> wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
+                1 -> {
+                    wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+                    wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
+                }
+                2 -> wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+                else -> 0
+            }
+            if (result == 0) {
+                emit(ExecuteResult.Error("Wallpaper not installing! Unknown error!"))
+            } else emit(ExecuteResult.Done(0))
+        } else {
+            wallpaperManager.setBitmap(bitmap)
+            emit(ExecuteResult.Done(0))
+        }
+    }
 
     private fun String.fixPath(): String = "file:///android_asset/images/$this"
 

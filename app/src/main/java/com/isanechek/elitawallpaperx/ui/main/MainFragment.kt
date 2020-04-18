@@ -2,14 +2,11 @@ package com.isanechek.elitawallpaperx.ui.main
 
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.LayoutMode
@@ -19,13 +16,13 @@ import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.listItems
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.NewInfo
-import com.isanechek.elitawallpaperx.ui.base.bind
+import com.isanechek.elitawallpaperx.ui.base.bindAdater
 import kotlinx.android.synthetic.main.main_fragment_layout.*
 import kotlinx.android.synthetic.main.what_is_new_item_layout.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -102,8 +99,8 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
     private fun showDialog() {
         MaterialDialog(requireContext(), BottomSheet()).show {
-            customView(viewRes = _layout.base_list_dialog_layout)
             lifecycleOwner(this@MainFragment)
+            customListAdapter(adapter = mainAdapter, layoutManager =  GridLayoutManager(requireContext(), 3))
             positiveButton(text = "close") {
                 it.dismiss()
             }
@@ -116,12 +113,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     }
                 }
             })
-
-            with(it.findViewById<RecyclerView>(_id.dialog_list)) {
-                setHasFixedSize(true)
-                layoutManager = GridLayoutManager(requireContext(), 3)
-                adapter = mainAdapter
-            }
         }
     }
 
@@ -178,25 +169,24 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             NewInfo(version = "9.12.55", description = testDescription, date = "18.09.2019"),
             NewInfo(version = "9.12.55", description = testDescription, date = "12.07.2019")
         )
+
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             title(text = "What is new")
             lifecycleOwner(this@MainFragment)
-            customView(viewRes = _layout.base_list_dialog_layout)
-            positiveButton(text = "close") {
-                it.dismiss()
-            }
-        }.onShow {
-            with(it.findViewById<RecyclerView>(_id.dialog_list)) {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(requireContext())
-                this.bind(testData, _layout.what_is_new_item_layout) { item: NewInfo ->
+            customListAdapter(
+                adapter = bindAdater(
+                    testData,
+                    _layout.what_is_new_item_layout
+                ) { item: NewInfo ->
                     wni_title_tv.text = item.version
                     wni_date_tv.text = item.date
                     wni_description_tv.text = descriptionToString(item.description)
                     wni_container.onClick {
                         showWhatNewDetailDialog(item)
                     }
-                }
+                })
+            positiveButton(text = "close") {
+                it.dismiss()
             }
         }
     }

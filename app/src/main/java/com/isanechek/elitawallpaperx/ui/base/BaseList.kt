@@ -17,6 +17,11 @@ import kotlinx.android.extensions.LayoutContainer
  * radoslavyankov@gmail.com
  */
 
+fun <T> bindAdater(items: List<T>, @LayoutRes singleLayout: Int = 0, singleBind: (View.(item: T) -> Unit)): FastListAdapter<T> {
+    return FastListAdapter(items.toMutableList(), null
+    ).mapAdapter(singleLayout, {item: T, idx: Int ->  true }, singleBind)
+}
+
 /**
  * Dynamic list bind function. It should be followed by one or multiple .map calls.
  * @param items - Generic list of the items to be displayed in the list
@@ -88,13 +93,13 @@ fun <T> ViewPager2.update(newItems: List<T>) {
 open class FastListAdapter<T>(private var items: MutableList<T>, private var list: RecyclerView?=null, private var vpList : ViewPager2?=null)
     : RecyclerView.Adapter<FastListViewHolder<T>>() {
 
-    init {
-        if (vpList != null && list != null)
-            throw IllegalArgumentException("You can only use either the Recycler(list) or the Pager(vpList)")
-        if (vpList == null && list == null)
-            throw IllegalArgumentException("You have to use either the Recycler(list) or the Pager(vpList)")
-
-    }
+//    init {
+//        if (vpList != null && list != null)
+//            throw IllegalArgumentException("You can only use either the Recycler(list) or the Pager(vpList)")
+//        if (vpList == null && list == null)
+//            throw IllegalArgumentException("You have to use either the Recycler(list) or the Pager(vpList)")
+//
+//    }
 
     private inner class BindMap(val layout: Int, var type: Int = 0, val bind: View.(item: T) -> Unit, val predicate: (item: T, idx : Int) -> Boolean) {
         constructor(lf: LayoutFactory, type: Int = 0, bind: View.(item: T) -> Unit, predicate: (item: T, idx : Int) -> Boolean) : this(0, type, bind, predicate){
@@ -141,6 +146,11 @@ open class FastListAdapter<T>(private var items: MutableList<T>, private var lis
         bindMap.add(BindMap(layout, typeCounter++, bind, predicate))
         list?.adapter = this
         vpList?.adapter = this
+        return this
+    }
+
+    fun mapAdapter(@LayoutRes layout: Int, predicate: (item: T, idx : Int) -> Boolean, bind: View.(item: T) -> Unit): FastListAdapter<T> {
+        bindMap.add(BindMap(layout, typeCounter++, bind, predicate))
         return this
     }
 
