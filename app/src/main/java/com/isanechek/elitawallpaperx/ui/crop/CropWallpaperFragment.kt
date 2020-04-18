@@ -90,7 +90,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
             cwf_crop_view.apply {
                 setImageUriAsync(currentUri)
 
-//                setMinCropResultSize(screenSize.first, screenSize.second)
+                setMinCropResultSize(screenSize.first, screenSize.second)
                 setAspectRatio(item.w, item.h)
                 setFixedAspectRatio(true)
                 setOnSetCropOverlayMovedListener { rect ->

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ssf_center_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <View
+        android:layout_width="@dimen/dp0"
+        android:layout_height="@dimen/dp0"
+        android:background="@color/my_primary_color"
+        app:elevation="@dimen/dp16"
+        app:layout_constraintBottom_toTopOf="@id/ssf_center_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="lollipop" />
+
+    <View
+        android:layout_width="@dimen/dp0"
+        android:layout_height="@dimen/dp0"
+        android:background="@color/my_white_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssf_center_guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ssf_text_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/ssf_lottie"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:lottie_rawRes="@raw/covid19"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ssf_stay_home_tv"
+        app:layout_constraintTop_toBottomOf="@id/ssf_center_guideline" />
+
+
+    <TextView
+        android:id="@+id/ssf_stay_home_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="#оставайсядома"
+        android:textAllCaps="true"
+        android:textColor="@color/my_primary_dark_color"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EW"
+        android:textAllCaps="true"
+        android:textColor="@color/my_white_color"
+        android:textSize="120sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/ssf_text_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

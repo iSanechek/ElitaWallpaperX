@@ -31,4 +31,10 @@
         android:label="ads"
         tools:layout="@layout/ads_fragment_layout" />
 
+    <fragment
+        android:id="@+id/splash_fragment"
+        android:name="com.isanechek.elitawallpaperx.ui.splash.SplashFragment"
+        android:label="splash"
+        tools:layout="@layout/splash_sreen_fragment_layout" />
+
 </navigation>
