@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.callbacks.onDismiss
+import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
@@ -21,6 +23,7 @@ import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.ui.main.MainViewModel
 import com.isanechek.elitawallpaperx.utils.WARNING_INSTALL_LOCK_SCREEN
 import com.isanechek.elitawallpaperx.utils.WARNING_RATION_DIALOG_KEY
+import com.isanechek.elitawallpaperx.utils.WARNING_SCREEN_SIZE
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.croup_wallpaper_fragment_layout.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -79,26 +82,44 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 
     private fun updateCropView() {
         if (currentUri != Uri.EMPTY) {
+            var currentW = 0
+            var currentH = 0
+            val screenSize = vm.screenSize
             val item = vm.getRationInfo
             d { item.toString() }
             cwf_crop_view.apply {
                 setImageUriAsync(currentUri)
-                val screenSize = vm.screenSize
+
 //                setMinCropResultSize(screenSize.first, screenSize.second)
                 setAspectRatio(item.w, item.h)
                 setFixedAspectRatio(true)
                 setOnSetCropOverlayMovedListener { rect ->
                     if (rect != null) {
+                        currentW = rect.width()
+                        currentH = rect.height()
                         cwf_toolbar_width_tv.text = String.format("%d", rect.width())
                         cwf_toolbar_height_tv.text = String.format("%d", rect.height())
                     }
                 }
                 setOnCropImageCompleteListener { _, result ->
                     if (result.isSuccessful) {
-                        if (hasMinimumSdk(24) && hasIsNotMiUi) {
-                            showScreensChoiceDialog(result.bitmap)
+                        if (currentW < screenSize.first && currentH < screenSize.second) {
+                            d { "Boom warning" }
+                            showWarningScreenSizeDialog {
+                                d { "Boom install" }
+                                if (hasMinimumSdk(24) && hasIsNotMiUi) {
+                                    showScreensChoiceDialog(result.bitmap)
+                                } else {
+                                    vm.installWallpaper(result.bitmap, 0)
+                                }
+                            }
                         } else {
-                            vm.installWallpaper(result.bitmap, 0)
+                            d { "Boom hyyz" }
+                            if (hasMinimumSdk(24) && hasIsNotMiUi) {
+                                showScreensChoiceDialog(result.bitmap)
+                            } else {
+                                vm.installWallpaper(result.bitmap, 0)
+                            }
                         }
                     }
                 }
@@ -109,6 +130,22 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         } else {
             vm.showToast("Uri is empty!")
         }
+    }
+
+    private fun showWarningScreenSizeDialog(callback: () -> Unit) {
+        if (vm.isFirstStart(WARNING_SCREEN_SIZE)) {
+            MaterialDialog(requireContext()).show {
+                title(text = "Warning")
+                message(text = "Boom")
+                positiveButton {
+                    it.dismiss()
+                    callback.invoke()
+                }
+                checkBoxPrompt(text = "save") {
+                    if (it) { vm.markFirstStartDone(WARNING_SCREEN_SIZE) }
+                }
+            }
+        } else callback.invoke()
     }
 
     private fun showScreensChoiceDialog(bitmap: Bitmap) {
