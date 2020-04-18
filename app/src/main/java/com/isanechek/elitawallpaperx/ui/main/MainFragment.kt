@@ -217,4 +217,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         mf_pager.unregisterOnPageChangeCallback(pagerListener)
         super.onPause()
     }
+
+
 }

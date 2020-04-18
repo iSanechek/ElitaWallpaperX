@@ -1,6 +1,7 @@
 package com.isanechek.elitawallpaperx.ui.main
 
 import android.app.Application
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.*
@@ -34,6 +35,9 @@ class MainViewModel(application: Application, private val repository: AppReposit
             repository.getBitmapUri(path)
         }
 
+    val screenSize: Pair<Int, Int>
+        get() = repository.loadWallpaperSize()
+
     fun loadUri(path: String) {
         loadUri.value = path
     }
@@ -63,5 +67,11 @@ class MainViewModel(application: Application, private val repository: AppReposit
 
     fun showToast(message: String) {
         _showToast.value = message
+    }
+
+    fun updateScreenSize(width: Int, height: Int) {
+        viewModelScope.launch {
+            repository.updateWallpaperSize(width, height)
+        }
     }
 }

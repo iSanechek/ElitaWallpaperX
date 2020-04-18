@@ -26,6 +26,8 @@ interface AppRepository {
     var selectionRation: Int
     fun loadRations(): List<RationInfo>
     suspend fun installWallpaper(bitmap: Bitmap, screens: Int): Flow<ExecuteResult<Int>>
+    suspend fun updateWallpaperSize(width: Int, height: Int)
+    fun loadWallpaperSize(): Pair<Int, Int>
 }
 
 class AppRepositoryImpl(
@@ -112,6 +114,24 @@ class AppRepositoryImpl(
         }
     }
 
+    override suspend fun updateWallpaperSize(width: Int, height: Int) = withContext(Dispatchers.IO) {
+        preferences.edit { putInt(SYSTEM_WALLPAPER_WIDTH_KEY, width) }
+        preferences.edit { putInt(SYSTEM_WALLPAPER_HEIGHT_KEY, height) }
+
+    }
+
+    override fun loadWallpaperSize(): Pair<Int, Int> {
+        val width = preferences.getInt(SYSTEM_WALLPAPER_WIDTH_KEY, wallpaperManager.desiredMinimumWidth)
+        val height = preferences.getInt(SYSTEM_WALLPAPER_HEIGHT_KEY, wallpaperManager.desiredMinimumHeight)
+        return Pair(width, height)
+    }
+
+
     private fun String.fixPath(): String = "file:///android_asset/images/$this"
+
+    companion object {
+        private const val SYSTEM_WALLPAPER_WIDTH_KEY = "s.w.w.k"
+        private const val SYSTEM_WALLPAPER_HEIGHT_KEY = "s.w.h.k"
+    }
 
 }

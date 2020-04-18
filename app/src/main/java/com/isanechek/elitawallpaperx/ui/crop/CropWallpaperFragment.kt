@@ -81,7 +81,8 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
             d { item.toString() }
             cwf_crop_view.apply {
                 setImageUriAsync(currentUri)
-                setMinCropResultSize(720, 1344)
+                val screenSize = vm.screenSize
+                setMinCropResultSize(screenSize.first, screenSize.second)
                 setAspectRatio(item.w, item.h)
                 setFixedAspectRatio(true)
                 setOnCropImageCompleteListener { _, result ->
