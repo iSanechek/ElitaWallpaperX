@@ -1,6 +1,7 @@
 package com.isanechek.elitawallpaperx.ui.crop
 
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -20,6 +21,7 @@ import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.ui.main.MainViewModel
 import com.isanechek.elitawallpaperx.utils.WARNING_INSTALL_LOCK_SCREEN
 import com.isanechek.elitawallpaperx.utils.WARNING_RATION_DIALOG_KEY
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.croup_wallpaper_fragment_layout.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -82,9 +84,15 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
             cwf_crop_view.apply {
                 setImageUriAsync(currentUri)
                 val screenSize = vm.screenSize
-                setMinCropResultSize(screenSize.first, screenSize.second)
+//                setMinCropResultSize(screenSize.first, screenSize.second)
                 setAspectRatio(item.w, item.h)
                 setFixedAspectRatio(true)
+                setOnSetCropOverlayMovedListener { rect ->
+                    if (rect != null) {
+                        cwf_toolbar_width_tv.text = String.format("%d", rect.width())
+                        cwf_toolbar_height_tv.text = String.format("%d", rect.height())
+                    }
+                }
                 setOnCropImageCompleteListener { _, result ->
                     if (result.isSuccessful) {
                         if (hasMinimumSdk(24) && hasIsNotMiUi) {

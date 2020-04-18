@@ -5,15 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <com.theartofdev.edmodo.cropper.CropImageView
+        android:id="@+id/cwf_crop_view"
+        android:layout_width="@dimen/dp0"
+        android:layout_height="@dimen/dp0"
+        android:background="@color/my_primary_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.isanechek.elitawallpaperx.widgets.SuperToolbar
         android:id="@+id/cwf_toolbar"
         android:layout_width="@dimen/dp0"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/my_primary_color"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:superToolbar_showElevationAtStart="true">
+        app:superToolbar_showElevationAtStart="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,6 +45,41 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_close_24" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/cwf_toolbar_center_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.50" />
+
+            <TextView
+                android:id="@+id/cwf_toolbar_width_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginBottom="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp8"
+                android:textColor="@color/my_white_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/cwf_toolbar_center_guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1280" />
+
+            <TextView
+                android:id="@+id/cwf_toolbar_height_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginBottom="@dimen/dp8"
+                android:layout_marginStart="@dimen/dp8"
+                android:textColor="@color/my_white_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cwf_toolbar_center_guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1280" />
+
             <ImageButton
                 android:id="@+id/cwf_toolbar_menu_btn"
                 android:layout_width="wrap_content"
@@ -50,15 +96,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.isanechek.elitawallpaperx.widgets.SuperToolbar>
 
-    <com.theartofdev.edmodo.cropper.CropImageView
-        android:id="@+id/cwf_crop_view"
-        android:layout_width="@dimen/dp0"
-        android:layout_height="@dimen/dp0"
-        android:background="@color/my_primary_dark_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cwf_toolbar" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cwf_crop_btn"

@@ -34,6 +34,8 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     private val pagerAdapter by lazy { MainPagerAdapter() }
     private val mainAdapter by lazy { MainWallpapersAdapter() }
     private val pagerListener = object : ViewPager2.OnPageChangeCallback() {
+
+
         override fun onPageScrolled(
             position: Int,
             positionOffset: Float,
@@ -41,6 +43,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             d { "pos $position" }
+//            mf_toolbar.setElevationVisibility(position != 0)
             mf_toolbar_counter.text =
                 String.format("%d/%d", position.plus(1), pagerAdapter.itemCount)
         }
