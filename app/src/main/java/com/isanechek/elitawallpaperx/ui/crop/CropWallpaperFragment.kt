@@ -15,11 +15,8 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import com.isanechek.elitawallpaperx._layout
-import com.isanechek.elitawallpaperx.d
-import com.isanechek.elitawallpaperx.hasMinimumSdk
+import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
-import com.isanechek.elitawallpaperx.onClick
 import com.isanechek.elitawallpaperx.ui.main.MainViewModel
 import com.isanechek.elitawallpaperx.utils.WARNING_INSTALL_LOCK_SCREEN
 import com.isanechek.elitawallpaperx.utils.WARNING_RATION_DIALOG_KEY
@@ -89,7 +86,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 setFixedAspectRatio(true)
                 setOnCropImageCompleteListener { _, result ->
                     if (result.isSuccessful) {
-                        if (hasMinimumSdk(24)) {
+                        if (hasMinimumSdk(24) && hasIsNotMiUi) {
                             showScreensChoiceDialog(result.bitmap)
                         } else {
                             vm.installWallpaper(result.bitmap, 0)
