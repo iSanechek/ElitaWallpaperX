@@ -97,21 +97,17 @@
     </com.isanechek.elitawallpaperx.widgets.SuperToolbar>
 
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/cwf_crop_btn"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/dp0"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp16"
-        android:text="установить"
+        android:text="@string/set_wallpaper"
         android:textAllCaps="true"
+        android:background="?attr/selectableItemBackground"
         android:textColor="@color/my_white_color"
-        app:cornerRadius="@dimen/dp16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="@color/my_primary_dark_color"
-        app:strokeWidth="@dimen/dp1"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
