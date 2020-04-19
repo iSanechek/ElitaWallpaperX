@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -51,10 +53,14 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 is ExecuteResult.Done -> {
                     currentUri = data.data
                     updateCropView()
+                    statusProgress()
                 }
                 is ExecuteResult.Loading -> {
+                    statusProgress(true)
                 }
                 is ExecuteResult.Error -> {
+                    statusProgress()
+                    vm.sendEvent(TAG, "Load wallpaper error! ${data.errorMessage}")
                 }
             }
         })
@@ -62,11 +68,15 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         vm.installWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
             when (status) {
                 is ExecuteResult.Loading -> {
+                    statusProgress(true)
                 }
                 is ExecuteResult.Done -> {
+                    statusProgress()
                     vm.showToast(getString(_string.install_wallpaper_done))
                 }
                 is ExecuteResult.Error -> {
+                    statusProgress()
+                    vm.sendEvent(TAG, "Install wallpaper error! ${status.errorMessage}")
                 }
             }
         })
@@ -274,6 +284,17 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 vm.markFirstStartDone(WARNING_INSTALL_LOCK_SCREEN)
             }
         } else callback.invoke()
+    }
+
+    private fun statusProgress(show: Boolean = false) {
+        when {
+            show -> if (cwf_toolbar_progress.isInvisible) cwf_toolbar_progress.isInvisible = false
+            cwf_toolbar_progress.isVisible -> cwf_toolbar_progress.isInvisible = true
+        }
+    }
+
+    companion object {
+        private const val TAG = "CropFragment"
     }
 
 }
