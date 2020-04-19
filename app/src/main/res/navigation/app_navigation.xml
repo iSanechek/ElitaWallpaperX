@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/main_fragment">
+    app:startDestination="@id/splash_fragment">
 
     <fragment
         android:id="@+id/main_fragment"
@@ -35,6 +35,10 @@
         android:id="@+id/splash_fragment"
         android:name="com.isanechek.elitawallpaperx.ui.splash.SplashFragment"
         android:label="splash"
-        tools:layout="@layout/splash_sreen_fragment_layout" />
+        tools:layout="@layout/splash_sreen_fragment_layout">
+        <action
+            android:id="@+id/go_splash_to_main"
+            app:destination="@id/main_fragment" />
+    </fragment>
 
 </navigation>

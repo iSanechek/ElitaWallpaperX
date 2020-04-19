@@ -3,10 +3,10 @@ package com.isanechek.elitawallpaperx.ui.main
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.isanechek.elitawallpaperx._layout
 import com.isanechek.elitawallpaperx.inflate
 import com.isanechek.elitawallpaperx.onClick
-import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.main_pager_item_layout.*
 
@@ -17,7 +17,7 @@ class MainPagerAdapter : RecyclerView.Adapter<MainPagerAdapter.PagerHolder>() {
     inner class PagerHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(data: String, position: Int, callback: ListenerCallback?) {
-            Picasso.get().load(data).into(mpi_background_iv)
+            mpi_background_iv.load(data)
             mpi_background_iv.onClick { callback?.onItemClick(data, position) }
         }
     }
