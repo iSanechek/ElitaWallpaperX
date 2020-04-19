@@ -8,6 +8,7 @@ import androidx.lifecycle.*
 import com.isanechek.elitawallpaperx.data.AppRepository
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.RationInfo
+import com.isanechek.elitawallpaperx.utils.TrackerUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -15,8 +16,11 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 
-class AppViewModel(application: Application, private val repository: AppRepository) :
-    AndroidViewModel(application) {
+class AppViewModel(
+    application: Application,
+    private val repository: AppRepository,
+    private val tracker: TrackerUtils
+) : AndroidViewModel(application) {
 
     private val _showToast = MutableLiveData<String>()
     val showToast: LiveData<String>
@@ -73,5 +77,13 @@ class AppViewModel(application: Application, private val repository: AppReposito
         viewModelScope.launch {
             repository.updateWallpaperSize(width, height)
         }
+    }
+
+    fun sendEvent(tag: String, event: String) {
+        tracker.sendEvent(tag, event, viewModelScope)
+    }
+
+    fun sendException(tag: String, event: String, exception: Exception?) {
+        tracker.sendException(tag, event, viewModelScope, exception)
     }
 }

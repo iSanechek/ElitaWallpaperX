@@ -8,6 +8,8 @@ import com.isanechek.elitawallpaperx.data.AppRepository
 import com.isanechek.elitawallpaperx.data.AppRepositoryImpl
 import com.isanechek.elitawallpaperx.utils.FilesManager
 import com.isanechek.elitawallpaperx.utils.FilesManagerImpl
+import com.isanechek.elitawallpaperx.utils.TrackerUtils
+import com.isanechek.elitawallpaperx.utils.TrackerUtilsImpl
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,6 +17,8 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val appModule = module {
+
+    single<TrackerUtils> { TrackerUtilsImpl() }
 
     single<FilesManager> {
         FilesManagerImpl()
@@ -25,7 +29,7 @@ val appModule = module {
     }
 
     viewModel {
-        AppViewModel(androidApplication(), get())
+        AppViewModel(androidApplication(), get(), get())
     }
 
     single {

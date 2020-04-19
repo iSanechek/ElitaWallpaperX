@@ -36,7 +36,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     private val mainAdapter by lazy { MainWallpapersAdapter() }
     private val pagerListener = object : ViewPager2.OnPageChangeCallback() {
 
-
         override fun onPageScrolled(
             position: Int,
             positionOffset: Float,
@@ -51,7 +50,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mf_toolbar.hideCustomLayout()
-        mf_toolbar_title.text = "WallpaperX"
+        mf_toolbar_title.text = getString(_string.app_name)
 
         // pager
         with(mf_pager) {
@@ -63,9 +62,10 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         vm.data.observe(viewLifecycleOwner, Observer { data ->
             when (data) {
                 is ExecuteResult.Error -> {
+                    vm.sendEvent(TAG, "Load images from assets error! ${data.errorMessage}")
+                    vm.showToast(data.errorMessage)
                 }
-                is ExecuteResult.Loading -> {
-                }
+                is ExecuteResult.Loading -> {}
                 is ExecuteResult.Done -> {
                     pagerAdapter.submit(data.data)
                     mainAdapter.submit(data.data)
@@ -123,10 +123,22 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
     private fun showSettingsDialog() {
         val menuItems = listOf(
-            ItemMenu(id = "remove", iconId = _drawable.image_remove, titleId = _string.clear_wallpaper_title),
-            ItemMenu(id = "black", iconId = _drawable.black_image, titleId = _string.black_wallpaper_title),
+            ItemMenu(
+                id = "remove",
+                iconId = _drawable.image_remove,
+                titleId = _string.clear_wallpaper_title
+            ),
+            ItemMenu(
+                id = "black",
+                iconId = _drawable.black_image,
+                titleId = _string.black_wallpaper_title
+            ),
             ItemMenu(id = "new", iconId = _drawable.new_box, titleId = _string.what_is_new_title),
-            ItemMenu(id = "info", iconId = _drawable.ic_baseline_info_24, titleId = _string.about_info_title)
+            ItemMenu(
+                id = "info",
+                iconId = _drawable.ic_baseline_info_24,
+                titleId = _string.about_info_title
+            )
         )
 
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
@@ -140,7 +152,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                 ) { item: ItemMenu ->
                     sci_container.onClick {
 
-                        when(item.id) {
+                        when (item.id) {
                             "remove" -> showRemoveWallpaperDialog()
                             "black" -> showBlackWallpaperDialog()
                             "new" -> showWhatNewDialog()
@@ -148,7 +160,12 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                         }
                         dialog.dismiss()
                     }
-                    sci_icon.setImageDrawable(ContextCompat.getDrawable(requireContext(), item.iconId))
+                    sci_icon.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            item.iconId
+                        )
+                    )
                     sci_title_tv.text = getText(item.titleId)
                 })
 
@@ -245,5 +262,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         super.onPause()
     }
 
-
+    companion object {
+        private const val TAG = "MainFragment"
+    }
 }
