@@ -2,11 +2,9 @@
     <string name="app_name">EW</string>
     <string name="app_label">Other Wallpaper HD</string>
     <string name="set_wallpaper">Set wallpaper</string>
-    <string name="no_wallpaper">No wallpaper</string>
     <string name="link_other_app">Other apps</string>
     <string name="share">Share!</string>
-    <string name="about">About</string>
-    <string name="warning">Warning</string>
+    <string name="warning_title">Warning</string>
     <string name="no_wallpapers_message">Black picture to save battery power.\nThe most effective on AMOLED display.</string>
     <string name="ad_nw_yes_btn">Yes</string>
     <string name="ad_nw_no_btn">No</string>
@@ -20,42 +18,14 @@
     <string name="analytics">Analytics</string>
     <string name="by">by</string>
 
-    <!--Settings-->
-    <string name="app_setting">Settings</string>
 
-    <!--MAIN SETTINGS-->
-    <string name="crop_main_title">Main</string>
+    <!--New-->
+    <string name="clear_wallpaper_title">Clear wallpaper</string>
+    <string name="black_wallpaper_title">Black wallpaper</string>
+    <string name="what_is_new_title">What is new</string>
+    <string name="about_info_title">About info</string>
+    <string name="menu_title">Menu</string>
+    <string name="close_title">close</string>
 
-    <string name="crop_title">Alternative choice wallpaper</string>
-    <string name="crop_summary">Enable if primary choice wallpaper does not work</string>
-
-    <!--ABOUT SETTINGS-->
-    <string name="about_title">Other</string>
-
-    <string name="about_app_title">About app</string>
-    <string name="i_love_ads">No. I love ads</string>
-    <string name="buy_btn">Buy</string>
-    <string name="buy_dialog">Warning</string>
-    <string name="use_libs">Use libs</string>
-    <string name="close_about_dialog">close</string>
-    <string name="whatisnew">What is new</string>
-
-    <!--BILLING-->
-    <string name="enable_after_inapp">Enable after purchase</string>
-    <string name="thks">thanks</string>
-    <string name="restart">Restart app for disable google analytics.</string>
-    <string name="now_restart">now</string>
-    <string name="later_restart">later</string>
-    <string name="disable_anal">Disable Analytics</string>
-    <string name="about_crop">Correct work of cropping depends on your launcher and the settings your laucher.</string>
-    <string name="no_connect">No connect</string>
-    <string name="wait">Wait</string>
-    <string name="set_as">Set as</string>
-    <string name="about_permission_dialog_title">About requesting permission</string>
-    <string name="about_permission_dialog_message">Write access is necessary to transfer wallpapers to the phone memory. Transfer to phone memory to use the system cropping the wallpaper.</string>
-    <string name="permission_not_granted">WARNING! The memory access rejected! Switch to the standard way?</string>
-    <string name="permission_yes_btn">enable</string>
-    <string name="permision_no_btn">reject</string>
-    <string name="all_ok_bro">All Ok. Please click on \'Set Wallpaper\' again.</string>
-    <string name="my_web_site">AVERD SOFT</string>
+    <string name="company_name">AVERD SOFT</string>
 </resources>

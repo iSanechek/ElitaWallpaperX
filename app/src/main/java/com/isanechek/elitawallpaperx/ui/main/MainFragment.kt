@@ -2,12 +2,12 @@ package com.isanechek.elitawallpaperx.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -18,12 +18,13 @@ import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
-import com.afollestad.materialdialogs.list.listItems
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
+import com.isanechek.elitawallpaperx.models.ItemMenu
 import com.isanechek.elitawallpaperx.models.NewInfo
 import com.isanechek.elitawallpaperx.ui.base.bindAdater
 import kotlinx.android.synthetic.main.main_fragment_layout.*
+import kotlinx.android.synthetic.main.settings_custom_item_layout.view.*
 import kotlinx.android.synthetic.main.what_is_new_item_layout.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -103,7 +104,10 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     private fun showDialog() {
         MaterialDialog(requireContext(), BottomSheet()).show {
             lifecycleOwner(this@MainFragment)
-            customListAdapter(adapter = mainAdapter, layoutManager =  GridLayoutManager(requireContext(), 3))
+            customListAdapter(
+                adapter = mainAdapter,
+                layoutManager = GridLayoutManager(requireContext(), 3)
+            )
             positiveButton(text = "close") {
                 it.dismiss()
             }
@@ -120,25 +124,63 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     }
 
     private fun showSettingsDialog() {
-        val items = listOf<CharSequence>("No wallpaper", "What is new", "About as")
+        val menuItems = listOf(
+            ItemMenu(id = "remove", iconId = _drawable.image_remove, titleId = _string.clear_wallpaper_title),
+            ItemMenu(id = "black", iconId = _drawable.black_image, titleId = _string.black_wallpaper_title),
+            ItemMenu(id = "new", iconId = _drawable.new_box, titleId = _string.what_is_new_title),
+            ItemMenu(id = "info", iconId = _drawable.ic_baseline_info_24, titleId = _string.about_info_title)
+        )
+//        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+//            lifecycleOwner(this@MainFragment)
+//            listItems(items = items) { d, i, _ ->
+//                d.dismiss()
+//                when (i) {
+//                    0 -> showNoWallpaperDialog()
+//                    1 -> showWhatNewDialog()
+//                    2 -> showAboutDialog()
+//                    else -> Unit
+//                }
+//            }
+//            negativeButton(text = "Close") {
+//                it.dismiss()
+//            }
+//        }
+
+
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            val dialog = this
             lifecycleOwner(this@MainFragment)
-            listItems(items = items) { d, i, _ ->
-                d.dismiss()
-                when (i) {
-                    0 -> showNoWallpaperDialog()
-                    1 -> showWhatNewDialog()
-                    2 -> showAboutDialog()
-                    else -> Unit
-                }
-            }
-            negativeButton(text = "Close") {
+            title(res = _string.menu_title)
+            customListAdapter(
+                adapter = bindAdater(
+                    menuItems,
+                    _layout.settings_custom_item_layout
+                ) { item: ItemMenu ->
+                    sci_container.onClick {
+
+                        when(item.id) {
+                            "remove" -> showRemoveWallpaperDialog()
+                            "black" -> showBlackWallpaperDialog()
+                            "new" -> showWhatNewDialog()
+                            "info" -> showAboutDialog()
+                        }
+                        dialog.dismiss()
+                    }
+                    sci_icon.setImageDrawable(ContextCompat.getDrawable(requireContext(), item.iconId))
+                    sci_title_tv.text = getText(item.titleId)
+                })
+
+            negativeButton(res = _string.close_title) {
                 it.dismiss()
             }
         }
     }
 
-    private fun showNoWallpaperDialog() {
+    private fun showRemoveWallpaperDialog() {
+
+    }
+
+    private fun showBlackWallpaperDialog() {
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             title(text = "No wallpaper")
             message(res = _string.no_wallpapers_message)

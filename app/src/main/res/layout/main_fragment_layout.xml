@@ -112,7 +112,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/dp16"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:text="awerd soft"
+                    android:text="@string/company_name"
                     android:textAllCaps="true"
                     android:textColor="@color/my_white_color"
                     android:textSize="18sp"
