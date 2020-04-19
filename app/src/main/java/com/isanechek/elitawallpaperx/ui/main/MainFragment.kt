@@ -15,6 +15,7 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
+import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -69,6 +70,18 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                 is ExecuteResult.Done -> {
                     pagerAdapter.submit(data.data)
                     mainAdapter.submit(data.data)
+                }
+            }
+        })
+
+        vm.resetWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
+            when(status) {
+                is ExecuteResult.Done -> {
+                    vm.showToast(getString(_string.done_title))
+                }
+                is ExecuteResult.Loading -> {}
+                is ExecuteResult.Error -> {
+                    vm.showToast(getString(_string.reset_wallpaper_fail_msg))
                 }
             }
         })
@@ -176,7 +189,27 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     }
 
     private fun showRemoveWallpaperDialog() {
-
+        var isLockScreen = false
+        MaterialDialog(requireContext()).show {
+            lifecycleOwner(this@MainFragment)
+            title(res = _string.warning_title)
+            message(res = _string.reset_to_default_wallpaper_msg)
+            if (hasMinimumSdk(24) && hasIsNotMiUi) {
+                checkBoxPrompt(res = _string.lock_screen_title) {
+                    isLockScreen = it
+                }
+            }
+            positiveButton(res = _string.reset_title) {
+                it.dismiss()
+                when {
+                    isLockScreen -> vm.resetWallpaper(1)
+                    else -> vm.resetWallpaper(0)
+                }
+            }
+            negativeButton(res = _string.cancel_title) {
+                it.dismiss()
+            }
+        }
     }
 
     private fun showBlackWallpaperDialog() {

@@ -26,6 +26,7 @@ interface AppRepository {
     var selectionRation: Int
     fun loadRations(): List<RationInfo>
     suspend fun installWallpaper(bitmap: Bitmap, screens: Int): Flow<ExecuteResult<Int>>
+    suspend fun resetWallpaper(which: Int): Flow<ExecuteResult<String>>
     suspend fun updateWallpaperSize(width: Int, height: Int)
     fun loadWallpaperSize(): Pair<Int, Int>
 }
@@ -111,6 +112,24 @@ class AppRepositoryImpl(
         } else {
             wallpaperManager.setBitmap(bitmap)
             emit(ExecuteResult.Done(0))
+        }
+    }
+
+    override suspend fun resetWallpaper(which: Int): Flow<ExecuteResult<String>> = flow {
+        emit(ExecuteResult.Loading)
+        if (hasMinimumSdk(24)) {
+            when(which) {
+                0 -> wallpaperManager.clear(WallpaperManager.FLAG_SYSTEM)
+                1 -> {
+                    wallpaperManager.clear(WallpaperManager.FLAG_SYSTEM)
+                    wallpaperManager.clear(WallpaperManager.FLAG_LOCK)
+                }
+                2 -> wallpaperManager.clear(WallpaperManager.FLAG_LOCK)
+            }
+            emit(ExecuteResult.Done(""))
+        } else {
+            wallpaperManager.clear()
+            emit(ExecuteResult.Done(""))
         }
     }
 

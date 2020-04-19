@@ -26,6 +26,10 @@ class AppViewModel(
     val showToast: LiveData<String>
         get() = _showToast
 
+    private val _resetWallpaperStatus = MutableLiveData<ExecuteResult<String>>()
+    val resetWallpaperStatus: LiveData<ExecuteResult<String>>
+        get() = _resetWallpaperStatus
+
     private val _installWallpaperStatus = MutableLiveData<ExecuteResult<Int>>()
     val installWallpaperStatus: LiveData<ExecuteResult<Int>>
         get() = _installWallpaperStatus
@@ -85,5 +89,14 @@ class AppViewModel(
 
     fun sendException(tag: String, event: String, exception: Exception?) {
         tracker.sendException(tag, event, viewModelScope, exception)
+    }
+
+    fun resetWallpaper(which: Int) {
+        viewModelScope.launch {
+            repository.resetWallpaper(which)
+                .flowOn(Dispatchers.IO)
+                .catch { _showToast.value = "Reset wallpaper error!" }
+                .collect { _resetWallpaperStatus.value = it }
+        }
     }
 }
