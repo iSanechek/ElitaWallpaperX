@@ -218,6 +218,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             message(res = _string.no_wallpapers_message)
             positiveButton(res = _string.install_title) {
                 it.dismiss()
+                vm.setBlackWallpaper()
             }
             negativeButton(res = _string.close_title) {
                 it.dismiss()

@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.core.content.FileProvider
-import com.isanechek.elitawallpaperx.BuildConfig
 import com.isanechek.elitawallpaperx.d
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.File
@@ -24,7 +22,7 @@ interface FilesManager {
     suspend fun getBitmapUri(context: Context, fileName: String): Uri
 }
 
-class FilesManagerImpl : FilesManager {
+class FilesManagerImpl(private val tracker: TrackerUtils) : FilesManager {
 
     // Здесь надо впилить проверку файла
     override fun getFileName(path: String): String = File(path).nameWithoutExtension
@@ -100,7 +98,7 @@ class FilesManagerImpl : FilesManager {
                 val result = paths?.toList() ?: emptyList()
                 c.resume(result)
             } catch (ex: Exception) {
-                d { "loadImagesFromAssets error! ${ex.message}" }
+                tracker.sendException(TAG, "loadImagesFromAssets error!", null, ex)
                 c.resume(emptyList())
             }
         }
@@ -132,10 +130,13 @@ class FilesManagerImpl : FilesManager {
                     c.resume(Uri.EMPTY)
                 }
             } catch (ex: Exception) {
-                d { "getBitmapUri error! ${ex.message}" }
+                tracker.sendException(TAG, "getBitmapUri error!", null, ex)
                 c.resume(Uri.EMPTY)
             }
-
         }
+
+    companion object {
+        private const val TAG = "FilesManager"
+    }
 
 }

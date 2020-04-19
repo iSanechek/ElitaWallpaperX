@@ -9,10 +9,12 @@ import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.isanechek.elitawallpaperx.d
+import com.isanechek.elitawallpaperx.hasIsNotMiUi
 import com.isanechek.elitawallpaperx.hasMinimumSdk
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.RationInfo
 import com.isanechek.elitawallpaperx.utils.FilesManager
+import com.isanechek.elitawallpaperx.utils.WallpaperUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -26,15 +28,17 @@ interface AppRepository {
     var selectionRation: Int
     fun loadRations(): List<RationInfo>
     suspend fun installWallpaper(bitmap: Bitmap, screens: Int): Flow<ExecuteResult<Int>>
-    suspend fun resetWallpaper(which: Int): Flow<ExecuteResult<String>>
+    suspend fun resetWallpaper(which: Int): Flow<ExecuteResult<Int>>
     suspend fun updateWallpaperSize(width: Int, height: Int)
+    suspend fun installBlackWallpaper(w: Int, h: Int): Flow<ExecuteResult<Int>>
     fun loadWallpaperSize(): Pair<Int, Int>
 }
 
 class AppRepositoryImpl(
     private val context: Context,
     private val preferences: SharedPreferences,
-    private val filesManager: FilesManager
+    private val filesManager: FilesManager,
+    private val wallpaperUtils: WallpaperUtils
 ) : AppRepository {
 
     private val wallpaperManager: WallpaperManager by lazy {
@@ -115,7 +119,7 @@ class AppRepositoryImpl(
         }
     }
 
-    override suspend fun resetWallpaper(which: Int): Flow<ExecuteResult<String>> = flow {
+    override suspend fun resetWallpaper(which: Int): Flow<ExecuteResult<Int>> = flow {
         emit(ExecuteResult.Loading)
         if (hasMinimumSdk(24)) {
             when(which) {
@@ -126,10 +130,10 @@ class AppRepositoryImpl(
                 }
                 2 -> wallpaperManager.clear(WallpaperManager.FLAG_LOCK)
             }
-            emit(ExecuteResult.Done(""))
+            emit(ExecuteResult.Done(0))
         } else {
             wallpaperManager.clear()
-            emit(ExecuteResult.Done(""))
+            emit(ExecuteResult.Done(0))
         }
     }
 
@@ -137,6 +141,21 @@ class AppRepositoryImpl(
         preferences.edit { putInt(SYSTEM_WALLPAPER_WIDTH_KEY, width) }
         preferences.edit { putInt(SYSTEM_WALLPAPER_HEIGHT_KEY, height) }
 
+    }
+
+    override suspend fun installBlackWallpaper(w: Int, h: Int): Flow<ExecuteResult<Int>> = flow {
+        emit(ExecuteResult.Loading)
+        val blackWallpaper = wallpaperUtils.createBlackWallpaper(w, h)
+        if (hasMinimumSdk(24) && hasIsNotMiUi) {
+            val system =wallpaperManager.setBitmap(blackWallpaper, null, true, WallpaperManager.FLAG_SYSTEM)
+            val lock = wallpaperManager.setBitmap(blackWallpaper, null, true, WallpaperManager.FLAG_LOCK)
+            if (system != 0 && lock != 0) {
+                emit(ExecuteResult.Done(0))
+            } else emit(ExecuteResult.Error("Set black wallpaper error!"))
+        } else {
+            wallpaperManager.setBitmap(blackWallpaper)
+            emit(ExecuteResult.Done(0))
+        }
     }
 
     override fun loadWallpaperSize(): Pair<Int, Int> {

@@ -6,10 +6,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.isanechek.elitawallpaperx.data.AppRepository
 import com.isanechek.elitawallpaperx.data.AppRepositoryImpl
-import com.isanechek.elitawallpaperx.utils.FilesManager
-import com.isanechek.elitawallpaperx.utils.FilesManagerImpl
-import com.isanechek.elitawallpaperx.utils.TrackerUtils
-import com.isanechek.elitawallpaperx.utils.TrackerUtilsImpl
+import com.isanechek.elitawallpaperx.utils.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -21,11 +18,15 @@ val appModule = module {
     single<TrackerUtils> { TrackerUtilsImpl() }
 
     single<FilesManager> {
-        FilesManagerImpl()
+        FilesManagerImpl(get())
+    }
+
+    factory<WallpaperUtils> {
+        WallpaperUtilsImpl()
     }
 
     single<AppRepository> {
-        AppRepositoryImpl(androidApplication(), get(), get())
+        AppRepositoryImpl(androidApplication(), get(), get(), get())
     }
 
     viewModel {
