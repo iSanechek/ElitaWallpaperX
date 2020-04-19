@@ -1,12 +1,11 @@
 package com.isanechek.elitawallpaperx.ui.crop
 
 import android.graphics.Bitmap
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.size
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -16,16 +15,19 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
-import com.isanechek.elitawallpaperx.ui.main.MainViewModel
+import com.isanechek.elitawallpaperx.AppViewModel
+import com.isanechek.elitawallpaperx.models.ItemMenu
+import com.isanechek.elitawallpaperx.ui.base.bindAdater
 import com.isanechek.elitawallpaperx.utils.WARNING_INSTALL_LOCK_SCREEN
 import com.isanechek.elitawallpaperx.utils.WARNING_RATION_DIALOG_KEY
 import com.isanechek.elitawallpaperx.utils.WARNING_SCREEN_SIZE
-import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.croup_wallpaper_fragment_layout.*
+import kotlinx.android.synthetic.main.settings_custom_item_layout.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) {
@@ -35,14 +37,14 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
     private val path: String
         get() = arguments?.getString("path", "") ?: ""
 
-    private val vm: MainViewModel by sharedViewModel()
+    private val vm: AppViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         vm.loadUri(path)
         cwf_toolbar.hideCustomLayout()
         cwf_toolbar_close_btn.onClick { findNavController().navigateUp() }
-        cwf_toolbar_menu_btn.onClick { showSettingsDialog() }
+        cwf_toolbar_menu_btn.onClick { showMenuDialog() }
 
         vm.uri.observe(viewLifecycleOwner, Observer { data ->
             when (data) {
@@ -58,12 +60,14 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         })
 
         vm.installWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
-            when(status) {
-                is ExecuteResult.Loading -> {}
-                is ExecuteResult.Done -> {
-                    vm.showToast("Install done")
+            when (status) {
+                is ExecuteResult.Loading -> {
                 }
-                is ExecuteResult.Error -> {}
+                is ExecuteResult.Done -> {
+                    vm.showToast(getString(_string.install_wallpaper_done))
+                }
+                is ExecuteResult.Error -> {
+                }
             }
         })
 
@@ -104,9 +108,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 setOnCropImageCompleteListener { _, result ->
                     if (result.isSuccessful) {
                         if (currentW < screenSize.first && currentH < screenSize.second) {
-                            d { "Boom warning" }
                             showWarningScreenSizeDialog {
-                                d { "Boom install" }
                                 if (hasMinimumSdk(24) && hasIsNotMiUi) {
                                     showScreensChoiceDialog(result.bitmap)
                                 } else {
@@ -114,7 +116,6 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                                 }
                             }
                         } else {
-                            d { "Boom hyyz" }
                             if (hasMinimumSdk(24) && hasIsNotMiUi) {
                                 showScreensChoiceDialog(result.bitmap)
                             } else {
@@ -135,25 +136,31 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
     private fun showWarningScreenSizeDialog(callback: () -> Unit) {
         if (vm.isFirstStart(WARNING_SCREEN_SIZE)) {
             MaterialDialog(requireContext()).show {
-                title(text = "Warning")
+                title(res = _string.warning_title)
                 message(text = "Boom")
                 positiveButton {
                     it.dismiss()
                     callback.invoke()
                 }
-                checkBoxPrompt(text = "save") {
-                    if (it) { vm.markFirstStartDone(WARNING_SCREEN_SIZE) }
+                checkBoxPrompt(res = _string.save_title) {
+                    if (it) {
+                        vm.markFirstStartDone(WARNING_SCREEN_SIZE)
+                    }
                 }
             }
         } else callback.invoke()
     }
 
     private fun showScreensChoiceDialog(bitmap: Bitmap) {
-        val screens = mutableListOf("all screens", "system screen", "lock screens")
+        val screens = mutableListOf(
+            getText(_string.all_screens_title),
+            getText(_string.system_screen_title),
+            getText(_string.lock_screen_title)
+        )
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             lifecycleOwner(this@CropWallpaperFragment)
-            title(text = "Choice screen")
-            listItems(items = screens) { dialog, index, text ->
+            title(res = _string.choice_screen_title)
+            listItems(items = screens) { dialog, index, _ ->
                 dialog.dismiss()
                 showWarningLockScreen {
                     vm.installWallpaper(bitmap, index)
@@ -164,13 +171,13 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 
     private fun showRatioWarningInfoDialog() {
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-            title(text = "Warning")
-            message(text = "Default ration 16:9. For change click CHANGE or later you can cache in settings!")
+            title(res = _string.warning_title)
+            message(res = _string.default_ration_message)
             lifecycleOwner(this@CropWallpaperFragment)
-            negativeButton(text = "close") {
+            negativeButton(res = _string.close_title) {
                 it.dismiss()
             }
-            positiveButton(text = "change") {
+            positiveButton(res = _string.change_title) {
                 it.dismiss()
                 showRatioChangeDialog()
             }
@@ -183,36 +190,72 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         val rationList = vm.rations
         MaterialDialog(requireContext()).show {
             lifecycleOwner(this@CropWallpaperFragment)
-            title(text = "Select ration")
+            title(res = _string.select_ratio_title)
             listItemsSingleChoice(
                 items = rationList.map { it.title },
                 initialSelection = vm.selectionRatio
             ) { _, index, text ->
                 if (vm.selectionRatio != index) {
-                    vm.showToast(String.format("Выбрано %s \n Значание обновлено!", text))
+                    vm.showToast(
+                        String.format(
+                            "%s %s\n%s",
+                            getText(_string.select_text),
+                            text,
+                            getText(_string.value_update_message)
+                        )
+                    )
                     vm.selectionRatio = index
                     updateCropView()
                 }
             }
-            positiveButton(text = "save") {
+            positiveButton(res = _string.save_title) {
                 it.dismiss()
             }
-            negativeButton(text = "close") {
+            negativeButton(res = _string.close_title) {
                 it.dismiss()
             }
         }
     }
 
-    private fun showSettingsDialog() {
-        val items = mutableListOf("Ration", "")
+    private fun showMenuDialog() {
+        val menuItems = listOf(
+            ItemMenu(
+                id = "ratio",
+                titleId = _string.ratio_title,
+                iconId = _drawable.ic_baseline_aspect_ratio_24
+            ),
+            ItemMenu(
+                id = "crop",
+                titleId = _string.minimum_crop_size_title,
+                iconId = _drawable.ic_baseline_crop_free_24
+            )
+        )
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            val dialog = this
             lifecycleOwner(this@CropWallpaperFragment)
-            title(text = "Settings")
-            listItems(items = items) { dialog, index, text ->
+            title(res = _string.menu_title)
+            customListAdapter(
+                adapter = bindAdater(
+                    menuItems,
+                    _layout.settings_custom_item_layout
+                ) { item: ItemMenu ->
+                    sci_container.onClick {
+                        when (item.id) {
+                            "ratio" -> showRatioChangeDialog()
+                            "crop" -> Unit
+                        }
+                        dialog.dismiss()
+                    }
+                    sci_icon.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            item.iconId
+                        )
+                    )
+                    sci_title_tv.text = getText(item.titleId)
+                })
 
-            }
-
-            positiveButton(text = "close") {
+            positiveButton(res = _string.close_title) {
                 it.dismiss()
             }
         }
@@ -221,9 +264,9 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
     private fun showWarningLockScreen(callback: () -> Unit) {
         if (vm.isFirstStart(WARNING_INSTALL_LOCK_SCREEN)) {
             MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-                title(text = "Warning")
-                message(text = "Some device not supported install wallpaper in lock screen!")
-                positiveButton(text = "done") {
+                title(res = _string.warning_title)
+                message(res = _string.warning_message_not_supported_lock_screen)
+                positiveButton(res = _string.close_title) {
                     it.dismiss()
                     callback.invoke()
                 }

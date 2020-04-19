@@ -1,4 +1,4 @@
-package com.isanechek.elitawallpaperx.ui.main
+package com.isanechek.elitawallpaperx
 
 import android.app.Application
 import android.content.Context
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 
-class MainViewModel(application: Application, private val repository: AppRepository) :
+class AppViewModel(application: Application, private val repository: AppRepository) :
     AndroidViewModel(application) {
 
     private val _showToast = MutableLiveData<String>()

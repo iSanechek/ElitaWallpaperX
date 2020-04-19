@@ -31,7 +31,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MainFragment : Fragment(_layout.main_fragment_layout) {
 
-    private val vm: MainViewModel by sharedViewModel()
+    private val vm: AppViewModel by sharedViewModel()
     private val pagerAdapter by lazy { MainPagerAdapter() }
     private val mainAdapter by lazy { MainWallpapersAdapter() }
     private val pagerListener = object : ViewPager2.OnPageChangeCallback() {

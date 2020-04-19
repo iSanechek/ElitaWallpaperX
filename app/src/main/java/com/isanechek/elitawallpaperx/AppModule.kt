@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.isanechek.elitawallpaperx.data.AppRepository
 import com.isanechek.elitawallpaperx.data.AppRepositoryImpl
-import com.isanechek.elitawallpaperx.ui.main.MainViewModel
 import com.isanechek.elitawallpaperx.utils.FilesManager
 import com.isanechek.elitawallpaperx.utils.FilesManagerImpl
 import org.koin.android.ext.koin.androidApplication
@@ -26,7 +25,7 @@ val appModule = module {
     }
 
     viewModel {
-        MainViewModel(androidApplication(), get())
+        AppViewModel(androidApplication(), get())
     }
 
     single {

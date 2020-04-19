@@ -13,7 +13,7 @@
     <string name="about_moto">Elite</string>
     <string name="about_moto_second">Wallpapers</string>
     <string name="about_text">This is a small application\nwritten specifically\nfor fans of the brand\n<b>Motorola</b>!</string>
-    <string name="awerd">AwerdMedia</string>
+    <string name="awerd">AverdMedia</string>
     <string name="thanks_for_click">Thanks. :))</string>
     <string name="analytics">Analytics</string>
     <string name="by">by</string>
@@ -27,6 +27,20 @@
     <string name="menu_title">Menu</string>
     <string name="close_title">close</string>
     <string name="install_title">install</string>
+    <string name="ratio_title">Aspect ratio</string>
+    <string name="minimum_crop_size_title">Min crop size fix</string>
+    <string name="save_title">save</string>
+    <string name="select_ratio_title">Select ratio</string>
+    <string name="change_title">change</string>
+    <string name="warning_message_not_supported_lock_screen">Some device not supported install wallpaper in lock screen!</string>
+    <string name="default_ration_message">Default ration 16:9. For change click CHANGE or later you can cache in settings!</string>
+    <string name="select_text">Select</string>
+    <string name="value_update_message">Value update</string>
+    <string name="choice_screen_title">Choice screen</string>
+    <string name="all_screens_title">all screens</string>
+    <string name="system_screen_title">system screen</string>
+    <string name="lock_screen_title">lock screen</string>
+    <string name="install_wallpaper_done">Install wallpaper done!</string>
 
     <string name="company_name">AVERD SOFT</string>
 </resources>

@@ -5,12 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.isanechek.elitawallpaperx.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(_layout.activity_main) {
 
-    private val vm: MainViewModel by viewModel()
+    private val vm: AppViewModel by viewModel()
 
     private val controller: NavController by lazy {
         findNavController(_id.main_host_fragment)
