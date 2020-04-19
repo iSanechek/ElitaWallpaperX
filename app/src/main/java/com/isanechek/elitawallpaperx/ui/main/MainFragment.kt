@@ -43,8 +43,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            d { "pos $position" }
-//            mf_toolbar.setElevationVisibility(position != 0)
             mf_toolbar_counter.text =
                 String.format("%d/%d", position.plus(1), pagerAdapter.itemCount)
         }
@@ -108,7 +106,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                 adapter = mainAdapter,
                 layoutManager = GridLayoutManager(requireContext(), 3)
             )
-            positiveButton(text = "close") {
+            positiveButton(res = _string.close_title) {
                 it.dismiss()
             }
         }.onShow {
@@ -130,22 +128,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             ItemMenu(id = "new", iconId = _drawable.new_box, titleId = _string.what_is_new_title),
             ItemMenu(id = "info", iconId = _drawable.ic_baseline_info_24, titleId = _string.about_info_title)
         )
-//        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-//            lifecycleOwner(this@MainFragment)
-//            listItems(items = items) { d, i, _ ->
-//                d.dismiss()
-//                when (i) {
-//                    0 -> showNoWallpaperDialog()
-//                    1 -> showWhatNewDialog()
-//                    2 -> showAboutDialog()
-//                    else -> Unit
-//                }
-//            }
-//            negativeButton(text = "Close") {
-//                it.dismiss()
-//            }
-//        }
-
 
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             val dialog = this
@@ -182,12 +164,12 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
     private fun showBlackWallpaperDialog() {
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-            title(text = "No wallpaper")
+            title(res = _string.black_wallpaper_title)
             message(res = _string.no_wallpapers_message)
-            positiveButton(text = "remove") {
+            positiveButton(res = _string.install_title) {
                 it.dismiss()
             }
-            negativeButton(text = "close") {
+            negativeButton(res = _string.close_title) {
                 it.dismiss()
             }
         }
@@ -198,7 +180,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             lifecycleOwner(this@MainFragment)
             customView(viewRes = _layout.about_dialog_layout)
             setPeekHeight(literal = 1000)
-            negativeButton(text = "ok") {
+            negativeButton(res = _string.close_title) {
                 it.dismiss()
             }
         }
@@ -216,7 +198,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         )
 
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-            title(text = "What is new")
+            title(res = _string.what_is_new_title)
             lifecycleOwner(this@MainFragment)
             customListAdapter(
                 adapter = bindAdater(
@@ -230,7 +212,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                         showWhatNewDetailDialog(item)
                     }
                 })
-            positiveButton(text = "close") {
+            positiveButton(res = _string.close_title) {
                 it.dismiss()
             }
         }
@@ -241,7 +223,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             lifecycleOwner(this@MainFragment)
             title(text = item.version)
             message(text = descriptionToString(item.description))
-            positiveButton(text = "close") {
+            positiveButton(res = _string.close_title) {
                 it.dismiss()
             }
         }

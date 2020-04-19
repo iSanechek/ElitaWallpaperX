@@ -26,6 +26,7 @@
     <string name="about_info_title">About info</string>
     <string name="menu_title">Menu</string>
     <string name="close_title">close</string>
+    <string name="install_title">install</string>
 
     <string name="company_name">AVERD SOFT</string>
 </resources>
