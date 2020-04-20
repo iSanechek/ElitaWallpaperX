@@ -11,6 +11,7 @@ import androidx.lifecycle.liveData
 import com.isanechek.elitawallpaperx.d
 import com.isanechek.elitawallpaperx.hasIsNotMiUi
 import com.isanechek.elitawallpaperx.hasMinimumSdk
+import com.isanechek.elitawallpaperx.models.BitmapInfo
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.RationInfo
 import com.isanechek.elitawallpaperx.utils.FilesManager
@@ -22,7 +23,7 @@ import kotlinx.coroutines.withContext
 
 interface AppRepository {
     fun loadImagesFromAssets(): LiveData<ExecuteResult<List<String>>>
-    fun getBitmapUri(imagePath: String): LiveData<ExecuteResult<Uri>>
+    fun getBitmapUri(imagePath: String): LiveData<ExecuteResult<BitmapInfo>>
     fun isFirstStart(key: String): Boolean
     fun markDoneFirstStart(key: String)
     var selectionRation: Int
@@ -60,13 +61,14 @@ class AppRepositoryImpl(
             }
         }
 
-    override fun getBitmapUri(imagePath: String): LiveData<ExecuteResult<Uri>> =
+    override fun getBitmapUri(imagePath: String): LiveData<ExecuteResult<BitmapInfo>> =
         liveData(Dispatchers.IO) {
             emit(ExecuteResult.Loading)
             val name = imagePath.replaceBefore("images", "").trim()
-            when (val uri = filesManager.getBitmapUri(context, name)) {
-                Uri.EMPTY -> emit(ExecuteResult.Error(""))
-                else -> emit(ExecuteResult.Done(uri))
+            val info = filesManager.getBitmapUri(context, name)
+            when (info.uri) {
+                Uri.EMPTY -> emit(ExecuteResult.Error("Uri is empty!"))
+                else -> emit(ExecuteResult.Done(info))
             }
         }
 

@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import com.isanechek.elitawallpaperx.d
+import com.isanechek.elitawallpaperx.models.BitmapInfo
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.File
 import java.io.FileOutputStream
@@ -19,7 +20,7 @@ interface FilesManager {
     fun clearAll(path: String): Boolean
     fun deleteFile(path: String): Boolean
     suspend fun loadImagesFromAssets(context: Context): List<String>
-    suspend fun getBitmapUri(context: Context, fileName: String): Uri
+    suspend fun getBitmapUri(context: Context, fileName: String): BitmapInfo
 }
 
 class FilesManagerImpl(private val tracker: TrackerUtils) : FilesManager {
@@ -103,7 +104,7 @@ class FilesManagerImpl(private val tracker: TrackerUtils) : FilesManager {
             }
         }
 
-    override suspend fun getBitmapUri(context: Context, fileName: String): Uri =
+    override suspend fun getBitmapUri(context: Context, fileName: String): BitmapInfo =
         suspendCancellableCoroutine { c ->
             try {
 
@@ -125,13 +126,13 @@ class FilesManagerImpl(private val tracker: TrackerUtils) : FilesManager {
 //                        BuildConfig.APPLICATION_ID + ".provider",
 //                        file
 //                    )
-                    c.resume(Uri.fromFile(file))
+                    c.resume(BitmapInfo(uri = Uri.fromFile(file), width = bitmap.width, height = bitmap.height))
                 } else {
-                    c.resume(Uri.EMPTY)
+                    c.resume(BitmapInfo.empty())
                 }
             } catch (ex: Exception) {
                 tracker.sendException(TAG, "getBitmapUri error!", null, ex)
-                c.resume(Uri.EMPTY)
+                c.resume(BitmapInfo.empty())
             }
         }
 

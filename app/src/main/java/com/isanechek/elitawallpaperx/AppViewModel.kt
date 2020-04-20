@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.*
 import com.isanechek.elitawallpaperx.data.AppRepository
+import com.isanechek.elitawallpaperx.models.BitmapInfo
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.RationInfo
 import com.isanechek.elitawallpaperx.utils.TrackerUtils
@@ -38,7 +39,7 @@ class AppViewModel(
         get() = repository.loadImagesFromAssets()
 
     private val loadUri = MutableLiveData<String>()
-    val uri: LiveData<ExecuteResult<Uri>>
+    val uri: LiveData<ExecuteResult<BitmapInfo>>
         get() = Transformations.switchMap(loadUri) { path ->
             repository.getBitmapUri(path)
         }

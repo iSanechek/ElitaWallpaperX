@@ -46,6 +46,9 @@
     <string name="cancel_title" tools:ignore="ButtonCase">cancel</string>
     <string name="reset_to_default_wallpaper_msg">Reset to default wallpaper.</string>
     <string name="reset_wallpaper_fail_msg">Reset wallpaper fail. :(</string>
+    <string name="resolution_low_warning_msg">The resolution of the selected area is very low - quality loss is inevitable.</string>
+    <string name="original_wallpaper_size_title">original</string>
+    <string name="crop_wallpaper_size_title">crop</string>
 
     <string name="company_name">AVERD SOFT</string>
 </resources>
