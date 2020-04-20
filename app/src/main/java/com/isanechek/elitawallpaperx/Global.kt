@@ -7,6 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import com.isanechek.elitawallpaperx.utils.LiveEvent
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -43,3 +47,12 @@ private fun getSystemProperty(propName: String): String = try {
         it.readLine()
     }
 } catch (ex: IOException) { "" }
+
+
+fun <T> LiveData<T>.toSingleEvent(): LiveData<T> {
+    val result = LiveEvent<T>()
+    result.addSource(this) {
+        result.value = it
+    }
+    return result
+}

@@ -84,6 +84,7 @@ class AppRepositoryImpl(
         get() = preferences.getInt("selection.ration", 2) // index 2 in list 16:9
         set(value) {
             preferences.edit {
+                d { "Selection $value" }
                 putInt("selection.ration", value)
             }
         }

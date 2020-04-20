@@ -9,6 +9,7 @@ import com.isanechek.elitawallpaperx.data.AppRepository
 import com.isanechek.elitawallpaperx.models.BitmapInfo
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.RationInfo
+import com.isanechek.elitawallpaperx.utils.LiveEvent
 import com.isanechek.elitawallpaperx.utils.TrackerUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -23,8 +24,8 @@ class AppViewModel(
     private val tracker: TrackerUtils
 ) : AndroidViewModel(application) {
 
-    private val _showToast = MutableLiveData<String>()
-    val showToast: LiveData<String>
+    private val _showToast = LiveEvent<String>()
+    val showToast: LiveEvent<String>
         get() = _showToast
 
     private val _resetWallpaperStatus = MutableLiveData<ExecuteResult<Int>>()
@@ -63,7 +64,11 @@ class AppViewModel(
         repository.markDoneFirstStart(key)
     }
 
-    var selectionRatio: Int = repository.selectionRation
+    var selectionRatio: Int
+        get() = repository.selectionRation
+        set(value) {
+            repository.selectionRation = value
+        }
 
     fun installWallpaper(bitmap: Bitmap, screens: Int) {
         viewModelScope.launch(Dispatchers.Main) {

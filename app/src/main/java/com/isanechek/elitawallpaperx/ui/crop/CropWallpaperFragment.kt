@@ -88,6 +88,8 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         })
     }
 
+
+
     override fun onResume() {
         super.onResume()
         if (vm.isFirstStart(WARNING_RATION_DIALOG_KEY)) {
@@ -100,7 +102,6 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         if (currentInfo.uri != Uri.EMPTY) {
             val screenSize = vm.screenSize
             val item = vm.getRationInfo
-            d { item.toString() }
             cwf_crop_view.apply {
                 setImageUriAsync(currentInfo.uri)
 
@@ -117,7 +118,6 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                                     cwf_toolbar_warning_tv.apply {
                                         isInvisible = false
                                         onClick {
-                                            d { "BOOOOOM" }
                                             showWarningScreenSizeDialog(
                                                 rect.width(),
                                                 rect.height(),
@@ -158,7 +158,6 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         bitmapH: Int
     ) {
         if (vm.isFirstStart(WARNING_SCREEN_SIZE)) {
-            d { "Boom" }
             MaterialDialog(requireContext()).show {
                 title(res = _string.warning_title)
                 val msg = String.format(
@@ -256,12 +255,12 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 id = "ratio",
                 titleId = _string.ratio_title,
                 iconId = _drawable.ic_baseline_aspect_ratio_24
-            ),
-            ItemMenu(
-                id = "crop",
-                titleId = _string.minimum_crop_size_title,
-                iconId = _drawable.ic_baseline_crop_free_24
             )
+//            ItemMenu(
+//                id = "crop",
+//                titleId = _string.minimum_crop_size_title,
+//                iconId = _drawable.ic_baseline_crop_free_24
+//            )
         )
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             val dialog = this
