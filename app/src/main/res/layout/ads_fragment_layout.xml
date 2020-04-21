@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/my_primary_color">
+    android:background="@color/my_primary_color"
+    app:layoutDescription="@xml/ads_fragment_layout_scene">
 
     <com.isanechek.elitawallpaperx.widgets.SuperToolbar
         android:id="@+id/af_toolbar"
@@ -23,6 +24,7 @@
         app:layout_constraintGuide_percent="0.12" />
 
     <ImageView
+        android:id="@+id/af_icon_iv"
         android:layout_width="128dp"
         android:layout_height="128dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +40,7 @@
         app:layout_constraintGuide_percent="0.35" />
 
     <TextView
+        android:id="@+id/af_user_message"
         android:layout_width="@dimen/dp0"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp16"
@@ -63,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp8"
+        android:gravity="center"
         android:text="@string/watch_ads_title"
         android:textColor="@color/my_white_color"
         android:textSize="18sp"
@@ -74,4 +78,4 @@
         app:strokeWidth="1dp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

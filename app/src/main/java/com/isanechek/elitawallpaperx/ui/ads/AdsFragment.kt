@@ -61,6 +61,8 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
         }
 
         ad_watch_btn.onClick {
+            
+
             loadRewardedAd()
         }
     }
