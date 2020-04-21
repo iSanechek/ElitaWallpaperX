@@ -17,7 +17,9 @@
             android:layout_height="128dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/af_top_guideline" />
+            app:layout_constraintTop_toBottomOf="@id/af_top_guideline">
+            <PropertySet android:visibility="visible" />
+        </Constraint>
 
         <Constraint
             android:id="@id/af_user_message"
@@ -44,6 +46,40 @@
                 app:attributeName="text"
                 app:customStringValue="@string/watch_ads_title" />
         </Constraint>
+
+        <Constraint
+            android:id="@+id/af_load_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/af_bottom_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/af_center_guideline">
+            <PropertySet android:visibility="gone" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/af_lottie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/af_load_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/af_center_guideline">
+            <PropertySet android:visibility="gone" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/af_lottie_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/af_load_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/af_center_guideline">
+            <PropertySet android:visibility="gone" />
+        </Constraint>
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/ads_scene_end">
@@ -57,11 +93,13 @@
 
         <Constraint
             android:id="@id/af_icon_iv"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginStart="@dimen/dp16"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/af_top_guideline" />
+            app:layout_constraintTop_toBottomOf="@id/af_top_guideline">
+            <PropertySet android:visibility="gone" />
+        </Constraint>
 
         <Constraint
             android:id="@id/af_user_message"
@@ -81,7 +119,6 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp8"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/af_bottom_guideline">
@@ -89,6 +126,41 @@
                 app:attributeName="text"
                 app:customStringValue="@string/cancel_title" />
         </Constraint>
+        <Constraint
+            android:id="@+id/af_load_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintBottom_toTopOf="@id/af_bottom_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/af_end_guideline">
+            <PropertySet android:visibility="visible" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/af_lottie_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/af_load_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/af_top_guideline">
+            <PropertySet android:visibility="visible" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/af_lottie"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toTopOf="@id/af_load_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/af_top_guideline">
+            <PropertySet android:visibility="visible" />
+        </Constraint>
+
+
     </ConstraintSet>
 
     <Transition
