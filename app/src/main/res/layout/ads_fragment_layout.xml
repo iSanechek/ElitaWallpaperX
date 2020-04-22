@@ -14,7 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -59,12 +59,12 @@
         android:id="@+id/af_lottie_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:lottie_rawRes="@raw/loading"
-        app:lottie_loop="true"
         app:layout_constraintBottom_toTopOf="@id/af_load_status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/af_center_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/af_center_guideline"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/af_lottie"
@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/af_center_guideline" />
 
-    <TextView
+    <com.isanechek.elitawallpaperx.widgets.TypedKtView
         android:id="@+id/af_load_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,6 +84,11 @@
         android:textColor="@color/my_white_color"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:animateOnLoad="false"
+        app:delay="1000"
+        app:isAnimatedByWord="false"
+        app:isLooped="false"
+
         app:layout_constraintBottom_toTopOf="@id/af_bottom_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

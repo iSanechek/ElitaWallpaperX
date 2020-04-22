@@ -8,4 +8,11 @@
         <attr name="superToolbar_useLightFont" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="TypedKtView">
+        <attr name="animateOnLoad" format="boolean"/>
+        <attr name="delay" format="integer"/>
+        <attr name="isLooped" format="boolean"/>
+        <attr name="isAnimatedByWord" format="boolean"/>
+    </declare-styleable>
+
 </resources>

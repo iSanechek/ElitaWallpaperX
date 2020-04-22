@@ -17,7 +17,7 @@
             android:layout_height="128dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/af_top_guideline">
+            app:layout_constraintTop_toTopOf="@id/af_top_guideline">
             <PropertySet android:visibility="visible" />
         </Constraint>
 
@@ -96,8 +96,9 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginStart="@dimen/dp16"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/af_top_guideline">
+            app:layout_constraintTop_toTopOf="parent">
             <PropertySet android:visibility="gone" />
         </Constraint>
 
