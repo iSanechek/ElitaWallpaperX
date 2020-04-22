@@ -26,6 +26,7 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
     private lateinit var rewardedAd: RewardedAd
     private var countDownTimer: CountDownTimer? = null
     private var isTimerRun = false
+    private var isAdsShowDone = false
 
     private val adsLoadListener = object : RewardedAdLoadCallback() {
         override fun onRewardedAdFailedToLoad(p0: Int) {
@@ -49,8 +50,8 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
     private val userActionsListener = object : RewardedAdCallback() {
         override fun onUserEarnedReward(p0: RewardItem) {
             d { "user watch ads" }
-            showAnimState(_raw.emoji_thanks, _string.ads_thanks_msg)
-            showCloseTimer(COUNTER_TIME)
+            isAdsShowDone = true
+            Toast.makeText(requireContext(), "Now close ads", Toast.LENGTH_SHORT).show()
         }
 
         override fun onRewardedAdFailedToShow(p0: Int) {
@@ -63,8 +64,13 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
         override fun onRewardedAdClosed() {
             super.onRewardedAdClosed()
             d { "user close ads" }
-            showAnimState(_raw.emoji_close_ads, _string.close_ads_msg)
-            showCloseTimer(COUNTER_TIME)
+            if (isAdsShowDone) {
+                showAnimState(_raw.emoji_thanks, _string.ads_thanks_msg)
+                showCloseTimer(COUNTER_TIME)
+            } else {
+                showAnimState(_raw.emoji_close_ads, _string.close_ads_msg)
+                showCloseTimer(COUNTER_TIME)
+            }
         }
 
         override fun onRewardedAdOpened() {
@@ -121,15 +127,6 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
             playAnimation()
         }
         af_load_status.text = getString(msgId)
-    }
-
-    private fun showNoAds() {
-        af_lottie.apply {
-            setAnimation(_raw.emoji_no_ads)
-            repeatCount = LottieDrawable.INFINITE
-            playAnimation()
-        }
-        af_load_status.text = getString(_string.no_ads_to_show_msg)
     }
 
     private fun showProgress() {
