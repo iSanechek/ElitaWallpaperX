@@ -16,7 +16,7 @@ android {
     def appId = "my.ew.wallpaper"
     def fileNaming = "apk/EliteWallpaper"
     def versionNumber = 1
-    def versionMajor = "6"
+    def versionMajor = "10"
     def versionMinor = "0"
     def versionPatch = "0"
     def versionBuild = -1
