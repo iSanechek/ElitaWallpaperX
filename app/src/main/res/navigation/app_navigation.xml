@@ -12,11 +12,19 @@
         tools:layout="@layout/main_fragment_layout">
         <action
             android:id="@+id/main_go_detail_fragment"
-            app:destination="@id/detail_fragment" />
+            app:destination="@id/detail_fragment"
+            app:enterAnim="@anim/slide_up_anim"
+            app:exitAnim="@anim/alpha_out_anim"
+            app:popEnterAnim="@anim/fade_in_anim"
+            app:popExitAnim="@anim/slide_down_out" />
 
         <action
             android:id="@+id/main_go_ads_fragment"
-            app:destination="@id/ads_fragment" />
+            app:destination="@id/ads_fragment"
+            app:enterAnim="@anim/slide_up_anim"
+            app:exitAnim="@anim/alpha_out_anim"
+            app:popEnterAnim="@anim/fade_in_anim"
+            app:popExitAnim="@anim/slide_down_out" />
     </fragment>
 
     <fragment
