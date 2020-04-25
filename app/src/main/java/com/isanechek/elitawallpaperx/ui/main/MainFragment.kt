@@ -106,6 +106,9 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     vm.showToast(data.errorMessage)
                 }
                 is ExecuteResult.Loading -> {}
+                is ExecuteResult.LoadingWithStatus -> {
+
+                }
                 is ExecuteResult.Done -> {
                     pagerAdapter.submit(data.data)
                     mainAdapter.submit(data.data)
