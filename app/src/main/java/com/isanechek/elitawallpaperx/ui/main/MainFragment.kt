@@ -60,31 +60,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             registerOnPageChangeCallback(pagerListener)
         }
 
-        vm.data.observe(viewLifecycleOwner, Observer { data ->
-            when (data) {
-                is ExecuteResult.Error -> {
-                    vm.sendEvent(TAG, "Load images from assets error! ${data.errorMessage}")
-                    vm.showToast(data.errorMessage)
-                }
-                is ExecuteResult.Loading -> {}
-                is ExecuteResult.Done -> {
-                    pagerAdapter.submit(data.data)
-                    mainAdapter.submit(data.data)
-                }
-            }
-        })
-
-        vm.resetWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
-            when(status) {
-                is ExecuteResult.Done -> {
-                    vm.showToast(getString(_string.done_title))
-                }
-                is ExecuteResult.Loading -> {}
-                is ExecuteResult.Error -> {
-                    vm.showToast(getString(_string.reset_wallpaper_fail_msg))
-                }
-            }
-        })
         pagerAdapter.setOnListenerCallback(object : MainPagerAdapter.ListenerCallback {
             override fun onItemClick(data: String, position: Int) {
                 findNavController().navigate(_id.main_go_detail_fragment, bundleOf("path" to data))
@@ -110,6 +85,45 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         mf_toolbar_ads_btn.onClick {
             findNavController().navigate(_id.main_go_ads_fragment)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupObserver()
+    }
+
+    override fun onPause() {
+        mf_pager.unregisterOnPageChangeCallback(pagerListener)
+        super.onPause()
+    }
+
+    private fun setupObserver() {
+
+        vm.data.observe(viewLifecycleOwner, Observer { data ->
+            when (data) {
+                is ExecuteResult.Error -> {
+                    vm.sendEvent(TAG, "Load images from assets error! ${data.errorMessage}")
+                    vm.showToast(data.errorMessage)
+                }
+                is ExecuteResult.Loading -> {}
+                is ExecuteResult.Done -> {
+                    pagerAdapter.submit(data.data)
+                    mainAdapter.submit(data.data)
+                }
+            }
+        })
+
+        vm.resetWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
+            when(status) {
+                is ExecuteResult.Done -> {
+                    vm.showToast(getString(_string.done_title))
+                }
+                is ExecuteResult.Loading -> {}
+                is ExecuteResult.Error -> {
+                    vm.showToast(getString(_string.reset_wallpaper_fail_msg))
+                }
+            }
+        })
     }
 
     private fun showDialog() {
@@ -289,11 +303,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             }
         }
         return sb.toString()
-    }
-
-    override fun onPause() {
-        mf_pager.unregisterOnPageChangeCallback(pagerListener)
-        super.onPause()
     }
 
     companion object {

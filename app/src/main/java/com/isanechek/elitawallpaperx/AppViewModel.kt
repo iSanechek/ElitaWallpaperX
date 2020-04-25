@@ -114,4 +114,8 @@ class AppViewModel(
                 .collect { _installWallpaperStatus.value = it }
         }
     }
+
+    fun cacheData() {
+
+    }
 }

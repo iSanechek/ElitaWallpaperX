@@ -20,6 +20,7 @@ interface FilesManager {
     fun clearAll(path: String): Boolean
     fun deleteFile(path: String): Boolean
     suspend fun loadImagesFromAssets(context: Context): List<String>
+    suspend fun copyImagesFromAssets(context: Context): List<String>
     suspend fun getBitmapUri(context: Context, fileName: String): BitmapInfo
 }
 
@@ -103,6 +104,38 @@ class FilesManagerImpl(private val tracker: TrackerUtils) : FilesManager {
                 c.resume(emptyList())
             }
         }
+
+    override suspend fun copyImagesFromAssets(context: Context): List<String> = suspendCancellableCoroutine { c ->
+        try {
+            val am = context.assets
+            val paths = am.list("images")
+            val result = paths?.toList() ?: emptyList()
+            if (result.isNotEmpty()) {
+                val temp = mutableListOf<String>()
+                val cachePath = context.filesDir.absolutePath + File.separator + "cache_images"
+                if (createFolderIfEmpty(cachePath)) {
+                    result.filter { it.contains("moto_", ignoreCase = true) }.forEach { fileName ->
+                        val bitmap = context.assets.open("images/$fileName").use {
+                            BitmapFactory.decodeStream(it)
+                        }
+                        val file = File("${cachePath}/$fileName")
+                        if (file.exists()) {
+                            file.delete()
+                        }
+                        FileOutputStream(file).use {
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                        }
+                        temp.add(file.absolutePath)
+                    }
+                    c.resume(temp)
+                } else c.resume(emptyList())
+            } else c.resume(emptyList())
+        } catch (ex: Exception) {
+            tracker.sendException(TAG, "copyImagesFromAssets error!", null, ex)
+            c.resume(emptyList())
+        }
+
+    }
 
     override suspend fun getBitmapUri(context: Context, fileName: String): BitmapInfo =
         suspendCancellableCoroutine { c ->

@@ -49,15 +49,21 @@ class AppRepositoryImpl(
     override fun loadImagesFromAssets(): LiveData<ExecuteResult<List<String>>> =
         liveData(Dispatchers.IO) {
             emit(ExecuteResult.Loading)
-            val result = filesManager.loadImagesFromAssets(context)
-            when {
-                result.isNotEmpty() -> emit(ExecuteResult.Done(result.filter {
-                    it.contains(
-                        "moto_",
-                        ignoreCase = true
-                    )
-                }.map { it.fixPath() }))
-                else -> emit(ExecuteResult.Error(""))
+            val cache = preferences.getStringSet("data", emptySet<String>())
+            if (!cache.isNullOrEmpty()) {
+                emit(ExecuteResult.Done(cache.toList()))
+            } else {
+                emit(ExecuteResult.LoadingWithStatus("Cache data!"))
+                val result = filesManager.copyImagesFromAssets(context)
+                if (result.isNotEmpty()) {
+                    preferences.edit {
+                        putStringSet("data", result.toSet())
+                    }
+                    val data = result.map { it.fixPath() }
+                    if (data.isEmpty()) {
+                        emit(ExecuteResult.Done(data))
+                    } else emit(ExecuteResult.Error("Data not find!"))
+                } else emit(ExecuteResult.Error("Data not copy!!"))
             }
         }
 
@@ -101,31 +107,37 @@ class AppRepositoryImpl(
      * 1 - only system screen
      * 2 - only lock screen
      */
-    override suspend fun installWallpaper(bitmap: Bitmap, screens: Int): Flow<ExecuteResult<Int>> = flow {
-        emit(ExecuteResult.Loading)
-        if (hasMinimumSdk(24)) {
-            val result = when (screens) {
-                0 -> wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
-                1 -> {
-                    wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
-                    wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
+    override suspend fun installWallpaper(bitmap: Bitmap, screens: Int): Flow<ExecuteResult<Int>> =
+        flow {
+            emit(ExecuteResult.Loading)
+            if (hasMinimumSdk(24)) {
+                val result = when (screens) {
+                    0 -> wallpaperManager.setBitmap(
+                        bitmap,
+                        null,
+                        true,
+                        WallpaperManager.FLAG_SYSTEM
+                    )
+                    1 -> {
+                        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+                        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
+                    }
+                    2 -> wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+                    else -> 0
                 }
-                2 -> wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
-                else -> 0
+                if (result == 0) {
+                    emit(ExecuteResult.Error("Wallpaper not installing! Unknown error!"))
+                } else emit(ExecuteResult.Done(0))
+            } else {
+                wallpaperManager.setBitmap(bitmap)
+                emit(ExecuteResult.Done(0))
             }
-            if (result == 0) {
-                emit(ExecuteResult.Error("Wallpaper not installing! Unknown error!"))
-            } else emit(ExecuteResult.Done(0))
-        } else {
-            wallpaperManager.setBitmap(bitmap)
-            emit(ExecuteResult.Done(0))
         }
-    }
 
     override suspend fun resetWallpaper(which: Int): Flow<ExecuteResult<Int>> = flow {
         emit(ExecuteResult.Loading)
         if (hasMinimumSdk(24)) {
-            when(which) {
+            when (which) {
                 0 -> wallpaperManager.clear(WallpaperManager.FLAG_SYSTEM)
                 1 -> {
                     wallpaperManager.clear(WallpaperManager.FLAG_SYSTEM)
@@ -140,18 +152,21 @@ class AppRepositoryImpl(
         }
     }
 
-    override suspend fun updateWallpaperSize(width: Int, height: Int) = withContext(Dispatchers.IO) {
-        preferences.edit { putInt(SYSTEM_WALLPAPER_WIDTH_KEY, width) }
-        preferences.edit { putInt(SYSTEM_WALLPAPER_HEIGHT_KEY, height) }
+    override suspend fun updateWallpaperSize(width: Int, height: Int) =
+        withContext(Dispatchers.IO) {
+            preferences.edit { putInt(SYSTEM_WALLPAPER_WIDTH_KEY, width) }
+            preferences.edit { putInt(SYSTEM_WALLPAPER_HEIGHT_KEY, height) }
 
-    }
+        }
 
     override suspend fun installBlackWallpaper(w: Int, h: Int): Flow<ExecuteResult<Int>> = flow {
         emit(ExecuteResult.Loading)
         val blackWallpaper = wallpaperUtils.createBlackWallpaper(w, h)
         if (hasMinimumSdk(24) && hasIsNotMiUi) {
-            val system =wallpaperManager.setBitmap(blackWallpaper, null, true, WallpaperManager.FLAG_SYSTEM)
-            val lock = wallpaperManager.setBitmap(blackWallpaper, null, true, WallpaperManager.FLAG_LOCK)
+            val system =
+                wallpaperManager.setBitmap(blackWallpaper, null, true, WallpaperManager.FLAG_SYSTEM)
+            val lock =
+                wallpaperManager.setBitmap(blackWallpaper, null, true, WallpaperManager.FLAG_LOCK)
             if (system != 0 && lock != 0) {
                 emit(ExecuteResult.Done(0))
             } else emit(ExecuteResult.Error("Set black wallpaper error!"))
@@ -162,8 +177,10 @@ class AppRepositoryImpl(
     }
 
     override fun loadWallpaperSize(): Pair<Int, Int> {
-        val width = preferences.getInt(SYSTEM_WALLPAPER_WIDTH_KEY, wallpaperManager.desiredMinimumWidth)
-        val height = preferences.getInt(SYSTEM_WALLPAPER_HEIGHT_KEY, wallpaperManager.desiredMinimumHeight)
+        val width =
+            preferences.getInt(SYSTEM_WALLPAPER_WIDTH_KEY, wallpaperManager.desiredMinimumWidth)
+        val height =
+            preferences.getInt(SYSTEM_WALLPAPER_HEIGHT_KEY, wallpaperManager.desiredMinimumHeight)
         return Pair(width, height)
     }
 

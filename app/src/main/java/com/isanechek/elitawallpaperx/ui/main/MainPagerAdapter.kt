@@ -9,6 +9,7 @@ import com.isanechek.elitawallpaperx.inflate
 import com.isanechek.elitawallpaperx.onClick
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.main_pager_item_layout.*
+import java.io.File
 
 class MainPagerAdapter : RecyclerView.Adapter<MainPagerAdapter.PagerHolder>() {
 
@@ -17,7 +18,7 @@ class MainPagerAdapter : RecyclerView.Adapter<MainPagerAdapter.PagerHolder>() {
     inner class PagerHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(data: String, position: Int, callback: ListenerCallback?) {
-            mpi_background_iv.load(data)
+            mpi_background_iv.load(File(data))
             mpi_background_iv.onClick { callback?.onItemClick(data, position) }
         }
     }
