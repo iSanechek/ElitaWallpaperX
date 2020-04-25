@@ -22,7 +22,7 @@ class MainWallpapersAdapter :
 
         fun bind(data: String, position: Int, callback: ClickListener?) {
             mli_container.onClick { callback?.onItemClick(position) }
-            mli_iv.load(data) {
+            mli_iv.load(File(data)) {
                 crossfade(true)
             }
             itemView.rootView.tag =
