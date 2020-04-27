@@ -21,11 +21,11 @@
 
     <!--New-->
     <string name="clear_wallpaper_title">Поставить дефолтные обои</string>
-    <string name="black_wallpaper_title">Black wallpaper</string>
-    <string name="what_is_new_title">What is new</string>
+    <string name="black_wallpaper_title">Установить ченые обои</string>
+    <string name="what_is_new_title">Что нового</string>
     <string name="about_info_title">About info</string>
-    <string name="menu_title">Menu</string>
-    <string name="close_title">close</string>
+    <string name="menu_title">Меню</string>
+    <string name="close_title">Отмена</string>
     <string name="install_title">install</string>
     <string name="ratio_title">Aspect ratio</string>
     <string name="minimum_crop_size_title">Min crop size fix</string>
