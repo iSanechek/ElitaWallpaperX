@@ -26,7 +26,7 @@
     <string name="about_info_title">About info</string>
     <string name="menu_title">Меню</string>
     <string name="close_title">Отмена</string>
-    <string name="install_title">install</string>
+    <string name="install_title">Установить</string>
     <string name="ratio_title">Aspect ratio</string>
     <string name="minimum_crop_size_title">Min crop size fix</string>
     <string name="save_title">save</string>
