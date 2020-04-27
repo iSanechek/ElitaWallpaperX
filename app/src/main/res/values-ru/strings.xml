@@ -20,7 +20,7 @@
 
 
     <!--New-->
-    <string name="clear_wallpaper_title">Clear wallpaper</string>
+    <string name="clear_wallpaper_title">Поставить дефолтные обои</string>
     <string name="black_wallpaper_title">Black wallpaper</string>
     <string name="what_is_new_title">What is new</string>
     <string name="about_info_title">About info</string>
