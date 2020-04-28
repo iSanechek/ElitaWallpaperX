@@ -12,9 +12,9 @@
     <string name="negative_button_clicked">Ok! You boss!</string>
     <string name="about_moto">Elite</string>
     <string name="about_moto_second">Wallpaper</string>
-    <string name="about_text">This is a small application\nwritten specifically\nfor fans of the brand\n<b>Motorola</b>!</string>
-    <string name="awerd">AverdSoft</string>
-    <string name="thanks_for_click">Thanks. :))</string>
+    <string name="about_text">This is a small application\nwritten specifically\nfor fans of the brand\n<b>MOTOROLA</b>!</string>
+    <string name="awerd">AVERD SOFT</string>
+    <string name="thanks_for_click">Thanks. :-)</string>
     <string name="analytics">Analytics</string>
     <string name="by">by</string>
 
@@ -47,7 +47,7 @@
     <string name="done_title">done</string>
     <string name="cancel_title" tools:ignore="ButtonCase">cancel</string>
     <string name="reset_to_default_wallpaper_msg">Reset to default wallpaper.</string>
-    <string name="reset_wallpaper_fail_msg">Reset wallpaper fail. :(</string>
+    <string name="reset_wallpaper_fail_msg">Reset wallpaper fail. :-(</string>
     <string name="resolution_low_warning_msg">The resolution of the selected area is very low - quality loss is inevitable.</string>
     <string name="original_wallpaper_size_title">original</string>
     <string name="crop_wallpaper_size_title">crop</string>
