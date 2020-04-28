@@ -36,30 +36,30 @@
     <string name="ads_again_msg">Ух ты. Спасибо!\nБудем рады видеть Вас снова.</string>
     <string name="warning_message_not_supported_lock_screen">На некоторых устройствах не поддерживается установка обоев на экран блокировки!</string>
     <string name="default_ration_message">Соотношение по умолчанию 16:9. Для изменения нажмите кнопку ИЗМЕНИТЬ, или позже Вы сможете кэшировать в настройках</string>
-    <string name="select_text">Select</string>
-    <string name="value_update_message">Value update</string>
-    <string name="choice_screen_title">Choice screen</string>
-    <string name="all_screens_title">all screens</string>
-    <string name="system_screen_title">system screen</string>
-    <string name="lock_screen_title">lock screen</string>
-    <string name="install_wallpaper_done">Install wallpaper done!</string>
-    <string name="reset_title">reset</string>
-    <string name="done_title">done</string>
-    <string name="cancel_title" tools:ignore="ButtonCase">cancel</string>
-    <string name="reset_to_default_wallpaper_msg">Reset to default wallpaper.</string>
-    <string name="reset_wallpaper_fail_msg">Reset wallpaper fail. :(</string>
-    <string name="resolution_low_warning_msg">The resolution of the selected area is very low - quality loss is inevitable.</string>
-    <string name="original_wallpaper_size_title">original</string>
-    <string name="crop_wallpaper_size_title">crop</string>
-    <string name="watch_ads_title">watch ads</string>
-    <string name="loading_ads_message">Please wait one moment.\nLoading ads.</string>
-    <string name="click_for_close">click again to close</string>
-    <string name="screen_close_msg">Screen close after 10 sec</string>
-    <string name="ads_thanks_msg">Thanks a lot.\nWe really appreciate it.</string>
-    <string name="something_msg">Oh something went wrong.\nCome back later.</string>
-    <string name="no_ads_to_show_msg">Unfortunately,\nthere are no ads to display yet.</string>
-    <string name="close_ads_msg">Wow You have closed ads ahead of time.\Thanks for the support.\nCome back later.</string>
-    <string name="ads_user_message">Hey user.\nThank you for visiting this screen.\n\nWe, like everyone, do not like advertising and try to protect our favorite users from advertising as much possible.\nWe also love our products and really want to develop our products in the future…\nDear user, let us steal a couple of minutes of your life.\n\nPlease watch this promotional video.</string>
+    <string name="select_text">Выбрать</string>
+    <string name="value_update_message">Обновление значения</string>
+    <string name="choice_screen_title">Выбор экрана</string>
+    <string name="all_screens_title">Все экраны</string>
+    <string name="system_screen_title">Системный экран</string>
+    <string name="lock_screen_title">Экран блокировки</string>
+    <string name="install_wallpaper_done">Обои установлены!</string>
+    <string name="reset_title">Сброс</string>
+    <string name="done_title">Сделано</string>
+    <string name="cancel_title" tools:ignore="ButtonCase">Отмена</string>
+    <string name="reset_to_default_wallpaper_msg">Сброс на обои по умолчанию.</string>
+    <string name="reset_wallpaper_fail_msg">Сброс не удается. :-(</string>
+    <string name="resolution_low_warning_msg">Вы выбрали слишком маленький участоу изображения, качество будет очень низким</string>
+    <string name="original_wallpaper_size_title">Оригинал</string>
+    <string name="crop_wallpaper_size_title">Обрезать</string>
+    <string name="watch_ads_title">Смотреть рекламу</string>
+    <string name="loading_ads_message">Пожалуйста, подождите одну минуту.\nЗагрузка рекламы...</string>
+    <string name="click_for_close">Нажмите еще раз, чтобы закрыть</string>
+    <string name="screen_close_msg">Экран закрывается через 10 секунд</string>
+    <string name="ads_thanks_msg">Большое спасибо!\nМы вам очень благодарны.</string>
+    <string name="something_msg">ОЙ, что-то пошло не так.\nВернись позже.</string>
+    <string name="no_ads_to_show_msg">К сожалению,\nпока нет объявлений для показа.</string>
+    <string name="close_ads_msg">ОГО Вы не закрыли рекламу раньше времени\nСпасибо за поддержку!\nВозвращайтесь ещё</string>
+    <string name="ads_user_message">Привет, \nСпасибо за просмотр этого сообщения. \n\nМы, как и все, не любим рекламу, и стараемся максимально защитить наших любимых пользователей от неё. \nМы также любим наши проекты, и очень хотим развивать их в будущем… \nУважаемый пользователь, подари нам несколько секунд своего драгоценного времени. \n\nПожалуйста, посмотрите это рекламное видео.</string>
 
     <string name="company_name">AVERD SOFT</string>
 </resources>
