@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">EW</string>
-    <string name="app_label">другие обои</string>
+    <string name="app_name" translatable="false">Elite Wallpapers</string>
+    <string name="app_label">Other Wallpapers</string>
     <string name="set_wallpaper">Set wallpaper</string>
     <string name="link_other_app">Other apps</string>
     <string name="share">Share!</string>
@@ -35,7 +35,7 @@
     <string name="bad_internet_msg">Your internet connection is very bad. Come back later!</string>
     <string name="ads_again_msg">Wow. Thanks!\nLooking forward to seeing you again.</string>
     <string name="warning_message_not_supported_lock_screen">Some device not supported install wallpaper in lock screen!</string>
-    <string name="default_ration_message">Default ration 16:9. For change click CHANGE or later you can cache in settings!</string>
+    <string name="default_ration_message">Default ratio 16:9. For change click CHANGE or later you can cache in settings!</string>
     <string name="select_text">Select</string>
     <string name="value_update_message">Value update</string>
     <string name="choice_screen_title">Choice screen</string>
