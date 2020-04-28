@@ -35,7 +35,7 @@
     <string name="bad_internet_msg">Ваше интернет-соединение очень плохое. Возвращайтесь позже!</string>
     <string name="ads_again_msg">Ух ты. Спасибо!\nБудем рады видеть Вас снова.</string>
     <string name="warning_message_not_supported_lock_screen">На некоторых устройствах не поддерживается установка обоев на экран блокировки!</string>
-    <string name="default_ration_message">Соотношение по умолчанию 16:9. Для изменения нажмите кнопку ИЗМЕНИТЬ, или позже Вы сможете кэшировать в настройках!</string>
+    <string name="default_ration_message">Соотношение по умолчанию 16:9. Для изменения нажмите кнопку ИЗМЕНИТЬ, или позже Вы сможете кэшировать в настройках</string>
     <string name="select_text">Select</string>
     <string name="value_update_message">Value update</string>
     <string name="choice_screen_title">Choice screen</string>
