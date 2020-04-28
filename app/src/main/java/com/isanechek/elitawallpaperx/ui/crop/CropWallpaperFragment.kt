@@ -256,11 +256,6 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 titleId = _string.ratio_title,
                 iconId = _drawable.ic_baseline_aspect_ratio_24
             )
-//            ItemMenu(
-//                id = "crop",
-//                titleId = _string.minimum_crop_size_title,
-//                iconId = _drawable.ic_baseline_crop_free_24
-//            )
         )
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             val dialog = this

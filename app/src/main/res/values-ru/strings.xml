@@ -28,14 +28,13 @@
     <string name="close_title">Отмена</string>
     <string name="install_title">Установить</string>
     <string name="ratio_title">Соотношение сторон</string>
-    <string name="minimum_crop_size_title">Min crop size fix</string>
     <string name="save_title">Сохранить</string>
     <string name="select_ratio_title">Выберите соотношение</string>
     <string name="change_title">Изменение</string>
     <string name="bad_internet_msg">Ваше интернет-соединение очень плохое. Возвращайтесь позже!</string>
     <string name="ads_again_msg">Ух ты. Спасибо!\nБудем рады видеть Вас снова.</string>
     <string name="warning_message_not_supported_lock_screen">На некоторых устройствах не поддерживается установка обоев на экран блокировки!</string>
-    <string name="default_ration_message">Соотношение по умолчанию 16:9. Для изменения нажмите кнопку ИЗМЕНИТЬ, или позже Вы сможете кэшировать в настройках</string>
+    <string name="default_ration_message">Соотношение по умолчанию 16:9. Для изменения нажмите кнопку ИЗМЕНИТЬ, или позже Вы сможете изминить в настройках</string>
     <string name="select_text">Выбрать</string>
     <string name="value_update_message">Обновление значения</string>
     <string name="choice_screen_title">Выбор экрана</string>
