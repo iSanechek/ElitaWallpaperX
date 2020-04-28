@@ -4,8 +4,10 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,12 +16,17 @@ import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onDismiss
-import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
+import com.afollestad.materialdialogs.callbacks.onShow
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.AppViewModel
@@ -159,20 +166,49 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
     ) {
         if (vm.isFirstStart(WARNING_SCREEN_SIZE)) {
             MaterialDialog(requireContext()).show {
-                title(res = _string.warning_title)
+                val (sw, sh) = vm.screenSize
                 val msg = String.format(
-                    "%s\n%s - %dx%d\n%s - %dx%d",
-                    getString(_string.resolution_low_warning_msg),
+                    "\n%s - %dx%d\n%s - %dx%d\n%s - %dx%d",
                     getString(_string.original_wallpaper_size_title),
                     bitmapW,
                     bitmapH,
                     getString(_string.crop_wallpaper_size_title),
                     currentW,
-                    currentH
+                    currentH,
+                    getString(_string.screen_size_title),
+                    sw,
+                    sh
                 )
-                message(text = msg)
+                customView(viewRes = _layout.custom_screen_dialog_layout)
                 positiveButton(res = _string.close_title) {
                     it.dismiss()
+                }
+
+                onShow {
+                    val root = it.getCustomView()
+                    root.findViewById<TextView>(_id.wsd_title).text = getString(_string.resolution_low_warning_msg)
+                    val lottie = root.findViewById<LottieAnimationView>(_id.wsd_lottie)
+
+                    with(root.findViewById<TextView>(_id.wsd_description)) {
+                        isGone = false
+                        text = msg
+                    }
+
+                    with(lottie) {
+                        setAnimation(_raw.emoji_crying)
+                        repeatMode = LottieDrawable.REVERSE
+                        repeatCount = LottieDrawable.INFINITE
+                        playAnimation()
+                    }
+
+                    onCancel {
+                        if (lottie.isAnimating) lottie.cancelAnimation()
+                    }
+
+                    onDismiss {
+                        if (lottie.isAnimating) lottie.cancelAnimation()
+                    }
+
                 }
 //                checkBoxPrompt(res = _string.save_title) {
 //                    if (it) {

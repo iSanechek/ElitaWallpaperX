@@ -25,7 +25,7 @@
     <string name="what_is_new_title">Что нового</string>
     <string name="about_info_title">Информация</string>
     <string name="menu_title">Меню</string>
-    <string name="close_title">Отмена</string>
+    <string name="close_title">Закрыть</string>
     <string name="install_title">Установить</string>
     <string name="ratio_title">Соотношение сторон</string>
     <string name="save_title">Сохранить</string>
@@ -47,11 +47,11 @@
     <string name="cancel_title" tools:ignore="ButtonCase">Отмена</string>
     <string name="reset_to_default_wallpaper_msg">Сброс на обои по умолчанию.</string>
     <string name="reset_wallpaper_fail_msg">Сброс не удается. :-(</string>
-    <string name="resolution_low_warning_msg">Вы выбрали слишком маленький участоу изображения, качество будет очень низким</string>
+    <string name="resolution_low_warning_msg">Вы выбрали слишком маленький фрагмент изображения, финальное качество будет очень низким</string>
     <string name="original_wallpaper_size_title">Оригинал</string>
-    <string name="crop_wallpaper_size_title">Обрезать</string>
+    <string name="crop_wallpaper_size_title">Результат</string>
     <string name="watch_ads_title">Смотреть рекламу</string>
-    <string name="loading_ads_message">Пожалуйста, подождите одну минуту.\nЗагрузка рекламы...</string>
+    <string name="loading_ads_message">Пожалуйста, подождите одну минуту.\nЗагрузка рекламы…</string>
     <string name="click_for_close">Нажмите еще раз, чтобы закрыть</string>
     <string name="screen_close_msg">Экран закрывается через 10 секунд</string>
     <string name="ads_thanks_msg">Большое спасибо!\nМы вам очень благодарны.</string>
@@ -59,6 +59,7 @@
     <string name="no_ads_to_show_msg">К сожалению,\nпока нет объявлений для показа.</string>
     <string name="close_ads_msg">ОГО Вы не закрыли рекламу раньше времени\nСпасибо за поддержку!\nВозвращайтесь ещё</string>
     <string name="ads_user_message">Привет! \nСпасибо за просмотр этого сообщения. \n\nМы, как и все, не любим рекламу и стараемся максимально защитить наших любимых пользователей от неё. \nМы так же любим наши проекты, и очень хотим развивать их в будущем… \nУважаемый пользователь, подари нам несколько секунд своего драгоценного времени. \n\nПожалуйста, посмотрите это рекламное видео.</string>
+    <string name="screen_size_title">Размер экрана</string>
 
     <string name="company_name">AVERD SOFT</string>
 </resources>

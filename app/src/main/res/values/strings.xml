@@ -59,6 +59,7 @@
     <string name="no_ads_to_show_msg">Unfortunately,\nthere are no ads to display yet.</string>
     <string name="close_ads_msg">Wow You have closed ads ahead of time.\Thanks for the support.\nCome back later.</string>
     <string name="ads_user_message">Hey user.\nThank you for visiting this screen.\n\nWe, like everyone, do not like advertising and try to protect our favorite users from advertising as much possible.\nWe also love our products and really want to develop our products in the future…\nDear user, let us steal a couple of minutes of your life.\n\nPlease watch this promotional video.</string>
+    <string name="screen_size_title">screen size</string>
 
     <string name="company_name">AVERD SOFT</string>
 </resources>
