@@ -35,19 +35,34 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="WallpaperX" />
 
+            <ProgressBar
+                android:id="@+id/mf_toolbar_progress"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp8"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/mf_toolbar_ads_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
             <ImageButton
                 android:id="@+id/mf_toolbar_ads_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginBottom="@dimen/dp8"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/dp8"
-                app:srcCompat="@drawable/handshake_icon_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/mf_toolbar_counter"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/handshake_icon_24" />
 
             <TextView
                 android:id="@+id/mf_toolbar_counter"
@@ -56,8 +71,8 @@
                 android:layout_marginTop="@dimen/dp8"
                 android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginBottom="@dimen/dp8"
-                android:padding="@dimen/dp8"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/dp8"
                 android:textColor="@color/my_white_color"
                 android:textSize="14sp"
                 android:textStyle="normal"
@@ -101,8 +116,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|start"
                     android:layout_marginStart="@dimen/dp8"
-                    android:padding="@dimen/dp8"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/dp8"
                     app:srcCompat="@drawable/settings_icon_24" />
 
                 <androidx.appcompat.widget.AppCompatTextView

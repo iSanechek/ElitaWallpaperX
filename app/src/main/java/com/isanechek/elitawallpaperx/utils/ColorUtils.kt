@@ -1,8 +1,7 @@
 package com.isanechek.elitawallpaperx.utils
 
 import android.graphics.Color
-import androidx.annotation.ColorRes
-import com.isanechek.elitawallpaperx.d
+import com.isanechek.elitawallpaperx.debugLog
 
 object ColorUtils {
     const val PERCENT_0 = "00"
@@ -37,9 +36,9 @@ object ColorUtils {
         // Color.parseColor(String.format("%s%d", percent, color))
 
         val s = String.format("%s%d", percent, color)
-        d { "Color $color" }
-        d { "Percent $percent" }
-        d { "Result $s" }
+        debugLog { "Color $color" }
+        debugLog { "Percent $percent" }
+        debugLog { "Result $s" }
         return 0
     }
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import com.isanechek.elitawallpaperx.d
+import com.isanechek.elitawallpaperx.debugLog
 import com.isanechek.elitawallpaperx.models.BitmapInfo
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.File
@@ -88,7 +88,7 @@ class FilesManagerImpl(private val tracker: TrackerUtils) : FilesManager {
         if (file.isFile) {
             isDeleted = file.delete()
         }
-        d { "Path $path status $isDeleted" }
+        debugLog { "Path $path status $isDeleted" }
         return isDeleted
     }
 
@@ -153,7 +153,7 @@ class FilesManagerImpl(private val tracker: TrackerUtils) : FilesManager {
                     FileOutputStream(file).use {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
                     }
-                    d { "File size ${file.length()}" }
+                    debugLog { "File size ${file.length()}" }
 //                    val uri = FileProvider.getUriForFile(
 //                        context,
 //                        BuildConfig.APPLICATION_ID + ".provider",

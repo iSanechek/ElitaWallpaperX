@@ -2,13 +2,9 @@ package com.isanechek.elitawallpaperx.ui.ads
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieDrawable
@@ -19,7 +15,6 @@ import com.google.android.gms.ads.rewarded.RewardedAdCallback
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.isanechek.elitawallpaperx.*
 import kotlinx.android.synthetic.main.ads_fragment_layout.*
-import kotlin.math.roundToInt
 
 class AdsFragment : Fragment(_layout.ads_fragment_layout) {
 
@@ -31,7 +26,7 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
     private val adsLoadListener = object : RewardedAdLoadCallback() {
         override fun onRewardedAdFailedToLoad(p0: Int) {
             super.onRewardedAdFailedToLoad(p0)
-            d { "onRewardedAdFailedToLoad" }
+            debugLog { "onRewardedAdFailedToLoad" }
             when(p0) {
                 2 -> showAnimState(_raw.emoji_crying, _string.bad_internet_msg)
                 3 -> showAnimState(_raw.emoji_no_ads, _string.no_ads_to_show_msg)
@@ -49,21 +44,21 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
 
     private val userActionsListener = object : RewardedAdCallback() {
         override fun onUserEarnedReward(p0: RewardItem) {
-            d { "user watch ads" }
+            debugLog { "user watch ads" }
             isAdsShowDone = true
             Toast.makeText(requireContext(), "Now close ads", Toast.LENGTH_SHORT).show()
         }
 
         override fun onRewardedAdFailedToShow(p0: Int) {
             super.onRewardedAdFailedToShow(p0)
-            d { "Fail load ads" }
+            debugLog { "Fail load ads" }
             showAnimState(_raw.emoji_crying, _string.something_msg)
             showCloseTimer(COUNTER_TIME)
         }
 
         override fun onRewardedAdClosed() {
             super.onRewardedAdClosed()
-            d { "user close ads" }
+            debugLog { "user close ads" }
             if (isAdsShowDone) {
                 showAnimState(_raw.emoji_thanks, _string.ads_thanks_msg)
                 showCloseTimer(COUNTER_TIME)
@@ -76,7 +71,7 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
         override fun onRewardedAdOpened() {
             super.onRewardedAdOpened()
             showAnimState(_raw.emoji_smiley, _string.ads_again_msg)
-            d { "user open ads" }
+            debugLog { "user open ads" }
         }
     }
 
@@ -165,7 +160,7 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                d { "Count ${millisUntilFinished / 1000 + 1}" }
+                debugLog { "Count ${millisUntilFinished / 1000 + 1}" }
                 ad_watch_btn.text = String.format(
                     "%s (%d)",
                     getString(_string.close_title),

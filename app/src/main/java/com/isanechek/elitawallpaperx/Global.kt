@@ -7,8 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.isanechek.elitawallpaperx.utils.LiveEvent
 import java.io.BufferedReader
@@ -33,8 +31,16 @@ fun View.onClick(function: () -> Unit) {
     }
 }
 
-inline fun d(message: () -> String) {
-    Log.e("DEBUG", message())
+inline fun hasDebug(callback: () -> Unit) {
+    if (BuildConfig.DEBUG) {
+        callback.invoke()
+    }
+}
+
+inline fun debugLog(message: () -> String) {
+    hasDebug {
+        Log.e("DEBUG", message())
+    }
 }
 
 fun hasMinimumSdk(minimumSdk: Int): Boolean = Build.VERSION.SDK_INT >= minimumSdk

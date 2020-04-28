@@ -8,7 +8,8 @@ import android.net.Uri
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.isanechek.elitawallpaperx.d
+import com.isanechek.elitawallpaperx.BuildConfig
+import com.isanechek.elitawallpaperx.debugLog
 import com.isanechek.elitawallpaperx.hasIsNotMiUi
 import com.isanechek.elitawallpaperx.hasMinimumSdk
 import com.isanechek.elitawallpaperx.models.BitmapInfo
@@ -42,6 +43,14 @@ class AppRepositoryImpl(
     private val wallpaperUtils: WallpaperUtils
 ) : AppRepository {
 
+    private val currentVersion: Int
+        get() = BuildConfig.VERSION_NAME
+            .replaceAfter("(", "")
+            .replace("(", "")
+            .replace(".", "")
+            .trim()
+            .toInt()
+
     private val wallpaperManager: WallpaperManager by lazy {
         WallpaperManager.getInstance(context)
     }
@@ -51,21 +60,52 @@ class AppRepositoryImpl(
             emit(ExecuteResult.Loading)
             val cache = preferences.getStringSet("data", emptySet<String>())
             if (!cache.isNullOrEmpty()) {
-                emit(ExecuteResult.Done(cache.toList()))
-            } else {
-                emit(ExecuteResult.LoadingWithStatus("Cache data!"))
-                val result = filesManager.copyImagesFromAssets(context)
-                if (result.isNotEmpty()) {
-                    preferences.edit {
-                        putStringSet("data", result.toSet())
-                    }
-                    val data = result.map { it.fixPath() }
-                    if (data.isEmpty()) {
+                if (isNeedUpdate()) {
+                    emit(ExecuteResult.Update(cache.toList()))
+                    val data = updateData()
+                    if (data.isNotEmpty()) {
                         emit(ExecuteResult.Done(data))
                     } else emit(ExecuteResult.Error("Data not find!"))
-                } else emit(ExecuteResult.Error("Data not copy!!"))
+
+                } else {
+                    emit(ExecuteResult.Done(cache.toList()))
+                }
+            } else {
+                emit(ExecuteResult.Loading)
+                preferences.edit {
+                    putInt("app_version", currentVersion)
+                }
+                val data = updateData()
+                if (data.isNotEmpty()) {
+                    emit(ExecuteResult.Done(data))
+                } else emit(ExecuteResult.Error("Data not find!"))
             }
         }
+
+    private suspend fun updateData() : List<String> {
+        val result = filesManager.copyImagesFromAssets(context)
+        if (result.isNotEmpty()) {
+            preferences.edit {
+                putStringSet("data", emptySet())
+                putStringSet("data", result.toSet())
+            }
+            return result
+        }
+        return emptyList()
+    }
+
+    private fun isNeedUpdate(): Boolean {
+        val oldVersion = preferences.getInt("app_version", 0)
+        if (currentVersion > oldVersion) {
+            preferences.edit {
+                putInt("app_version", currentVersion)
+            }
+            debugLog { "NEW VERSION. NEED UPDATE" }
+            return true
+        }
+        debugLog { "OLD VERSION." }
+        return false
+    }
 
     override fun getBitmapUri(imagePath: String): LiveData<ExecuteResult<BitmapInfo>> =
         liveData(Dispatchers.IO) {
@@ -90,7 +130,7 @@ class AppRepositoryImpl(
         get() = preferences.getInt("selection.ration", 2) // index 2 in list 16:9
         set(value) {
             preferences.edit {
-                d { "Selection $value" }
+                debugLog { "Selection $value" }
                 putInt("selection.ration", value)
             }
         }

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -102,14 +104,18 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         vm.data.observe(viewLifecycleOwner, Observer { data ->
             when (data) {
                 is ExecuteResult.Error -> {
+                    if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     vm.sendEvent(TAG, "Load images from assets error! ${data.errorMessage}")
                     vm.showToast(data.errorMessage)
                 }
-                is ExecuteResult.Loading -> {}
+                is ExecuteResult.Loading -> {
+                    if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
+                }
                 is ExecuteResult.LoadingWithStatus -> {
-
+                    if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
                 }
                 is ExecuteResult.Done -> {
+                    if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     pagerAdapter.submit(data.data)
                     mainAdapter.submit(data.data)
                 }
