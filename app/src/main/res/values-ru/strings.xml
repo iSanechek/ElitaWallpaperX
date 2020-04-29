@@ -42,10 +42,10 @@
     <string name="system_screen_title">Системный экран</string>
     <string name="lock_screen_title">Экран блокировки</string>
     <string name="install_wallpaper_done">Обои установлены!</string>
-    <string name="reset_title">Сброс</string>
+    <string name="reset_title">Сбросить</string>
     <string name="done_title">Сделано</string>
     <string name="cancel_title" tools:ignore="ButtonCase">Отмена</string>
-    <string name="reset_to_default_wallpaper_msg">Сброс на обои по умолчанию.</string>
+    <string name="reset_to_default_wallpaper_msg">Сбросить к дефолтным обоям\nДефолтные обои - обои которые установлены были производителем.</string>
     <string name="reset_wallpaper_fail_msg">Сброс не удается. :-(</string>
     <string name="resolution_low_warning_msg">Вы выбрали слишком маленький фрагмент изображения, финальное качество будет очень низким</string>
     <string name="original_wallpaper_size_title">Оригинал</string>

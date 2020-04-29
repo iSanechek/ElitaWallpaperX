@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="@color/my_primary_color"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:background="@color/my_primary_color">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/wsd_lottie"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
-        android:id="@+id/wsd_title"
+        android:id="@+id/wsd_msg"
         android:layout_width="@dimen/dp0"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/dp8"
         android:layout_marginStart="@dimen/dp8"
-        android:layout_marginEnd="@dimen/dp16"
+        android:layout_marginEnd="@dimen/dp8"
+        android:layout_marginTop="@dimen/dp8"
+        android:gravity="center"
         android:textColor="@color/my_white_color"
-        tools:text="@string/warning_message_not_supported_lock_screen"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wsd_lottie" />
+        app:layout_constraintTop_toBottomOf="@id/wsd_lottie"
+        tools:text="@string/warning_message_not_supported_lock_screen" />
 
     <TextView
         android:id="@+id/wsd_description"
         android:layout_width="@dimen/dp0"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/dp8"
         android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp8"
         android:layout_marginEnd="@dimen/dp16"
-        android:visibility="gone"
-        tools:visibility="gone"
         android:textColor="@color/my_white_color"
-        tools:text="@string/warning_message_not_supported_lock_screen"
+        android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wsd_title" />
+        app:layout_constraintTop_toBottomOf="@id/wsd_msg"
+        tools:text="@string/warning_message_not_supported_lock_screen"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

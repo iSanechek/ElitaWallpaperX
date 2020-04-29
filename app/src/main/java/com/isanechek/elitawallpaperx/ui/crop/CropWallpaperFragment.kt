@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -26,7 +25,6 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.AppViewModel
@@ -36,6 +34,7 @@ import com.isanechek.elitawallpaperx.ui.base.bindAdater
 import com.isanechek.elitawallpaperx.utils.WARNING_INSTALL_LOCK_SCREEN
 import com.isanechek.elitawallpaperx.utils.WARNING_RATION_DIALOG_KEY
 import com.isanechek.elitawallpaperx.utils.WARNING_SCREEN_SIZE
+import com.isanechek.elitawallpaperx.widgets.TypedKtView
 import kotlinx.android.synthetic.main.croup_wallpaper_fragment_layout.*
 import kotlinx.android.synthetic.main.settings_custom_item_layout.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -107,7 +106,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 
     private fun updateCropView() {
         if (currentInfo.uri != Uri.EMPTY) {
-            val screenSize = vm.screenSize
+//            val screenSize = vm.screenSize
             val item = vm.getRationInfo
             cwf_crop_view.apply {
                 setImageUriAsync(currentInfo.uri)
@@ -166,19 +165,19 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
     ) {
         if (vm.isFirstStart(WARNING_SCREEN_SIZE)) {
             MaterialDialog(requireContext()).show {
-                val (sw, sh) = vm.screenSize
-                val msg = String.format(
-                    "\n%s - %dx%d\n%s - %dx%d\n%s - %dx%d",
-                    getString(_string.original_wallpaper_size_title),
-                    bitmapW,
-                    bitmapH,
-                    getString(_string.crop_wallpaper_size_title),
-                    currentW,
-                    currentH,
-                    getString(_string.screen_size_title),
-                    sw,
-                    sh
-                )
+//                val (sw, sh) = vm.screenSize
+//                val msg = String.format(
+//                    "\n%s - %dx%d\n%s - %dx%d\n%s - %dx%d",
+//                    getString(_string.original_wallpaper_size_title),
+//                    bitmapW,
+//                    bitmapH,
+//                    getString(_string.crop_wallpaper_size_title),
+//                    currentW,
+//                    currentH,
+//                    getString(_string.screen_size_title),
+//                    sw,
+//                    sh
+//                )
                 customView(viewRes = _layout.custom_screen_dialog_layout)
                 positiveButton(res = _string.close_title) {
                     it.dismiss()
@@ -186,27 +185,25 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 
                 onShow {
                     val root = it.getCustomView()
-                    root.findViewById<TextView>(_id.wsd_title).text = getString(_string.resolution_low_warning_msg)
+                    root.findViewById<TextView>(_id.wsd_msg).text = getString(_string.resolution_low_warning_msg)
                     val lottie = root.findViewById<LottieAnimationView>(_id.wsd_lottie)
 
-                    with(root.findViewById<TextView>(_id.wsd_description)) {
-                        isGone = false
-                        text = msg
-                    }
+//                    with(root.findViewById<TextView>(_id.wsd_description)) {
+//                        isGone = false
+//                        text = msg
+//                    }
 
-                    with(lottie) {
-                        setAnimation(_raw.emoji_crying)
-                        repeatMode = LottieDrawable.REVERSE
-                        repeatCount = LottieDrawable.INFINITE
-                        playAnimation()
+                    lottie.apply {
+                        run(_raw.dialog_alert)
+                        onClick { run(_raw.dialog_alert) }
                     }
 
                     onCancel {
-                        if (lottie.isAnimating) lottie.cancelAnimation()
+                        lottie.stop()
                     }
 
                     onDismiss {
-                        if (lottie.isAnimating) lottie.cancelAnimation()
+                        lottie.stop()
                     }
 
                 }

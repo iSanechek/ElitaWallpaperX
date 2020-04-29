@@ -1,7 +1,9 @@
 package com.isanechek.elitawallpaperx.ui.main
 
+import android.animation.Animator
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isInvisible
@@ -15,17 +17,21 @@ import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
+import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
+import com.airbnb.lottie.LottieAnimationView
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.ItemMenu
 import com.isanechek.elitawallpaperx.models.NewInfo
 import com.isanechek.elitawallpaperx.ui.base.bindAdater
+import com.isanechek.elitawallpaperx.widgets.TypedKtView
 import kotlinx.android.synthetic.main.main_fragment_layout.*
 import kotlinx.android.synthetic.main.settings_custom_item_layout.view.*
 import kotlinx.android.synthetic.main.what_is_new_item_layout.view.*
@@ -215,11 +221,29 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         var isLockScreen = false
         MaterialDialog(requireContext()).show {
             lifecycleOwner(this@MainFragment)
-            title(res = _string.warning_title)
-            message(res = _string.reset_to_default_wallpaper_msg)
+
+            customView(viewRes = _layout.custom_screen_dialog_layout)
             if (hasMinimumSdk(24) && hasIsNotMiUi) {
                 checkBoxPrompt(res = _string.lock_screen_title) {
                     isLockScreen = it
+                }
+            }
+
+            onShow {
+                val root = it.getCustomView()
+                root.findViewById<TextView>(_id.wsd_msg).text = getString(_string.reset_to_default_wallpaper_msg)
+                val lottie = root.findViewById<LottieAnimationView>(_id.wsd_lottie)
+                lottie.apply {
+                    run(_raw.dialog_alert)
+                    onClick { run(_raw.dialog_alert) }
+                }
+
+                onCancel {
+                    lottie.stop()
+                }
+
+                onDismiss {
+                    lottie.stop()
                 }
             }
             positiveButton(res = _string.reset_title) {
@@ -236,9 +260,29 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     }
 
     private fun showBlackWallpaperDialog() {
-        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-            title(res = _string.black_wallpaper_title)
-            message(res = _string.no_wallpapers_message)
+        MaterialDialog(requireContext()).show {
+//            title(res = _string.black_wallpaper_title)
+//            message(res = _string.no_wallpapers_message)
+
+            customView(viewRes = _layout.custom_screen_dialog_layout)
+            onShow {
+                val root = it.getCustomView()
+                root.findViewById<TextView>(_id.wsd_msg).text = getString(_string.no_wallpapers_message)
+                val lottie = root.findViewById<LottieAnimationView>(_id.wsd_lottie)
+                lottie.apply {
+                    run(_raw.dialog_alert)
+                    onClick { run(_raw.dialog_alert) }
+                }
+
+                onCancel {
+                    lottie.stop()
+                }
+
+                onDismiss {
+                    lottie.stop()
+                }
+            }
+
             positiveButton(res = _string.install_title) {
                 it.dismiss()
                 vm.setBlackWallpaper()

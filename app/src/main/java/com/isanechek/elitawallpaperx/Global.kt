@@ -2,12 +2,16 @@
 
 package com.isanechek.elitawallpaperx
 
+import android.animation.Animator
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RawRes
 import androidx.lifecycle.LiveData
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.isanechek.elitawallpaperx.utils.LiveEvent
 import java.io.BufferedReader
 import java.io.IOException
@@ -29,6 +33,32 @@ fun View.onClick(function: () -> Unit) {
     setOnClickListener {
         function()
     }
+}
+
+fun LottieAnimationView.animStartListener(callback: () -> Unit) {
+    addAnimatorListener(object : Animator.AnimatorListener {
+        override fun onAnimationRepeat(animation: Animator?) {}
+
+        override fun onAnimationEnd(animation: Animator?) {}
+
+        override fun onAnimationCancel(animation: Animator?) {}
+
+        override fun onAnimationStart(animation: Animator?) {
+            callback.invoke()
+        }
+    })
+}
+
+fun LottieAnimationView.run(@RawRes anim:Int) {
+    with(this) {
+        if (isAnimating) cancelAnimation()
+        setAnimation(anim)
+        playAnimation()
+    }
+}
+
+fun LottieAnimationView.stop() {
+    if (this.isAnimating) this.cancelAnimation()
 }
 
 inline fun hasDebug(callback: () -> Unit) {
