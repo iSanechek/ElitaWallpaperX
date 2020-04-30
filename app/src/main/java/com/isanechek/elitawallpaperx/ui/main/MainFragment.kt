@@ -1,15 +1,17 @@
 package com.isanechek.elitawallpaperx.ui.main
 
-import android.animation.Animator
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -31,11 +33,15 @@ import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.ItemMenu
 import com.isanechek.elitawallpaperx.models.NewInfo
 import com.isanechek.elitawallpaperx.ui.base.bindAdater
-import com.isanechek.elitawallpaperx.widgets.TypedKtView
 import kotlinx.android.synthetic.main.main_fragment_layout.*
 import kotlinx.android.synthetic.main.settings_custom_item_layout.view.*
 import kotlinx.android.synthetic.main.what_is_new_item_layout.view.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.util.*
 
 
 class MainFragment : Fragment(_layout.main_fragment_layout) {
@@ -56,6 +62,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         }
     }
 
+    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mf_toolbar.hideCustomLayout()
@@ -93,6 +100,27 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         mf_toolbar_ads_btn.onClick {
             findNavController().navigate(_id.main_go_ads_fragment)
         }
+
+
+        lifecycleScope.launchWhenResumed {
+
+            if (vm.isShowAdsScreen) {
+                mf_toolbar_ads_lottie.apply {
+                    if (isInvisible) isInvisible = false
+                    onClick {
+                        findNavController().navigate(_id.main_go_ads_fragment)
+                    }
+                }
+
+                tickerFlow(period = 10000)
+                    .flowOn(Dispatchers.Main)
+                    .onEach { mf_toolbar_ads_lottie.update() }
+                    .launchIn(this)
+
+            } else {
+                if (mf_toolbar_ads_lottie.isVisible) mf_toolbar_ads_lottie.isInvisible = true
+            }
+        }
     }
 
     override fun onResume() {
@@ -103,6 +131,11 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     override fun onPause() {
         mf_pager.unregisterOnPageChangeCallback(pagerListener)
         super.onPause()
+    }
+
+    override fun onDestroy() {
+        mf_pager.unregisterOnPageChangeCallback(pagerListener)
+        super.onDestroy()
     }
 
     private fun setupObserver() {
@@ -129,11 +162,12 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         })
 
         vm.resetWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
-            when(status) {
+            when (status) {
                 is ExecuteResult.Done -> {
                     vm.showToast(getString(_string.done_title))
                 }
-                is ExecuteResult.Loading -> {}
+                is ExecuteResult.Loading -> {
+                }
                 is ExecuteResult.Error -> {
                     vm.showToast(getString(_string.reset_wallpaper_fail_msg))
                 }
@@ -231,11 +265,12 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
             onShow {
                 val root = it.getCustomView()
-                root.findViewById<TextView>(_id.wsd_msg).text = getString(_string.reset_to_default_wallpaper_msg)
+                root.findViewById<TextView>(_id.wsd_msg).text =
+                    getString(_string.reset_to_default_wallpaper_msg)
                 val lottie = root.findViewById<LottieAnimationView>(_id.wsd_lottie)
                 lottie.apply {
-                    run(_raw.dialog_alert)
-                    onClick { run(_raw.dialog_alert) }
+                    update(_raw.dialog_alert)
+                    onClick { update(_raw.dialog_alert) }
                 }
 
                 onCancel {
@@ -267,11 +302,12 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             customView(viewRes = _layout.custom_screen_dialog_layout)
             onShow {
                 val root = it.getCustomView()
-                root.findViewById<TextView>(_id.wsd_msg).text = getString(_string.no_wallpapers_message)
+                root.findViewById<TextView>(_id.wsd_msg).text =
+                    getString(_string.no_wallpapers_message)
                 val lottie = root.findViewById<LottieAnimationView>(_id.wsd_lottie)
                 lottie.apply {
-                    run(_raw.dialog_alert)
-                    onClick { run(_raw.dialog_alert) }
+                    update(_raw.dialog_alert)
+                    onClick { update(_raw.dialog_alert) }
                 }
 
                 onCancel {

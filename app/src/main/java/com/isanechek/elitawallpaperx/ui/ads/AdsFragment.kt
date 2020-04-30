@@ -15,9 +15,11 @@ import com.google.android.gms.ads.rewarded.RewardedAdCallback
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.isanechek.elitawallpaperx.*
 import kotlinx.android.synthetic.main.ads_fragment_layout.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AdsFragment : Fragment(_layout.ads_fragment_layout) {
 
+    private val vm: AppViewModel by sharedViewModel()
     private lateinit var rewardedAd: RewardedAd
     private var countDownTimer: CountDownTimer? = null
     private var isTimerRun = false
@@ -77,6 +79,8 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        vm.hideAdsScreen()
 
         af_toolbar.setBackOrCloseButton(
             isClose = true,

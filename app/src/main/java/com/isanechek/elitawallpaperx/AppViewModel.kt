@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 
 class AppViewModel(
@@ -23,6 +24,10 @@ class AppViewModel(
     private val repository: AppRepository,
     private val tracker: TrackerUtils
 ) : AndroidViewModel(application) {
+
+    init {
+        checkTimeForShowAdsIcon()
+    }
 
     private val _showToast = LiveEvent<String>()
     val showToast: LiveEvent<String>
@@ -69,6 +74,9 @@ class AppViewModel(
         set(value) {
             repository.selectionRation = value
         }
+
+    val isShowAdsScreen: Boolean
+        get() = repository.isShowAdsAnim()
 
     fun installWallpaper(bitmap: Bitmap, screens: Int) {
         viewModelScope.launch(Dispatchers.Main) {
@@ -117,5 +125,18 @@ class AppViewModel(
 
     fun cacheData() {
 
+    }
+
+    fun hideAdsScreen() {
+        repository.showAnimation(false)
+        repository.setTimeForUpdate(System.currentTimeMillis())
+    }
+
+    private fun checkTimeForShowAdsIcon() {
+        if (repository.isTimeUpdate(TimeUnit.SECONDS.toMillis(30))) {
+            if (!repository.isShowAdsAnim()) {
+                repository.showAnimation(true)
+            }
+        }
     }
 }

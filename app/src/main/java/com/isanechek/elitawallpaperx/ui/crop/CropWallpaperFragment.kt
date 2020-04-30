@@ -34,7 +34,6 @@ import com.isanechek.elitawallpaperx.ui.base.bindAdater
 import com.isanechek.elitawallpaperx.utils.WARNING_INSTALL_LOCK_SCREEN
 import com.isanechek.elitawallpaperx.utils.WARNING_RATION_DIALOG_KEY
 import com.isanechek.elitawallpaperx.utils.WARNING_SCREEN_SIZE
-import com.isanechek.elitawallpaperx.widgets.TypedKtView
 import kotlinx.android.synthetic.main.croup_wallpaper_fragment_layout.*
 import kotlinx.android.synthetic.main.settings_custom_item_layout.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -194,8 +193,8 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 //                    }
 
                     lottie.apply {
-                        run(_raw.dialog_alert)
-                        onClick { run(_raw.dialog_alert) }
+                        update(_raw.dialog_alert)
+                        onClick { update(_raw.dialog_alert) }
                     }
 
                     onCancel {
@@ -263,10 +262,10 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 if (vm.selectionRatio != index) {
                     vm.showToast(
                         String.format(
-                            "%s %s\n%s",
+                            "%s\n%s %s",
+                            getText(_string.value_update_message),
                             getText(_string.select_text),
-                            text,
-                            getText(_string.value_update_message)
+                            text
                         )
                     )
                     vm.selectionRatio = index

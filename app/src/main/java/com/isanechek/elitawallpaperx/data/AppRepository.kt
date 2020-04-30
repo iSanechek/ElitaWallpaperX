@@ -34,6 +34,10 @@ interface AppRepository {
     suspend fun updateWallpaperSize(width: Int, height: Int)
     suspend fun installBlackWallpaper(w: Int, h: Int): Flow<ExecuteResult<Int>>
     fun loadWallpaperSize(): Pair<Int, Int>
+    fun isShowAdsAnim(): Boolean
+    fun showAnimation(value: Boolean)
+    fun isTimeUpdate(period: Long): Boolean
+    fun setTimeForUpdate(time: Long)
 }
 
 class AppRepositoryImpl(
@@ -222,6 +226,26 @@ class AppRepositoryImpl(
         val height =
             preferences.getInt(SYSTEM_WALLPAPER_HEIGHT_KEY, wallpaperManager.desiredMinimumHeight)
         return Pair(width, height)
+    }
+
+    override fun isShowAdsAnim(): Boolean = preferences.getBoolean("ads_anim", true)
+
+    override fun showAnimation(value: Boolean) {
+        preferences.edit {
+            putBoolean("ads_anim", value)
+        }
+    }
+
+    override fun isTimeUpdate(period: Long): Boolean {
+        val lastUpdateTime = preferences.getLong("update_time", 0)
+        val actualTime = System.currentTimeMillis() - lastUpdateTime
+        return actualTime > period
+    }
+
+    override fun setTimeForUpdate(time: Long) {
+        preferences.edit {
+            putLong("update_time", time)
+        }
     }
 
 

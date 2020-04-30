@@ -46,7 +46,7 @@
                 android:indeterminate="true"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/mf_toolbar_ads_btn"
+                app:layout_constraintEnd_toStartOf="@id/mf_toolbar_ads_lottie"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible" />
 
@@ -59,10 +59,25 @@
                 android:layout_marginBottom="@dimen/dp8"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/dp8"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/mf_toolbar_counter"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/handshake_icon_24" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/mf_toolbar_ads_lottie"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="84dp"
+                android:layout_marginBottom="@dimen/dp8"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:lottie_rawRes="@raw/coffee_meditation"
+                app:lottie_loop="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/mf_toolbar_counter"

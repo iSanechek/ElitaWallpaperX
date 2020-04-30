@@ -11,14 +11,17 @@ import android.view.ViewGroup
 import androidx.annotation.RawRes
 import androidx.lifecycle.LiveData
 import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable
 import com.isanechek.elitawallpaperx.utils.LiveEvent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
 typealias _color = R.color
-typealias _xml = R.xml
 typealias _layout = R.layout
 typealias _id = R.id
 typealias _drawable = R.drawable
@@ -49,10 +52,17 @@ fun LottieAnimationView.animStartListener(callback: () -> Unit) {
     })
 }
 
-fun LottieAnimationView.run(@RawRes anim:Int) {
+fun LottieAnimationView.update(@RawRes anim:Int) {
     with(this) {
         if (isAnimating) cancelAnimation()
         setAnimation(anim)
+        playAnimation()
+    }
+}
+
+fun LottieAnimationView.update() {
+    with(this) {
+        if (isAnimating) cancelAnimation()
         playAnimation()
     }
 }
@@ -92,4 +102,21 @@ fun <T> LiveData<T>.toSingleEvent(): LiveData<T> {
         result.value = it
     }
     return result
+}
+
+@ExperimentalCoroutinesApi
+fun tickerFlow(
+    period: Long,
+    initialDelay: Long = 0
+): Flow<Unit> = callbackFlow {
+    require(period > 0)
+    require(initialDelay > -1)
+
+    delay(initialDelay)
+    var isDone = false
+    while (!isDone) {
+        offer(Unit)
+        delay(period)
+    }
+    awaitClose { isDone = true }
 }
