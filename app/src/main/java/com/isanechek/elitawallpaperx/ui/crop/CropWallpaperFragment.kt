@@ -67,6 +67,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 }
                 is ExecuteResult.Error -> {
                     statusProgress()
+                    Toast.makeText(requireContext(), "Opps. Plz. Restart app", Toast.LENGTH_SHORT).show()
                     vm.sendEvent(TAG, "Load wallpaper error! ${data.errorMessage}")
                 }
             }

@@ -117,7 +117,13 @@ class AppRepositoryImpl(
             val name = imagePath.replaceBefore("images", "").trim()
             val info = filesManager.getBitmapUri(context, name)
             when (info.uri) {
-                Uri.EMPTY -> emit(ExecuteResult.Error("Uri is empty!"))
+                Uri.EMPTY -> {
+                    // Защита от дурака, который вечно все забывает)))
+                    preferences.edit {
+                        putStringSet("data", emptySet<String>())
+                    }
+                    emit(ExecuteResult.Error("Uri is empty!"))
+                }
                 else -> emit(ExecuteResult.Done(info))
             }
         }
