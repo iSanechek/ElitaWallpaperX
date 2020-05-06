@@ -28,6 +28,7 @@ typealias _drawable = R.drawable
 typealias _string = R.string
 typealias _anim = R.anim
 typealias _raw = R.raw
+typealias _dimen = R.dimen
 
 infix fun ViewGroup.inflate(layoutResId: Int): View =
     LayoutInflater.from(this.context).inflate(layoutResId, this, false)

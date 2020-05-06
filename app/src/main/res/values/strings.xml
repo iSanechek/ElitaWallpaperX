@@ -9,11 +9,11 @@
     <string name="ad_nw_yes_btn">Yes</string>
     <string name="ad_nw_no_btn">No</string>
     <string name="img_install_done">Done</string>
-    <string name="negative_button_clicked">Ok! You boss!</string>
-    <string name="about_moto">Elite</string>
+    <string name="negative_button_clicked">OK! You boss!</string>
+    <string name="about_moto">Elite\nWallpaper</string>
     <string name="about_moto_second">Wallpaper</string>
     <string name="about_text">This is a small application\nwritten specifically\nfor fans of the brand\n<b>MOTOROLA</b>!</string>
-    <string name="awerd">AVERD SOFT</string>
+    <string name="awerd">by\nAVERD SOFT</string>
     <string name="thanks_for_click">Thanks. :-)</string>
     <string name="analytics">Analytics</string>
     <string name="by">by</string>

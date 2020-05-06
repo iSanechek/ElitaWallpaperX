@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/my_primary_color" >
+    android:background="@color/my_primary_color">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/aaf_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,37 +14,30 @@
         android:background="@drawable/imge_circle_bordure"
         android:padding="@dimen/about_iv_padding"
         android:src="@drawable/ic_launcher"
-        android:layout_marginTop="@dimen/about_iv_marginTop" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/aaf_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/about_tv_marginTop"
+        android:gravity="center"
         android:text="@string/about_moto"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/my_white_color"
         android:textIsSelectable="false"
-        android:textSize="@dimen/tv_textSize" />
+        android:textSize="@dimen/tv_textSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aaf_iv" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/aff_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:text="@string/about_moto_second"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/my_white_color"
-        android:textSize="@dimen/tv_textSize" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/tv_three_layout_marginTop"
         android:gravity="center"
@@ -53,26 +45,21 @@
         android:text="@string/about_text"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/my_white_color"
-        android:textSize="@dimen/tv_three_textSize" />
+        android:textSize="@dimen/tv_three_textSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aaf_title" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/tv_one_marginTop"
-        android:text="@string/by"
-        android:textColor="@color/my_light_primary_color"
-        android:textSize="@dimen/tv_one_textSize" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:text="@string/awerd"
-        android:textColor="@color/my_white_color"
-        android:textSize="@dimen/tv_a_textSize"
-        android:textStyle="bold" />
-</RelativeLayout>
+        android:textColor="@color/my_light_primary_color"
+        android:textSize="@dimen/tv_one_textSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aff_description" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -333,8 +333,9 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     private fun showAboutDialog() {
         MaterialDialog(requireContext(), BottomSheet()).show {
             lifecycleOwner(this@MainFragment)
+            title(text = "")
             customView(viewRes = _layout.about_dialog_layout)
-            setPeekHeight(literal = 1000)
+            setPeekHeight(res = _dimen.peek_height_about_dialog)
             negativeButton(res = _string.close_title) {
                 it.dismiss()
             }

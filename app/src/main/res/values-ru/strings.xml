@@ -10,10 +10,10 @@
     <string name="ad_nw_no_btn">Нет</string>
     <string name="img_install_done">Сднлано</string>
     <string name="negative_button_clicked">Хорошо! Вы босс!</string>
-    <string name="about_moto">Elite</string>
+    <string name="about_moto">Elite\nWallpaper</string>
     <string name="about_moto_second">Wallpapers</string>
     <string name="about_text">Это небольшое приложение \nнаписанно специально\nдля поклонников бренда\n<b>MOTOROLA</b>!</string>
-    <string name="awerd">AVERD SOFT</string>
+    <string name="awerd">by\nAVERD SOFT</string>
     <string name="thanks_for_click">Спасибо. :-)</string>
     <string name="analytics">Аналитика</string>
     <string name="by">by</string>
