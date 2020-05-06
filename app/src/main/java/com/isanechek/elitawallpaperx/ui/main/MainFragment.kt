@@ -115,7 +115,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                 }
 
                 tickerFlow(period = 10000)
-                    .flowOn(Dispatchers.Main)
+                    .flowOn(Dispatchers.Default)
                     .onEach { mf_toolbar_ads_lottie.update() }
                     .launchIn(this)
 
@@ -229,14 +229,13 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     _layout.settings_custom_item_layout
                 ) { item: ItemMenu ->
                     sci_container.onClick {
-
+                        dialog.dismiss()
                         when (item.id) {
                             "remove" -> showRemoveWallpaperDialog()
                             "black" -> showBlackWallpaperDialog()
                             "new" -> showWhatNewDialog()
                             "info" -> showAboutDialog()
                         }
-                        dialog.dismiss()
                     }
                     sci_icon.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -343,15 +342,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     }
 
     private fun showWhatNewDialog() {
-        val testDescription =
-            mutableListOf("Fix base lase", "Improve speed performance", "Add some bags")
-        val testData = mutableListOf(
-            NewInfo(version = "10.0.0", description = testDescription, date = "16.04.2020"),
-            NewInfo(version = "9.18.44", description = testDescription, date = "08.01.2020"),
-            NewInfo(version = "9.12.55", description = testDescription, date = "25.11.2019"),
-            NewInfo(version = "9.12.55", description = testDescription, date = "18.09.2019"),
-            NewInfo(version = "9.12.55", description = testDescription, date = "12.07.2019")
-        )
 
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             title(res = _string.what_is_new_title)
