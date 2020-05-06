@@ -2,6 +2,7 @@ package com.isanechek.elitawallpaperx.utils
 
 import android.util.Log
 import com.isanechek.elitawallpaperx.BuildConfig
+import com.yandex.metrica.YandexMetrica
 import kotlinx.coroutines.CoroutineScope
 import java.lang.Exception
 
@@ -24,6 +25,8 @@ class TrackerUtilsImpl : TrackerUtils {
     ) {
         if (BuildConfig.DEBUG) {
             Log.e(tag, event, exception)
+        } else {
+            YandexMetrica.reportError(event, exception)
         }
     }
 }

@@ -103,8 +103,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             findNavController().navigate(_id.main_go_ads_fragment)
         }
 
-
-
         lifecycleScope.launchWhenResumed {
             if (vm.isShowAdsScreen) {
                 mf_toolbar_ads_lottie.apply {
@@ -399,5 +397,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
     companion object {
         private const val TAG = "MainFragment"
+        private const val OTHER_APPS_URL = "https://play.google.com/store/apps/details?id=my.ew.wallpapernew"
+        private const val AVERD_WEB_SITE = "http://averdsoft.ru/"
     }
 }
