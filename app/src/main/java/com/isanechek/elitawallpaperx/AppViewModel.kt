@@ -139,7 +139,8 @@ class AppViewModel(
     }
 
     private fun checkTimeForShowAdsIcon() {
-        if (repository.isTimeUpdate(TimeUnit.SECONDS.toMillis(30))) {
+        val delayTime = if (BuildConfig.DEBUG) TimeUnit.SECONDS.toMillis(30) else TimeUnit.DAYS.toMillis(1)
+        if (repository.isTimeUpdate(delayTime)) {
             if (!repository.isShowAdsAnim()) {
                 repository.showAnimation(true)
             }
