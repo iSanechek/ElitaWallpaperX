@@ -297,9 +297,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
     private fun showBlackWallpaperDialog() {
         MaterialDialog(requireContext()).show {
-//            title(res = _string.black_wallpaper_title)
-//            message(res = _string.no_wallpapers_message)
-
             customView(viewRes = _layout.custom_screen_dialog_layout)
             onShow {
                 val root = it.getCustomView()

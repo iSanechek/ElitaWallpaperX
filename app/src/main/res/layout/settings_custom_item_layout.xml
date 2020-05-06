@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="55dp"
     android:id="@+id/sci_container"
     android:background="?attr/selectableItemBackground"
     android:layout_marginStart="@dimen/dp8"
@@ -11,8 +11,6 @@
     android:layout_marginEnd="@dimen/dp8"
     app:cardCornerRadius="@dimen/dp8"
     app:cardElevation="@dimen/dp0"
-    app:strokeColor="@color/my_white_color"
-    app:strokeWidth="@dimen/dp1"
     app:cardBackgroundColor="@color/my_primary_color">
 
     <androidx.constraintlayout.widget.ConstraintLayout
