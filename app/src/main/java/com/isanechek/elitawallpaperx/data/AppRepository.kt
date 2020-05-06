@@ -4,6 +4,7 @@ import android.app.WallpaperManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.net.ParseException
 import android.net.Uri
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
@@ -14,6 +15,7 @@ import com.isanechek.elitawallpaperx.hasIsNotMiUi
 import com.isanechek.elitawallpaperx.hasMinimumSdk
 import com.isanechek.elitawallpaperx.models.BitmapInfo
 import com.isanechek.elitawallpaperx.models.ExecuteResult
+import com.isanechek.elitawallpaperx.models.NewInfo
 import com.isanechek.elitawallpaperx.models.RationInfo
 import com.isanechek.elitawallpaperx.utils.FilesManager
 import com.isanechek.elitawallpaperx.utils.WallpaperUtils
@@ -21,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 interface AppRepository {
     fun loadImagesFromAssets(): LiveData<ExecuteResult<List<String>>>
@@ -38,6 +41,7 @@ interface AppRepository {
     fun showAnimation(value: Boolean)
     fun isTimeUpdate(period: Long): Boolean
     fun setTimeForUpdate(time: Long)
+    suspend fun loadWhatIsNewInfo(): LiveData<ExecuteResult<List<NewInfo>>>
 }
 
 class AppRepositoryImpl(
@@ -86,7 +90,7 @@ class AppRepositoryImpl(
             }
         }
 
-    private suspend fun updateData() : List<String> {
+    private suspend fun updateData(): List<String> {
         val result = filesManager.copyImagesFromAssets(context)
         if (result.isNotEmpty()) {
             preferences.edit {
@@ -253,6 +257,31 @@ class AppRepositoryImpl(
             putLong("update_time", time)
         }
     }
+
+    override suspend fun loadWhatIsNewInfo(): LiveData<ExecuteResult<List<NewInfo>>> =
+        liveData(Dispatchers.IO) {
+            val source = filesManager.loadJsonFromAssets(context, "jsons/update_info.json")
+            if (source.isNotEmpty()) {
+                try {
+                    val json = JSONObject(source)
+                    val arrays = json.getJSONArray("versions_list_info")
+                    val temp = mutableListOf<NewInfo>()
+                    for (i in 0 until arrays.length()) {
+                        val obj = arrays[i] as JSONObject
+                        val version = obj.getString("version")
+                        val date = obj.getString("date")
+                        val descriptions = obj.getString("description").split(",")
+                        temp.add(NewInfo(version, descriptions, date))
+                    }
+
+                    emit(ExecuteResult.Done(temp.toList()))
+                } catch (ex: ParseException) {
+                    debugLog { "Parse error ${ex.message}" }
+                }
+            } else {
+                emit(ExecuteResult.Error("Load info error!"))
+            }
+        }
 
 
     private fun String.fixPath(): String = "file:///android_asset/images/$this"

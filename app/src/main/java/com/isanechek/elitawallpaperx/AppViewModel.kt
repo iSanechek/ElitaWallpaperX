@@ -8,6 +8,7 @@ import androidx.lifecycle.*
 import com.isanechek.elitawallpaperx.data.AppRepository
 import com.isanechek.elitawallpaperx.models.BitmapInfo
 import com.isanechek.elitawallpaperx.models.ExecuteResult
+import com.isanechek.elitawallpaperx.models.NewInfo
 import com.isanechek.elitawallpaperx.models.RationInfo
 import com.isanechek.elitawallpaperx.utils.LiveEvent
 import com.isanechek.elitawallpaperx.utils.TrackerUtils
@@ -56,6 +57,11 @@ class AppViewModel(
     fun loadUri(path: String) {
         loadUri.value = path
     }
+
+    val whatIsNewData: LiveData<ExecuteResult<List<NewInfo>>>
+        get() = liveData {
+            emitSource(repository.loadWhatIsNewInfo())
+        }
 
     val rations: List<RationInfo>
         get() = repository.loadRations()

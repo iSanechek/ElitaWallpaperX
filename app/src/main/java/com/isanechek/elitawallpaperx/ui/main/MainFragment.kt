@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -21,6 +22,7 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.callbacks.onDismiss
+import com.afollestad.materialdialogs.callbacks.onPreShow
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.customview.customView
@@ -102,8 +104,8 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         }
 
 
-        lifecycleScope.launchWhenResumed {
 
+        lifecycleScope.launchWhenResumed {
             if (vm.isShowAdsScreen) {
                 mf_toolbar_ads_lottie.apply {
                     if (isInvisible) isInvisible = false
@@ -354,21 +356,34 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             title(res = _string.what_is_new_title)
             lifecycleOwner(this@MainFragment)
-            customListAdapter(
-                adapter = bindAdater(
-                    testData,
-                    _layout.what_is_new_item_layout
-                ) { item: NewInfo ->
-                    wni_title_tv.text = item.version
-                    wni_date_tv.text = item.date
-                    wni_description_tv.text = descriptionToString(item.description)
-                    wni_container.onClick {
-                        showWhatNewDetailDialog(item)
+            val observer = Observer<ExecuteResult<List<NewInfo>>> { result ->
+                when(result) {
+                    is ExecuteResult.Done -> {
+                        this.customListAdapter(
+                            adapter = bindAdater(
+                                result.data,
+                                _layout.what_is_new_item_layout
+                            ) { item: NewInfo ->
+                                wni_title_tv.text = item.version
+                                wni_date_tv.text = item.date
+                                wni_description_tv.text = descriptionToString(item.description)
+                                wni_container.onClick {
+                                    showWhatNewDetailDialog(item)
+                                }
+                            })
                     }
-                })
+                    is ExecuteResult.Error -> {}
+                    is ExecuteResult.Loading -> {}
+                }
+            }
+
             positiveButton(res = _string.close_title) {
                 it.dismiss()
             }
+
+            onPreShow { vm.whatIsNewData.observeForever(observer) }
+            onDismiss { vm.whatIsNewData.removeObserver(observer) }
+            onCancel { vm.whatIsNewData.removeObserver(observer) }
         }
     }
 

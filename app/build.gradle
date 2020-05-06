@@ -78,21 +78,6 @@ android {
         }
     }
 
-    flavorDimensions "version"
-    productFlavors {
-        devRelease {
-            dimension "version"
-            applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
-        }
-
-        finalRelease {
-            dimension "version"
-            applicationIdSuffix ".final"
-            versionNameSuffix "-final"
-        }
-    }
-
     aaptOptions {
         noCompress 'png', 'jpg'
     }
