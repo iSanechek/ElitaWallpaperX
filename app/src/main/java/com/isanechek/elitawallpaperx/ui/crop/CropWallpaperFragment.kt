@@ -67,7 +67,8 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 }
                 is ExecuteResult.Error -> {
                     statusProgress()
-                    Toast.makeText(requireContext(), "Opps. Plz. Restart app", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Opps. Plz. Restart app", Toast.LENGTH_SHORT)
+                        .show()
                     vm.sendEvent(TAG, "Load wallpaper error! ${data.errorMessage}")
                 }
             }
@@ -80,7 +81,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 }
                 is ExecuteResult.Done -> {
                     statusProgress()
-                    vm.showToast(getString(_string.install_wallpaper_done))
+                    shortToast(_string.install_wallpaper_done)
                 }
                 is ExecuteResult.Error -> {
                     statusProgress()
@@ -88,12 +89,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 }
             }
         })
-
-        vm.showToast.observe(viewLifecycleOwner, Observer { message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        })
     }
-
 
 
     override fun onResume() {
@@ -153,7 +149,8 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 cwf_crop_view.getCroppedImageAsync()
             }
         } else {
-            vm.showToast("Uri is empty!")
+            vm.sendEvent(TAG, "Uri is empty!")
+            shortToast(_string.something_msg)
         }
     }
 
@@ -185,7 +182,8 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 
                 onShow {
                     val root = it.getCustomView()
-                    root.findViewById<TextView>(_id.wsd_msg).text = getString(_string.resolution_low_warning_msg)
+                    root.findViewById<TextView>(_id.wsd_msg).text =
+                        getString(_string.resolution_low_warning_msg)
                     val lottie = root.findViewById<LottieAnimationView>(_id.wsd_lottie)
 
 //                    with(root.findViewById<TextView>(_id.wsd_description)) {
@@ -261,7 +259,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
                 initialSelection = vm.selectionRatio
             ) { _, index, text ->
                 if (vm.selectionRatio != index) {
-                    vm.showToast(
+                    shortToast(
                         String.format(
                             "%s\n%s %s",
                             getText(_string.value_update_message),

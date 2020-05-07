@@ -30,10 +30,6 @@ class AppViewModel(
         checkTimeForShowAdsIcon()
     }
 
-    private val _showToast = LiveEvent<String>()
-    val showToast: LiveEvent<String>
-        get() = _showToast
-
     private val _resetWallpaperStatus = LiveEvent<ExecuteResult<Int>>()
     val resetWallpaperStatus: LiveEvent<ExecuteResult<Int>>
         get() = _resetWallpaperStatus
@@ -88,13 +84,8 @@ class AppViewModel(
         viewModelScope.launch(Dispatchers.Main) {
             repository.installWallpaper(bitmap, screens)
                 .flowOn(Dispatchers.IO)
-                .catch { _showToast.value = "Install wallpaper error!" }
                 .collect { result -> _installWallpaperStatus.value = result }
         }
-    }
-
-    fun showToast(message: String) {
-        _showToast.value = message
     }
 
     fun updateScreenSize(width: Int, height: Int) {
@@ -115,7 +106,6 @@ class AppViewModel(
         viewModelScope.launch {
             repository.resetWallpaper(which)
                 .flowOn(Dispatchers.IO)
-                .catch { _showToast.value = "Reset wallpaper error!" }
                 .collect { _resetWallpaperStatus.postValue(it) }
         }
     }
@@ -124,7 +114,6 @@ class AppViewModel(
         viewModelScope.launch {
             repository.installBlackWallpaper(screenSize.first, screenSize.second)
                 .flowOn(Dispatchers.IO)
-                .catch { _showToast.value = it.message }
                 .collect {
                     debugLog { "INSTALL BLACK $it" }
                     _installWallpaperStatus.postValue(it)

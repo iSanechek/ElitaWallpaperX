@@ -144,7 +144,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                 is ExecuteResult.Error -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     vm.sendEvent(TAG, "Load images from assets error! ${data.errorMessage}")
-                    vm.showToast(getString(_string.something_msg))
+                    shortToast(_string.something_msg)
                 }
                 is ExecuteResult.Loading -> {
                     if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
@@ -164,12 +164,12 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             when (status) {
                 is ExecuteResult.Done -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
-                    vm.showToast(getString(_string.done_title))
+                    shortToast(_string.done_title)
                 }
                 is ExecuteResult.Loading -> if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
                 is ExecuteResult.Error -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
-                    vm.showToast(getString(_string.reset_wallpaper_fail_msg))
+                    shortToast(_string.reset_wallpaper_fail_msg)
                 }
             }
         })
@@ -179,18 +179,14 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             when (status) {
                 is ExecuteResult.Done -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
-                    vm.showToast(getString(_string.done_title))
+                    shortToast(_string.done_title)
                 }
                 is ExecuteResult.Loading -> if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
                 is ExecuteResult.Error -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
-                    vm.showToast(getString(_string.reset_wallpaper_fail_msg))
+                    shortToast(_string.reset_wallpaper_fail_msg)
                 }
             }
-        })
-
-        vm.showToast.observe(this, Observer { msg ->
-            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
         })
     }
 
@@ -440,7 +436,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     }
                     is ExecuteResult.Error -> {
                         this.dismiss()
-                        vm.showToast(getString(_string.something_msg))
+                        shortToast(_string.something_msg)
                     }
                     is ExecuteResult.Loading -> Unit
                 }

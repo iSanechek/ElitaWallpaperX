@@ -11,7 +11,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RawRes
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.airbnb.lottie.LottieAnimationView
 import com.isanechek.elitawallpaperx.utils.LiveEvent
@@ -145,4 +148,12 @@ fun Context.sendEmail(
 inline fun Context.actionView(url: () -> String) {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url()))
     startActivity(intent)
+}
+
+fun Fragment.shortToast(@StringRes msgId: Int) {
+    Toast.makeText(this.requireContext(), msgId, Toast.LENGTH_SHORT).show()
+}
+
+fun Fragment.shortToast(msg: String) {
+    Toast.makeText(this.requireContext(), msg, Toast.LENGTH_SHORT).show()
 }
