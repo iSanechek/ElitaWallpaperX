@@ -34,12 +34,12 @@ class AppViewModel(
     val showToast: LiveEvent<String>
         get() = _showToast
 
-    private val _resetWallpaperStatus = MutableLiveData<ExecuteResult<Int>>()
-    val resetWallpaperStatus: LiveData<ExecuteResult<Int>>
+    private val _resetWallpaperStatus = LiveEvent<ExecuteResult<Int>>()
+    val resetWallpaperStatus: LiveEvent<ExecuteResult<Int>>
         get() = _resetWallpaperStatus
 
-    private val _installWallpaperStatus = MutableLiveData<ExecuteResult<Int>>()
-    val installWallpaperStatus: LiveData<ExecuteResult<Int>>
+    private val _installWallpaperStatus = LiveEvent<ExecuteResult<Int>>()
+    val installWallpaperStatus: LiveEvent<ExecuteResult<Int>>
         get() = _installWallpaperStatus
 
     val data: LiveData<ExecuteResult<List<String>>>
@@ -116,7 +116,7 @@ class AppViewModel(
             repository.resetWallpaper(which)
                 .flowOn(Dispatchers.IO)
                 .catch { _showToast.value = "Reset wallpaper error!" }
-                .collect { _resetWallpaperStatus.value = it }
+                .collect { _resetWallpaperStatus.postValue(it) }
         }
     }
 
@@ -125,7 +125,10 @@ class AppViewModel(
             repository.installBlackWallpaper(screenSize.first, screenSize.second)
                 .flowOn(Dispatchers.IO)
                 .catch { _showToast.value = it.message }
-                .collect { _installWallpaperStatus.value = it }
+                .collect {
+                    debugLog { "INSTALL BLACK $it" }
+                    _installWallpaperStatus.postValue(it)
+                }
         }
     }
 

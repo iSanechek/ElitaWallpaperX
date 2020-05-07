@@ -70,7 +70,7 @@
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginTop="@dimen/dp8"
-                android:layout_marginEnd="84dp"
+                android:layout_marginEnd="64dp"
                 android:layout_marginBottom="@dimen/dp8"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 app:lottie_rawRes="@raw/coffee_meditation"

@@ -34,7 +34,6 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
                 3 -> showAnimState(_raw.emoji_no_ads, _string.no_ads_to_show_msg)
                 else -> showAnimState(_raw.emoji_no_ads, _string.no_ads_to_show_msg)
             }
-
             showCloseTimer(COUNTER_TIME)
         }
 
@@ -99,11 +98,7 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
             } else {
                 showProgress()
             loadRewardedAd()
-//                Handler().postDelayed({
-//                    af_container.transitionToEnd()
-//                }, 1000)
             }
-
         }
     }
 
@@ -170,7 +165,6 @@ class AdsFragment : Fragment(_layout.ads_fragment_layout) {
                     getString(_string.close_title),
                     millisUntilFinished / 1000 + 1
                 )
-
             }
         }
         countDownTimer?.start()

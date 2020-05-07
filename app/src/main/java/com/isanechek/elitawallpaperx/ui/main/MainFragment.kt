@@ -1,18 +1,16 @@
 package com.isanechek.elitawallpaperx.ui.main
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -30,7 +28,6 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.airbnb.lottie.LottieAnimationView
-import com.google.android.material.button.MaterialButton
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.ItemMenu
@@ -39,12 +36,12 @@ import com.isanechek.elitawallpaperx.ui.base.bindAdater
 import kotlinx.android.synthetic.main.main_fragment_layout.*
 import kotlinx.android.synthetic.main.settings_custom_item_layout.view.*
 import kotlinx.android.synthetic.main.what_is_new_item_layout.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.util.*
 
 
 class MainFragment : Fragment(_layout.main_fragment_layout) {
@@ -71,25 +68,14 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         mf_toolbar.hideCustomLayout()
         mf_toolbar_title.text = getString(_string.app_name)
 
-        // pager
-        with(mf_pager) {
-            orientation = ViewPager2.ORIENTATION_VERTICAL
-            adapter = pagerAdapter
-            registerOnPageChangeCallback(pagerListener)
-        }
-
-        pagerAdapter.setOnListenerCallback(object : MainPagerAdapter.ListenerCallback {
-            override fun onItemClick(data: String, position: Int) {
-                findNavController().navigate(_id.main_go_detail_fragment, bundleOf("path" to data))
-            }
-        })
+        setupViewPager()
 
         mf_fab.onClick {
-            showDialog()
+            showGridWallpaperDialog()
         }
 
         mf_menu_btn.onClick {
-            showSettingsDialog()
+            showMenuDialog()
         }
 
         mf_company_tv.onClick {
@@ -118,9 +104,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     .onEach { mf_toolbar_ads_lottie.update() }
                     .launchIn(this)
 
-            } else {
-                if (mf_toolbar_ads_lottie.isVisible) mf_toolbar_ads_lottie.isInvisible = true
-            }
+            } else if (mf_toolbar_ads_lottie.isVisible) mf_toolbar_ads_lottie.isInvisible = true
         }
     }
 
@@ -139,14 +123,28 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         super.onDestroy()
     }
 
-    private fun setupObserver() {
+    private fun setupViewPager() {
+        // pager
+        with(mf_pager) {
+            orientation = ViewPager2.ORIENTATION_VERTICAL
+            adapter = pagerAdapter
+            registerOnPageChangeCallback(pagerListener)
+        }
 
+        pagerAdapter.setOnListenerCallback(object : MainPagerAdapter.ListenerCallback {
+            override fun onItemClick(data: String, position: Int) {
+                findNavController().navigate(_id.main_go_detail_fragment, bundleOf("path" to data))
+            }
+        })
+    }
+
+    private fun setupObserver() {
         vm.data.observe(viewLifecycleOwner, Observer { data ->
             when (data) {
                 is ExecuteResult.Error -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     vm.sendEvent(TAG, "Load images from assets error! ${data.errorMessage}")
-                    vm.showToast(data.errorMessage)
+                    vm.showToast(getString(_string.something_msg))
                 }
                 is ExecuteResult.Loading -> {
                     if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
@@ -165,27 +163,45 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         vm.resetWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
             when (status) {
                 is ExecuteResult.Done -> {
+                    if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     vm.showToast(getString(_string.done_title))
                 }
-                is ExecuteResult.Loading -> {
-                }
+                is ExecuteResult.Loading -> if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
                 is ExecuteResult.Error -> {
+                    if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     vm.showToast(getString(_string.reset_wallpaper_fail_msg))
                 }
             }
         })
+
+        vm.installWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
+            debugLog { "INSTALL $status" }
+            when (status) {
+                is ExecuteResult.Done -> {
+                    if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
+                    vm.showToast(getString(_string.done_title))
+                }
+                is ExecuteResult.Loading -> if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
+                is ExecuteResult.Error -> {
+                    if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
+                    vm.showToast(getString(_string.reset_wallpaper_fail_msg))
+                }
+            }
+        })
+
+        vm.showToast.observe(this, Observer { msg ->
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        })
     }
 
-    private fun showDialog() {
+    private fun showGridWallpaperDialog() {
         MaterialDialog(requireContext(), BottomSheet()).show {
             lifecycleOwner(this@MainFragment)
             customListAdapter(
                 adapter = mainAdapter,
                 layoutManager = GridLayoutManager(requireContext(), 3)
             )
-            positiveButton(res = _string.close_title) {
-                it.dismiss()
-            }
+            positiveButton(res = _string.close_title)
         }.onShow {
             mainAdapter.setClickListener(object : MainWallpapersAdapter.ClickListener {
                 override fun onItemClick(position: Int) {
@@ -198,7 +214,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         }
     }
 
-    private fun showSettingsDialog() {
+    private fun showMenuDialog() {
         val menuItems = listOf(
             ItemMenu(
                 id = "remove",
@@ -210,7 +226,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                 iconId = _drawable.black_image,
                 titleId = _string.black_wallpaper_title
             ),
-            ItemMenu(id = "new", iconId = _drawable.new_box, titleId = _string.what_is_new_title),
             ItemMenu(
                 id = "info",
                 iconId = _drawable.ic_baseline_info_24,
@@ -231,7 +246,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                         when (item.id) {
                             "remove" -> showRemoveWallpaperDialog()
                             "black" -> showBlackWallpaperDialog()
-                            "new" -> showWhatNewDialog()
                             "info" -> showInfoListDialog()
                         }
                         dialog.dismiss()
@@ -245,9 +259,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     sci_title_tv.text = getText(item.titleId)
                 })
 
-            negativeButton(res = _string.close_title) {
-                it.dismiss()
-            }
+            negativeButton(res = _string.close_title)
         }
     }
 
@@ -292,24 +304,22 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                             }
                             "gp" -> {
                                 dialog.dismiss()
-                                requireContext().actionView { OTHER_APPS_URL }
+                                requireContext().actionView { getString(_string.averd_gp_link) }
 
                             }
                             "web" -> {
                                 dialog.dismiss()
-                                requireContext().actionView { AVERD_WEB_SITE }
+                                requireContext().actionView { getString(_string.averd_web) }
                             }
                             "email" -> {
                                 dialog.dismiss()
                                 requireContext().sendEmail(
                                     getString(_string.app_name),
-                                    "averdsoft@gmail.com",
+                                    getString(_string.averd_email),
                                     getString(_string.send_us_email_msg)
                                 )
                             }
                         }
-
-
                     }
                     sci_icon.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -359,9 +369,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     else -> vm.resetWallpaper(0)
                 }
             }
-            negativeButton(res = _string.cancel_title) {
-                it.dismiss()
-            }
+            negativeButton(res = _string.cancel_title)
         }
     }
 
@@ -391,9 +399,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                 it.dismiss()
                 vm.setBlackWallpaper()
             }
-            negativeButton(res = _string.close_title) {
-                it.dismiss()
-            }
+            negativeButton(res = _string.close_title)
         }
     }
 
@@ -403,20 +409,16 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             title(text = "")
             customView(viewRes = _layout.about_dialog_layout)
             setPeekHeight(res = _dimen.peek_height_about_dialog)
-            negativeButton(res = _string.close_title) {
+            negativeButton(res = _string.what_is_new_title) {
                 it.dismiss()
+                showWhatNewDialog()
             }
+            positiveButton(res = _string.close_title)
 
-            onShow {
-                it.getCustomView().findViewById<MaterialButton>(_id.aff_what_new).onClick {
-                    showWhatNewDialog()
-                }
-            }
         }
     }
 
     private fun showWhatNewDialog() {
-
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             title(res = _string.what_is_new_title)
             lifecycleOwner(this@MainFragment)
@@ -437,15 +439,14 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                             })
                     }
                     is ExecuteResult.Error -> {
+                        this.dismiss()
+                        vm.showToast(getString(_string.something_msg))
                     }
-                    is ExecuteResult.Loading -> {
-                    }
+                    is ExecuteResult.Loading -> Unit
                 }
             }
 
-            positiveButton(res = _string.close_title) {
-                it.dismiss()
-            }
+            positiveButton(res = _string.close_title)
 
             onPreShow { vm.whatIsNewData.observeForever(observer) }
             onDismiss { vm.whatIsNewData.removeObserver(observer) }
@@ -477,8 +478,5 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
     companion object {
         private const val TAG = "MainFragment"
-        private const val OTHER_APPS_URL =
-            "https://play.google.com/store/apps/dev?id=6812241770877419123"
-        private const val AVERD_WEB_SITE = "http://averdsoft.ru/"
     }
 }
