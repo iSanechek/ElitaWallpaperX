@@ -41,58 +41,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
-                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp8"
                 android:layout_marginBottom="@dimen/dp8"
                 android:indeterminate="true"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/mf_toolbar_ads_lottie"
+                app:layout_constraintEnd_toStartOf="@id/mf_toolbar_counter"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible" />
 
-            <ImageButton
-                android:id="@+id/mf_toolbar_ads_btn"
+            <com.richpath.RichPathView
+                android:id="@+id/mf_toolbar_ads_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
                 android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginBottom="@dimen/dp8"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/dp8"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/mf_toolbar_counter"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/handshake_icon_24" />
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/mf_toolbar_ads_lottie"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/dp8"
-                android:layout_marginEnd="64dp"
-                android:layout_marginBottom="@dimen/dp8"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:lottie_rawRes="@raw/coffee_meditation"
-                app:lottie_loop="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:vector="@drawable/ic_notifications" />
+
 
             <TextView
                 android:id="@+id/mf_toolbar_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
-                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp8"
                 android:layout_marginBottom="@dimen/dp8"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/dp8"
                 android:textColor="@color/my_white_color"
                 android:textSize="14sp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/mf_toolbar_ads_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="10/99" />
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,8 +2,8 @@ package com.isanechek.elitawallpaperx.ui.main
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isInvisible
@@ -33,6 +33,7 @@ import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.ItemMenu
 import com.isanechek.elitawallpaperx.models.NewInfo
 import com.isanechek.elitawallpaperx.ui.base.bindAdater
+import com.richpathanimator.RichPathAnimator
 import kotlinx.android.synthetic.main.main_fragment_layout.*
 import kotlinx.android.synthetic.main.settings_custom_item_layout.view.*
 import kotlinx.android.synthetic.main.what_is_new_item_layout.view.*
@@ -86,13 +87,10 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             // тут надо заимплементить посхалку
         }
 
-        mf_toolbar_ads_btn.onClick {
-            findNavController().navigate(_id.main_go_ads_fragment)
-        }
-
         lifecycleScope.launchWhenResumed {
             if (vm.isShowAdsScreen) {
-                mf_toolbar_ads_lottie.apply {
+                val adsIcon = mf_toolbar_ads_icon
+                with(adsIcon) {
                     if (isInvisible) isInvisible = false
                     onClick {
                         findNavController().navigate(_id.main_go_ads_fragment)
@@ -101,10 +99,23 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
                 tickerFlow(period = 10000)
                     .flowOn(Dispatchers.Default)
-                    .onEach { mf_toolbar_ads_lottie.update() }
+                    .onEach {
+                        val top = adsIcon.findRichPathByIndex(0)
+                        val bottom = adsIcon.findRichPathByIndex(1)
+                        RichPathAnimator.animate(top)
+                            .interpolator(DecelerateInterpolator())
+                            .rotation(0f, 20f, -20f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
+                            .duration(4000)
+                            .andAnimate(bottom)
+                            .interpolator(DecelerateInterpolator())
+                            .rotation(0f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
+                            .startDelay(50)
+                            .duration(4000)
+                            .start()
+                    }
                     .launchIn(this)
 
-            } else if (mf_toolbar_ads_lottie.isVisible) mf_toolbar_ads_lottie.isInvisible = true
+            } else if (mf_toolbar_ads_icon.isVisible) mf_toolbar_ads_icon.isInvisible = true
         }
     }
 
