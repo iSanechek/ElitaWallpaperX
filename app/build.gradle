@@ -144,8 +144,8 @@ dependencies {
     implementation "com.afollestad.material-dialogs:bottomsheets:$materialDialogVersion"
     implementation "com.afollestad.material-dialogs:lifecycle:$materialDialogVersion"
 
-    // AppMetrica SDK.
     implementation 'com.yandex.android:mobmetricalib:3.13.1'
+    implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

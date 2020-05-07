@@ -5,18 +5,23 @@ package com.isanechek.elitawallpaperx
 import android.animation.Animator
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.airbnb.lottie.LottieAnimationView
+import com.github.razir.progressbutton.*
 import com.isanechek.elitawallpaperx.utils.LiveEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -35,6 +40,48 @@ typealias _string = R.string
 typealias _anim = R.anim
 typealias _raw = R.raw
 typealias _dimen = R.dimen
+
+inline fun delay(milliseconds: Long, crossinline action: () -> Unit) {
+    Handler().postDelayed({
+        action()
+    }, milliseconds)
+}
+
+fun Button.progressShow(progressTitle: String) {
+    this.apply {
+        isEnabled = false
+        showProgress {
+            buttonText = progressTitle
+            progressColor = Color.WHITE
+        }
+    }
+}
+
+fun Button.progressDone(doneTitle: String, buttonTitle: String) {
+    this.apply {
+        val animatedDrawable = ContextCompat.getDrawable(this.context, R.drawable.animated_check)!!
+        animatedDrawable.setBounds(0, 0, 50, 50)
+        hideProgress()
+        showDrawable(animatedDrawable) {
+            buttonText = doneTitle
+            gravity = DrawableButton.GRAVITY_TEXT_END
+        }
+        delay(1000) {
+            this.isEnabled = true
+            this.hideDrawable(buttonTitle)
+        }
+    }
+}
+
+fun Button.progressHide(doneTitle: String, buttonTitle: String) {
+    this.apply {
+        isEnabled = true
+        hideProgress(doneTitle)
+        delay(1000) {
+            this.text = buttonTitle
+        }
+    }
+}
 
 infix fun ViewGroup.inflate(layoutResId: Int): View =
     LayoutInflater.from(this.context).inflate(layoutResId, this, false)

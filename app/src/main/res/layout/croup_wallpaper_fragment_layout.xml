@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
                 android:layout_marginBottom="@dimen/dp8"
+                android:background="@drawable/warning_text_bg"
                 android:gravity="center"
                 android:paddingStart="@dimen/dp8"
                 android:paddingTop="@dimen/dp4"
@@ -65,14 +66,13 @@
                 android:paddingBottom="@dimen/dp4"
                 android:text="@string/warning_title"
                 android:textAllCaps="true"
-                android:background="@drawable/warning_text_bg"
                 android:textColor="@color/my_white_color"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="warning"
                 tools:visibility="visible" />
@@ -108,11 +108,13 @@
     </com.isanechek.elitawallpaperx.widgets.SuperToolbar>
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/cwf_crop_btn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="@dimen/dp0"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
+        android:gravity="center"
         android:text="@string/set_wallpaper"
         android:textAllCaps="true"
         android:textColor="@color/my_white_color"

@@ -66,6 +66,7 @@
     <string name="about_app_title">About App</string>
     <string name="info_title">Info</string>
     <string name="send_us_email_msg">Share your ideas or concerns with us.</string>
+    <string name="wallpaper_installing_title">installing</string>
 
     <string name="company_name">AVERD SOFT</string>
     <string name="averd_web" translatable="false">http://averdsoft.ru/</string>

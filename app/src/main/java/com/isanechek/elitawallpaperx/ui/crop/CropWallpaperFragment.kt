@@ -1,14 +1,18 @@
 package com.isanechek.elitawallpaperx.ui.crop
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -25,6 +29,9 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.airbnb.lottie.LottieAnimationView
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.AppViewModel
@@ -52,6 +59,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
         super.onViewCreated(view, savedInstanceState)
         vm.loadUri(path)
         cwf_toolbar.hideCustomLayout()
+        bindProgressButton(cwf_crop_btn)
         cwf_toolbar_close_btn.onClick { findNavController().navigateUp() }
         cwf_toolbar_menu_btn.onClick { showMenuDialog() }
 
@@ -76,15 +84,16 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 
         vm.installWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
             when (status) {
-                is ExecuteResult.Loading -> {
-                    statusProgress(true)
-                }
-                is ExecuteResult.Done -> {
-                    statusProgress()
-                    shortToast(_string.install_wallpaper_done)
-                }
+                is ExecuteResult.Loading -> cwf_crop_btn.progressShow(getString(_string.wallpaper_installing_title))
+                is ExecuteResult.Done -> cwf_crop_btn.progressDone(
+                    getString(_string.done_title),
+                    getString(_string.install_title)
+                )
                 is ExecuteResult.Error -> {
-                    statusProgress()
+                    cwf_crop_btn.progressHide(
+                        getString(_string.done_title),
+                        getString(_string.install_title)
+                    )
                     vm.sendEvent(TAG, "Install wallpaper error! ${status.errorMessage}")
                 }
             }
@@ -147,6 +156,7 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
             }
             cwf_crop_btn.onClick {
                 cwf_crop_view.getCroppedImageAsync()
+
             }
         } else {
             vm.sendEvent(TAG, "Uri is empty!")

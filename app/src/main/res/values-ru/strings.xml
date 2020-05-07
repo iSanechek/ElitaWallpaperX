@@ -65,6 +65,7 @@
     <string name="about_app_title">О приложение</string>
     <string name="info_title">Информация</string>
     <string name="send_us_email_msg">Поделитесь с нами вашими идеями или проблемами.</string>
+    <string name="wallpaper_installing_title">Установка</string>
 
     <string name="company_name">AVERD SOFT</string>
 </resources>
