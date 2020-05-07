@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.button.MaterialButton
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.ItemMenu
@@ -227,13 +228,13 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     _layout.settings_custom_item_layout
                 ) { item: ItemMenu ->
                     sci_container.onClick {
-                        dialog.dismiss()
                         when (item.id) {
                             "remove" -> showRemoveWallpaperDialog()
                             "black" -> showBlackWallpaperDialog()
                             "new" -> showWhatNewDialog()
-                            "info" -> showAboutDialog()
+                            "info" -> showInfoListDialog()
                         }
+                        dialog.dismiss()
                     }
                     sci_icon.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -247,6 +248,77 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             negativeButton(res = _string.close_title) {
                 it.dismiss()
             }
+        }
+    }
+
+    private fun showInfoListDialog() {
+        val menuItems = listOf(
+            ItemMenu(
+                id = "about_app",
+                iconId = _drawable.ic_baseline_info_24,
+                titleId = _string.about_app_title
+            ),
+            ItemMenu(
+                id = "gp",
+                iconId = _drawable.gp_icon_24,
+                titleId = _string.gp_title
+            ),
+            ItemMenu(
+                id = "web",
+                iconId = _drawable.web_icon_24,
+                titleId = _string.web_site_title
+            ),
+            ItemMenu(
+                id = "email",
+                iconId = _drawable.ic_baseline_email_24,
+                titleId = _string.email_title
+            )
+        )
+
+        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            lifecycleOwner(this@MainFragment)
+            val dialog = this
+            title(res = _string.info_title)
+            customListAdapter(
+                adapter = bindAdater(
+                    menuItems,
+                    _layout.settings_custom_item_layout
+                ) { item: ItemMenu ->
+                    sci_container.onClick {
+                        when (item.id) {
+                            "about_app" -> {
+                                showAboutDialog()
+                                dialog.dismiss()
+                            }
+                            "gp" -> {
+                                dialog.dismiss()
+                                requireContext().actionView { OTHER_APPS_URL }
+
+                            }
+                            "web" -> {
+                                dialog.dismiss()
+                                requireContext().actionView { AVERD_WEB_SITE }
+                            }
+                            "email" -> {
+                                dialog.dismiss()
+                                requireContext().sendEmail(
+                                    getString(_string.app_name),
+                                    "averdsoft@gmail.com",
+                                    getString(_string.send_us_email_msg)
+                                )
+                            }
+                        }
+
+
+                    }
+                    sci_icon.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            item.iconId
+                        )
+                    )
+                    sci_title_tv.text = getText(item.titleId)
+                })
         }
     }
 
@@ -334,6 +406,12 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             negativeButton(res = _string.close_title) {
                 it.dismiss()
             }
+
+            onShow {
+                it.getCustomView().findViewById<MaterialButton>(_id.aff_what_new).onClick {
+                    showWhatNewDialog()
+                }
+            }
         }
     }
 
@@ -343,7 +421,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             title(res = _string.what_is_new_title)
             lifecycleOwner(this@MainFragment)
             val observer = Observer<ExecuteResult<List<NewInfo>>> { result ->
-                when(result) {
+                when (result) {
                     is ExecuteResult.Done -> {
                         this.customListAdapter(
                             adapter = bindAdater(
@@ -358,8 +436,10 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                                 }
                             })
                     }
-                    is ExecuteResult.Error -> {}
-                    is ExecuteResult.Loading -> {}
+                    is ExecuteResult.Error -> {
+                    }
+                    is ExecuteResult.Loading -> {
+                    }
                 }
             }
 
@@ -397,7 +477,8 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
     companion object {
         private const val TAG = "MainFragment"
-        private const val OTHER_APPS_URL = "https://play.google.com/store/apps/details?id=my.ew.wallpapernew"
+        private const val OTHER_APPS_URL =
+            "https://play.google.com/store/apps/dev?id=6812241770877419123"
         private const val AVERD_WEB_SITE = "http://averdsoft.ru/"
     }
 }

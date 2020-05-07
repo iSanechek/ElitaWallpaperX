@@ -60,6 +60,11 @@
     <string name="close_ads_msg">ОГО Вы не закрыли рекламу раньше времени\nСпасибо за поддержку!\nВозвращайтесь ещё</string>
     <string name="ads_user_message">Привет! \nСпасибо за просмотр этого сообщения. \n\nМы, как и все, не любим рекламу и стараемся максимально защитить наших любимых пользователей от неё. \nМы так же любим наши проекты, и очень хотим развивать их в будущем… \nУважаемый пользователь, подари нам несколько секунд своего драгоценного времени. \n\nПожалуйста, посмотрите это рекламное видео.</string>
     <string name="screen_size_title">Размер экрана</string>
+    <string name="email_title">Обратная связь</string>
+    <string name="web_site_title">Website</string>
+    <string name="about_app_title">О приложение</string>
+    <string name="info_title">Информация</string>
+    <string name="send_us_email_msg">Поделитесь с нами вашими идеями или проблемами.</string>
 
     <string name="company_name">AVERD SOFT</string>
 </resources>

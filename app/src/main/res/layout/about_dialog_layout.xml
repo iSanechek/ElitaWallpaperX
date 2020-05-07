@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@id/aaf_title" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/aff_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/tv_one_marginTop"
@@ -62,4 +62,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/aff_description" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/aff_what_new"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:cornerRadius="@dimen/dp8"
+        app:strokeWidth="@dimen/dp1"
+        app:strokeColor="@color/my_white_color"
+        android:text="@string/what_is_new_title"
+        android:textColor="@color/my_white_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aff_company" />
 </androidx.constraintlayout.widget.ConstraintLayout>
