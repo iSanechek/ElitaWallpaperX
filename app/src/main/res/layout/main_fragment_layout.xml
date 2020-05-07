@@ -64,17 +64,19 @@
                 app:vector="@drawable/ic_notifications" />
 
 
-            <TextView
+            <com.robinhood.ticker.TickerView
                 android:id="@+id/mf_toolbar_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
-                android:layout_marginEnd="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginBottom="@dimen/dp8"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
                 android:textColor="@color/my_white_color"
                 android:textSize="14sp"
-                android:textStyle="normal"
+                android:textStyle="bold"
+                app:ticker_defaultCharacterList="number"
+                app:ticker_animationDuration="500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/mf_toolbar_ads_icon"
                 app:layout_constraintTop_toTopOf="parent"

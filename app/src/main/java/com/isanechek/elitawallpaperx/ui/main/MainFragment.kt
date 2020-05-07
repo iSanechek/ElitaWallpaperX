@@ -6,6 +6,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -58,8 +59,11 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            mf_toolbar_counter.text =
-                String.format("%d/%d", position.plus(1), pagerAdapter.itemCount)
+            mf_toolbar_counter.apply {
+                text =
+                    String.format("%d/%d", position.plus(1), pagerAdapter.itemCount)
+
+            }
         }
     }
 
@@ -91,7 +95,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             if (vm.isShowAdsScreen) {
                 val adsIcon = mf_toolbar_ads_icon
                 with(adsIcon) {
-                    if (isInvisible) isInvisible = false
+                    if (isGone) isGone = false
                     onClick {
                         findNavController().navigate(_id.main_go_ads_fragment)
                     }
@@ -115,7 +119,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     }
                     .launchIn(this)
 
-            } else if (mf_toolbar_ads_icon.isVisible) mf_toolbar_ads_icon.isInvisible = true
+            } else if (mf_toolbar_ads_icon.isVisible) mf_toolbar_ads_icon.isGone = true
         }
     }
 

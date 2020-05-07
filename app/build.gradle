@@ -147,6 +147,7 @@ dependencies {
     implementation 'com.yandex.android:mobmetricalib:3.13.1'
     implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
     implementation 'com.github.tarek360.RichPath:animator:0.1.1'
+    implementation 'com.robinhood.ticker:ticker:2.0.2'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
