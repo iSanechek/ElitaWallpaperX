@@ -84,16 +84,30 @@ class CropWallpaperFragment : Fragment(_layout.croup_wallpaper_fragment_layout) 
 
         vm.installWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
             when (status) {
-                is ExecuteResult.Loading -> cwf_crop_btn.progressShow(getString(_string.wallpaper_installing_title))
-                is ExecuteResult.Done -> cwf_crop_btn.progressDone(
-                    getString(_string.done_title),
-                    getString(_string.install_title)
-                )
+                is ExecuteResult.Loading -> {
+                    if (hasMinimumSdk(21)) {
+                        cwf_crop_btn.progressShow(getString(_string.wallpaper_installing_title))
+                    } else statusProgress(true)
+                }
+                is ExecuteResult.Done -> {
+                    when {
+                        hasMinimumSdk(21) -> {
+                            cwf_crop_btn.progressDone(
+                                getString(_string.done_title),
+                                getString(_string.install_title)
+                            )
+                        }
+                        else -> statusProgress()
+                    }
+                }
                 is ExecuteResult.Error -> {
-                    cwf_crop_btn.progressHide(
-                        getString(_string.done_title),
-                        getString(_string.install_title)
-                    )
+                    if (hasMinimumSdk(21)) {
+                        cwf_crop_btn.progressHide(
+                            getString(_string.done_title),
+                            getString(_string.install_title)
+                        )
+                    } else statusProgress()
+                    shortToast(_string.something_msg)
                     vm.sendEvent(TAG, "Install wallpaper error! ${status.errorMessage}")
                 }
             }
