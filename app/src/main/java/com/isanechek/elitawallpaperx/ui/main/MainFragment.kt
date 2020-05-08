@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
@@ -81,16 +82,10 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         override fun onRewardedAdFailedToLoad(p0: Int) {
             super.onRewardedAdFailedToLoad(p0)
             when (p0) {
-                AdRequest.ERROR_CODE_INTERNAL_ERROR -> {
-                }
-                AdRequest.ERROR_CODE_INVALID_REQUEST -> {
-                }
-                AdRequest.ERROR_CODE_NETWORK_ERROR -> {
-                }
-                AdRequest.ERROR_CODE_NO_FILL -> {
-                }
-                else -> {
-                }
+                AdRequest.ERROR_CODE_INTERNAL_ERROR -> vm.sendEvent(TAG, "ERROR_CODE_INTERNAL_ERROR")
+                AdRequest.ERROR_CODE_INVALID_REQUEST -> vm.sendEvent(TAG, "ERROR_CODE_INVALID_REQUEST")
+                AdRequest.ERROR_CODE_NETWORK_ERROR -> vm.sendEvent(TAG, "ERROR_CODE_NETWORK_ERROR")
+                AdRequest.ERROR_CODE_NO_FILL -> vm.sendEvent(TAG, "ERROR_CODE_NO_FILL")
             }
         }
 
@@ -103,24 +98,29 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     private val userActionsListener = object : RewardedAdCallback() {
         override fun onUserEarnedReward(p0: RewardItem) {
             debugLog { "user watch ads" }
+            vm.sendEvent(TAG, "onUserEarnedReward")
             if (mf_toolbar_ads_icon.isVisible) mf_toolbar_ads_icon.isGone = true
             vm.hideAdsScreen()
-
+            Toast.makeText(requireContext(), getString(_string.ads_thanks_msg), Toast.LENGTH_SHORT).show()
         }
 
         override fun onRewardedAdFailedToShow(p0: Int) {
             super.onRewardedAdFailedToShow(p0)
             debugLog { "Fail load ads" }
+            vm.sendEvent(TAG, "onRewardedAdFailedToShow $p0")
         }
 
         override fun onRewardedAdClosed() {
             super.onRewardedAdClosed()
             debugLog { "user close ads" }
+            vm.sendEvent(TAG, "onRewardedAdClosed")
 
         }
 
         override fun onRewardedAdOpened() {
             super.onRewardedAdOpened()
+            vm.sendEvent(TAG, "onRewardedAdOpened")
+            Toast.makeText(requireContext(), getString(_string.ads_thanks_msg), Toast.LENGTH_SHORT).show()
         }
     }
 
