@@ -29,6 +29,12 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdCallback
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.material.button.MaterialButton
 import com.isanechek.elitawallpaperx.*
 import com.isanechek.elitawallpaperx.models.ExecuteResult
 import com.isanechek.elitawallpaperx.models.ItemMenu
@@ -43,11 +49,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class MainFragment : Fragment(_layout.main_fragment_layout) {
 
+    private val ADS_KEY =
+        if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/5224354917" else "ca-app-pub-9548650574871415/9743318724"
+    private lateinit var rewardedAd: RewardedAd
     private val vm: AppViewModel by sharedViewModel()
     private val pagerAdapter by lazy { MainPagerAdapter() }
     private val mainAdapter by lazy { MainWallpapersAdapter() }
@@ -67,7 +77,54 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         }
     }
 
-    @ExperimentalCoroutinesApi
+    private val adsLoadListener = object : RewardedAdLoadCallback() {
+        override fun onRewardedAdFailedToLoad(p0: Int) {
+            super.onRewardedAdFailedToLoad(p0)
+            when (p0) {
+                AdRequest.ERROR_CODE_INTERNAL_ERROR -> {
+                }
+                AdRequest.ERROR_CODE_INVALID_REQUEST -> {
+                }
+                AdRequest.ERROR_CODE_NETWORK_ERROR -> {
+                }
+                AdRequest.ERROR_CODE_NO_FILL -> {
+                }
+                else -> {
+                }
+            }
+        }
+
+        override fun onRewardedAdLoaded() {
+            super.onRewardedAdLoaded()
+            showAdsIcon()
+        }
+    }
+
+    private val userActionsListener = object : RewardedAdCallback() {
+        override fun onUserEarnedReward(p0: RewardItem) {
+            debugLog { "user watch ads" }
+            if (mf_toolbar_ads_icon.isVisible) mf_toolbar_ads_icon.isGone = true
+            vm.hideAdsScreen()
+
+        }
+
+        override fun onRewardedAdFailedToShow(p0: Int) {
+            super.onRewardedAdFailedToShow(p0)
+            debugLog { "Fail load ads" }
+        }
+
+        override fun onRewardedAdClosed() {
+            super.onRewardedAdClosed()
+            debugLog { "user close ads" }
+
+        }
+
+        override fun onRewardedAdOpened() {
+            super.onRewardedAdOpened()
+        }
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mf_toolbar.hideCustomLayout()
@@ -91,35 +148,40 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             // тут надо заимплементить посхалку
         }
 
-        lifecycleScope.launchWhenResumed {
-            if (vm.isShowAdsScreen) {
-                val adsIcon = mf_toolbar_ads_icon
-                with(adsIcon) {
-                    if (isGone) isGone = false
-                    onClick {
-                        findNavController().navigate(_id.main_go_ads_fragment)
-                    }
+
+
+        if (vm.isShowAdsScreen) {
+            loadRewardedAd()
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    private fun showAdsIcon() {
+        lifecycleScope.launch {
+            val adsIcon = mf_toolbar_ads_icon
+            with(adsIcon) {
+                if (isGone) isGone = false
+                onClick {
+                    showAdsDialog()
                 }
+            }
 
-                tickerFlow(period = 10000)
-                    .flowOn(Dispatchers.Default)
-                    .onEach {
-                        val top = adsIcon.findRichPathByIndex(0)
-                        val bottom = adsIcon.findRichPathByIndex(1)
-                        RichPathAnimator.animate(top)
-                            .interpolator(DecelerateInterpolator())
-                            .rotation(0f, 20f, -20f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
-                            .duration(4000)
-                            .andAnimate(bottom)
-                            .interpolator(DecelerateInterpolator())
-                            .rotation(0f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
-                            .startDelay(50)
-                            .duration(4000)
-                            .start()
-                    }
-                    .launchIn(this)
-
-            } else if (mf_toolbar_ads_icon.isVisible) mf_toolbar_ads_icon.isGone = true
+            tickerFlow(period = 10000)
+                .flowOn(Dispatchers.Default)
+                .onEach {
+                    val top = adsIcon.findRichPathByIndex(0)
+                    val bottom = adsIcon.findRichPathByIndex(1)
+                    RichPathAnimator.animate(top)
+                        .interpolator(DecelerateInterpolator())
+                        .rotation(0f, 20f, -20f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
+                        .duration(4000)
+                        .andAnimate(bottom)
+                        .interpolator(DecelerateInterpolator())
+                        .rotation(0f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
+                        .startDelay(50)
+                        .duration(4000)
+                        .start()
+                }.launchIn(this)
         }
     }
 
@@ -181,7 +243,8 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     shortToast(_string.done_title)
                 }
-                is ExecuteResult.Loading -> if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
+                is ExecuteResult.Loading -> if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible =
+                    false
                 is ExecuteResult.Error -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     shortToast(_string.reset_wallpaper_fail_msg)
@@ -196,7 +259,8 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     shortToast(_string.done_title)
                 }
-                is ExecuteResult.Loading -> if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible = false
+                is ExecuteResult.Loading -> if (mf_toolbar_progress.isInvisible) mf_toolbar_progress.isInvisible =
+                    false
                 is ExecuteResult.Error -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     shortToast(_string.reset_wallpaper_fail_msg)
@@ -485,6 +549,28 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             }
         }
         return sb.toString()
+    }
+
+    private fun loadRewardedAd() {
+        if (!(::rewardedAd.isInitialized) || !rewardedAd.isLoaded) {
+            rewardedAd = RewardedAd(requireContext(), ADS_KEY)
+            rewardedAd.loadAd(AdRequest.Builder().build(), adsLoadListener)
+        }
+    }
+
+    private fun showAdsDialog() {
+        MaterialDialog(requireContext(), BottomSheet()).show {
+            lifecycleOwner(this@MainFragment)
+            title(text = "")
+            setPeekHeight(res = _dimen.peek_height_about_dialog)
+            customView(viewRes = _layout.advertising_fragment_layout)
+            onShow {
+                it.getCustomView().findViewById<MaterialButton>(_id.afl_btn).onClick {
+                    it.dismiss()
+                    rewardedAd.show(requireActivity(), userActionsListener)
+                }
+            }
+        }
     }
 
     companion object {

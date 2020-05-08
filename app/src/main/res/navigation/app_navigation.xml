@@ -17,14 +17,6 @@
             app:exitAnim="@anim/alpha_out_anim"
             app:popEnterAnim="@anim/fade_in_anim"
             app:popExitAnim="@anim/slide_down_out" />
-
-        <action
-            android:id="@+id/main_go_ads_fragment"
-            app:destination="@id/ads_fragment"
-            app:enterAnim="@anim/slide_up_anim"
-            app:exitAnim="@anim/alpha_out_anim"
-            app:popEnterAnim="@anim/fade_in_anim"
-            app:popExitAnim="@anim/slide_down_out" />
     </fragment>
 
     <fragment
@@ -32,12 +24,6 @@
         android:name="com.isanechek.elitawallpaperx.ui.crop.CropWallpaperFragment"
         android:label="debug"
         tools:layout="@layout/croup_wallpaper_fragment_layout" />
-
-    <fragment
-        android:id="@+id/ads_fragment"
-        android:name="com.isanechek.elitawallpaperx.ui.ads.AdsFragment"
-        android:label="ads"
-        tools:layout="@layout/ads_fragment_layout" />
 
     <fragment
         android:id="@+id/splash_fragment"

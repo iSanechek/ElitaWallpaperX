@@ -58,6 +58,7 @@
                 android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginBottom="@dimen/dp8"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -75,11 +76,11 @@
                 android:textColor="@color/my_white_color"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:ticker_defaultCharacterList="number"
-                app:ticker_animationDuration="500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/mf_toolbar_ads_icon"
                 app:layout_constraintTop_toTopOf="parent"
+                app:ticker_animationDuration="500"
+                app:ticker_defaultCharacterList="number"
                 tools:text="10/99" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.isanechek.elitawallpaperx.widgets.SuperToolbar>
