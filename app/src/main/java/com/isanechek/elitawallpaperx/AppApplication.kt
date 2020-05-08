@@ -1,13 +1,13 @@
 package com.isanechek.elitawallpaperx
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.google.android.gms.ads.MobileAds
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class AppApplication : Application() {
+class AppApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
