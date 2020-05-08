@@ -148,46 +148,17 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
             // тут надо заимплементить посхалку
         }
 
-
-
         if (vm.isShowAdsScreen) {
             loadRewardedAd()
         }
     }
 
-    @ExperimentalCoroutinesApi
-    private fun showAdsIcon() {
-        lifecycleScope.launch {
-            val adsIcon = mf_toolbar_ads_icon
-            with(adsIcon) {
-                if (isGone) isGone = false
-                onClick {
-                    showAdsDialog()
-                }
-            }
 
-            tickerFlow(period = 10000)
-                .flowOn(Dispatchers.Default)
-                .onEach {
-                    val top = adsIcon.findRichPathByIndex(0)
-                    val bottom = adsIcon.findRichPathByIndex(1)
-                    RichPathAnimator.animate(top)
-                        .interpolator(DecelerateInterpolator())
-                        .rotation(0f, 20f, -20f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
-                        .duration(4000)
-                        .andAnimate(bottom)
-                        .interpolator(DecelerateInterpolator())
-                        .rotation(0f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
-                        .startDelay(50)
-                        .duration(4000)
-                        .start()
-                }.launchIn(this)
-        }
-    }
 
     override fun onResume() {
         super.onResume()
         setupObserver()
+        mf_pager.registerOnPageChangeCallback(pagerListener)
     }
 
     override fun onPause() {
@@ -205,7 +176,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         with(mf_pager) {
             orientation = ViewPager2.ORIENTATION_VERTICAL
             adapter = pagerAdapter
-            registerOnPageChangeCallback(pagerListener)
         }
 
         pagerAdapter.setOnListenerCallback(object : MainPagerAdapter.ListenerCallback {
@@ -555,6 +525,36 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         if (!(::rewardedAd.isInitialized) || !rewardedAd.isLoaded) {
             rewardedAd = RewardedAd(requireContext(), ADS_KEY)
             rewardedAd.loadAd(AdRequest.Builder().build(), adsLoadListener)
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    private fun showAdsIcon() {
+        lifecycleScope.launch {
+            val adsIcon = mf_toolbar_ads_icon
+            with(adsIcon) {
+                if (isGone) isGone = false
+                onClick {
+                    showAdsDialog()
+                }
+            }
+
+            tickerFlow(period = 10000)
+                .flowOn(Dispatchers.Default)
+                .onEach {
+                    val top = adsIcon.findRichPathByIndex(0)
+                    val bottom = adsIcon.findRichPathByIndex(1)
+                    RichPathAnimator.animate(top)
+                        .interpolator(DecelerateInterpolator())
+                        .rotation(0f, 20f, -20f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
+                        .duration(4000)
+                        .andAnimate(bottom)
+                        .interpolator(DecelerateInterpolator())
+                        .rotation(0f, 10f, -10f, 5f, -5f, 2f, -2f, 0f)
+                        .startDelay(50)
+                        .duration(4000)
+                        .start()
+                }.launchIn(this)
         }
     }
 
