@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application android:name=".AppApplication"
+    <application
+        android:name=".AppApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +15,9 @@
         android:theme="@style/Theme.NewMotoTheme">
 
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,13 +35,13 @@
         </provider>
 
         <!--Debug-->
-        <activity android:name=".debug.DebugActivity" >
+        <activity android:name=".debug.DebugActivity">
 
         </activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-9548650574871415~3526999391"/>
+            android:value="ca-app-pub-9548650574871415~3526999391" />
     </application>
 
 </manifest>

@@ -169,11 +169,6 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         super.onPause()
     }
 
-    override fun onDestroy() {
-        mf_pager.unregisterOnPageChangeCallback(pagerListener)
-        super.onDestroy()
-    }
-
     private fun setupViewPager() {
         // pager
         with(mf_pager) {

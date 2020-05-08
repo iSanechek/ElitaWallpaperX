@@ -49,7 +49,7 @@ android {
 
     defaultConfig {
         applicationId appId
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         multiDexEnabled true
         versionCode versionNumber
@@ -69,7 +69,6 @@ android {
 
     buildTypes {
         release {
-            multiDexKeepFile file('multidex-config.txt')
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -79,7 +78,7 @@ android {
             debuggable true
         }
     }
-    
+
     aaptOptions {
         noCompress 'png', 'jpg'
     }
@@ -118,7 +117,6 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta5'
     implementation 'com.google.android.gms:play-services-ads:19.1.0'
-    implementation 'com.android.support:multidex:1.0.3'
 
     implementation "org.koin:koin-core:$koin_version"
     implementation "org.koin:koin-core-ext:$koin_version"
