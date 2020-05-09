@@ -1,0 +1,76 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Elite Wallpapers</string>
+    <string name="app_label">Інші шпалери</string>
+    <string name="set_wallpaper">Встановити шпалери</string>
+    <string name="link_other_app">Наші додатки</string>
+    <string name="share">Поділись!</string>
+    <string name="warning_title">Попередження</string>
+    <string name="no_wallpapers_message">Чорне тло заощаджує заряд акумулятора.\nНайбільш ефективно на AMOLED дисплеях.</string>
+    <string name="ad_nw_yes_btn">Так</string>
+    <string name="ad_nw_no_btn">Ні</string>
+    <string name="img_install_done">Зроблено</string>
+    <string name="negative_button_clicked">Добре! Ви бос!</string>
+    <string name="about_moto">Elite</string>
+    <string name="about_moto_second">Wallpapers</string>
+    <string name="about_text">Цей невеликий додаток \nнаписано спеціально\nдля шанувальників бренду\n<b>MOTOROLA</b>!</string>
+    <string name="awerd">AVERD SOFT</string>
+    <string name="thanks_for_click">Дякую. :-)</string>
+    <string name="analytics">Аналітика</string>
+    <string name="by">by</string>
+
+
+    <!--New-->
+    <string name="clear_wallpaper_title">Встановити дефолтні шпалери</string>
+    <string name="black_wallpaper_title">Встановити чорні шпалери</string>
+    <string name="what_is_new_title">Що нового</string>
+    <string name="about_info_title">Інформація</string>
+    <string name="menu_title">Меню</string>
+    <string name="close_title">Закрити</string>
+    <string name="install_title">Встановити</string>
+    <string name="ratio_title">Співвідношення сторін</string>
+    <string name="save_title">Зберегти</string>
+    <string name="select_ratio_title">Оберіть співвідношення</string>
+    <string name="change_title">Змінити</string>
+    <string name="bad_internet_msg" tools:ignore="StringEscaping">Ваше інтернет-з'єднання дуже погане. Повертайтесь пізніше!</string>
+    <string name="ads_again_msg">Ух ти. Дякуємо!\nБудемо раді бичити Вас знову.</string>
+    <string name="warning_message_not_supported_lock_screen">Деякі пристрої не підтримують встановлення шпалер на заблокованому екрані!</string>
+    <string name="default_ration_message">Співвідношення сторін встановлено по замовчанню 16:9. Для зміни натисніть клавішу змінити, або пізніше Ви зможете внести зміни у налаштуваннях</string>
+    <string name="select_text">Обрати</string>
+    <string name="value_update_message">Оновлення значення</string>
+    <string name="choice_screen_title">Вибір екрану</string>
+    <string name="all_screens_title">Всі екрани</string>
+    <string name="system_screen_title">Системний екран</string>
+    <string name="lock_screen_title">Екран блокування</string>
+    <string name="install_wallpaper_done">Шпалери встановлені!</string>
+    <string name="reset_title">Скинути</string>
+    <string name="done_title">Зроблено</string>
+    <string name="cancel_title" tools:ignore="ButtonCase">Відміна</string>
+    <string name="reset_to_default_wallpaper_msg">Скинути до дефолтних шпалер\nДефолтні шпалери - шпалери, які встановлені виробником.</string>
+    <string name="reset_wallpaper_fail_msg">Скидання не вдається. :-(</string>
+    <string name="resolution_low_warning_msg">Ви обрали занадто маленький фрагмент зображення, фінальна якість буде дуже низькою</string>
+    <string name="original_wallpaper_size_title">Оригінал</string>
+    <string name="crop_wallpaper_size_title">Результат</string>
+    <string name="watch_ads_title">Дивитись рекламу</string>
+    <string name="loading_ads_message">Будь-ласка, зачекайте хвилину.\nЗавантаження реклами…</string>
+    <string name="click_for_close">Натисніть ще раз, щоб закрити</string>
+    <string name="screen_close_msg">Екран закривається через 10 секунд</string>
+    <string name="ads_thanks_msg">Щиро вдячні!\nМи Вам дуже вдячні.</string>
+    <string name="something_msg">Ой, щось пішло не так.\nПоверніться пізніше.</string>
+    <string name="no_ads_to_show_msg" tools:ignore="StringEscaping">Нажаль,\nпокищо немає об'яв для демонстрації.</string>
+    <string name="close_ads_msg">ОГО Ви не закрили рекламу раніше часу\nВдячні за підтримку!\nПовертайтесь ще</string>
+    <string name="ads_user_message">Привіт! \nВдячні за перегляд цього повідомлення. \n\nМи, як і всі, не любимо рекламу та намагаємось максимально захистити наших улюблених користувачів від неї. \nМи також любимо наші проекти та дуже хочемо развивати їх у майбутньому… \nШановний користувач, приділи будь-ласка нам декілька секунд свого часу. \n\nБудь-ласка, перегляньте це рекламне відео.</string>
+    <string name="screen_size_title">Размір екрану</string>
+    <string name="email_title">Зворотний зв'язок</string>
+    <string name="web_site_title">Website</string>
+    <string name="gp_title" translatable="false">Google Play</string>
+    <string name="about_app_title">Про додаток</string>
+    <string name="info_title">Інформація</string>
+    <string name="send_us_email_msg">Поділіться з нами вашими ідеями або проблемами.</string>
+    <string name="wallpaper_installing_title">Установка</string>
+    <string name="now_close_ads">Тепер ви можете закрити рекламу.</string>
+
+    <string name="company_name">AVERD SOFT</string>
+    <string name="averd_web" translatable="false">https://averd-soft.ru/</string>
+    <string name="averd_gp_link" translatable="false">"https://play.google.com/store/apps/dev?id=6812241770877419123"</string>
+    <string name="averd_email" translatable="false">averdsoft@gmail.com</string>
+</resources>
