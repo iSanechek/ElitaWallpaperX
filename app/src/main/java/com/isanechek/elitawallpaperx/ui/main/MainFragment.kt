@@ -158,7 +158,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     override fun onResume() {
         super.onResume()
         setupObserver()
-        if (rewardedAd.isLoaded) {
+        if (vm.isShowAdsScreen && rewardedAd.isLoaded) {
             showAdsIcon()
         }
         mf_pager.registerOnPageChangeCallback(pagerListener)
