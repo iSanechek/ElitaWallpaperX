@@ -62,6 +62,7 @@
     <string name="screen_size_title">Размер экрана</string>
     <string name="email_title">Обратная связь</string>
     <string name="web_site_title">Website</string>
+    <string name="gp_title" translatable="false">Google Play</string>
     <string name="about_app_title">О приложение</string>
     <string name="info_title">Информация</string>
     <string name="send_us_email_msg">Поделитесь с нами вашими идеями или проблемами.</string>
@@ -69,4 +70,7 @@
     <string name="now_close_ads">Теперь Вы можете закрыть рекламу.</string>
 
     <string name="company_name">AVERD SOFT</string>
+    <string name="averd_web" translatable="false">https://averd-soft.ru/</string>
+    <string name="averd_gp_link" translatable="false">"https://play.google.com/store/apps/dev?id=6812241770877419123"</string>
+    <string name="averd_email" translatable="false">averdsoft@gmail.com</string>
 </resources>

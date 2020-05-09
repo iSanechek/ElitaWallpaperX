@@ -70,7 +70,7 @@
     <string name="now_close_ads">You can close ads now.</string>
 
     <string name="company_name">AVERD SOFT</string>
-    <string name="averd_web" translatable="false">http://averdsoft.ru/</string>
+    <string name="averd_web" translatable="false">https://averd-soft.ru/</string>
     <string name="averd_gp_link" translatable="false">"https://play.google.com/store/apps/dev?id=6812241770877419123"</string>
     <string name="averd_email" translatable="false">averdsoft@gmail.com</string>
 </resources>
