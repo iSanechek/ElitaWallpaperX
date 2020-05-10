@@ -31,7 +31,7 @@
     <string name="save_title">Зберегти</string>
     <string name="select_ratio_title">Оберіть співвідношення</string>
     <string name="change_title">Змінити</string>
-    <string name="bad_internet_msg" tools:ignore="StringEscaping">Ваше інтернет-з'єднання дуже погане. Повертайтесь пізніше!</string>
+    <string name="bad_internet_msg" >Ваше інтернет-зєднання дуже погане. Повертайтесь пізніше!</string>
     <string name="ads_again_msg">Ух ти. Дякуємо!\nБудемо раді бичити Вас знову.</string>
     <string name="warning_message_not_supported_lock_screen">Деякі пристрої не підтримують встановлення шпалер на заблокованому екрані!</string>
     <string name="default_ration_message">Співвідношення сторін встановлено по замовчанню 16:9. Для зміни натисніть клавішу змінити, або пізніше Ви зможете внести зміни у налаштуваннях</string>
@@ -56,11 +56,11 @@
     <string name="screen_close_msg">Екран закривається через 10 секунд</string>
     <string name="ads_thanks_msg">Щиро вдячні!\nМи Вам дуже вдячні.</string>
     <string name="something_msg">Ой, щось пішло не так.\nПоверніться пізніше.</string>
-    <string name="no_ads_to_show_msg" tools:ignore="StringEscaping">Нажаль,\nпокищо немає об'яв для демонстрації.</string>
+    <string name="no_ads_to_show_msg" >Нажаль,\nпокищо немає обяв для демонстрації.</string>
     <string name="close_ads_msg">ОГО Ви не закрили рекламу раніше часу\nВдячні за підтримку!\nПовертайтесь ще</string>
     <string name="ads_user_message">Привіт! \nВдячні за перегляд цього повідомлення. \n\nМи, як і всі, не любимо рекламу та намагаємось максимально захистити наших улюблених користувачів від неї. \nМи також любимо наші проекти та дуже хочемо развивати їх у майбутньому… \nШановний користувач, приділи будь-ласка нам декілька секунд свого часу. \n\nБудь-ласка, перегляньте це рекламне відео.</string>
     <string name="screen_size_title">Размір екрану</string>
-    <string name="email_title">Зворотний зв'язок</string>
+    <string name="email_title" >Зворотний звязок</string>
     <string name="web_site_title">Website</string>
     <string name="gp_title" translatable="false">Google Play</string>
     <string name="about_app_title">Про додаток</string>

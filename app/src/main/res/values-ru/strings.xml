@@ -12,7 +12,7 @@
     <string name="negative_button_clicked">Хорошо! Вы босс!</string>
     <string name="about_moto">Elite\nWallpaper</string>
     <string name="about_moto_second">Wallpapers</string>
-    <string name="about_text">Это небольшое приложение \nнаписанно специально\nдля поклонников бренда\n<b>MOTOROLA</b>!</string>
+    <string name="about_text">Наше небольшое приложение \nсоздано специально\nдля поклонников бренда\n<b>MOTOROLA</b>!</string>
     <string name="awerd">by\nAVERD SOFT</string>
     <string name="thanks_for_click">Спасибо. :-)</string>
     <string name="analytics">Аналитика</string>
@@ -20,7 +20,7 @@
 
 
     <!--New-->
-    <string name="clear_wallpaper_title">Установить дефолтные обои</string>
+    <string name="clear_wallpaper_title">Установить обои по умолчанию</string>
     <string name="black_wallpaper_title">Установить чёные обои</string>
     <string name="what_is_new_title">Что нового</string>
     <string name="about_info_title">Информация</string>
@@ -63,7 +63,7 @@
     <string name="email_title">Обратная связь</string>
     <string name="web_site_title">Website</string>
     <string name="gp_title" translatable="false">Google Play</string>
-    <string name="about_app_title">О приложение</string>
+    <string name="about_app_title">О приложении</string>
     <string name="info_title">Информация</string>
     <string name="send_us_email_msg">Поделитесь с нами вашими идеями или проблемами.</string>
     <string name="wallpaper_installing_title">Установка</string>
