@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/my_primary_color">
@@ -9,14 +10,28 @@
         android:id="@+id/aaf_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/imge_circle_bordure"
         android:padding="@dimen/about_iv_padding"
         android:src="@drawable/ic_launcher"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/aaf_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/imge_circle_bordure"
+        android:padding="@dimen/dp8"
+        android:text="AS"
+        android:textColor="@color/my_primary_dark_color"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/aaf_title"
@@ -32,15 +47,15 @@
         android:textSize="@dimen/tv_textSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aaf_iv" />
+        app:layout_constraintTop_toBottomOf="@id/aaf_tv" />
 
     <TextView
         android:id="@+id/aff_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:layout_marginTop="@dimen/dp16"
+        android:gravity="center"
         android:padding="@dimen/dp16"
         android:text="@string/about_text"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -54,8 +69,8 @@
         android:id="@+id/aff_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="@dimen/dp16"
+        android:gravity="center"
         android:text="@string/awerd"
         android:textColor="@color/my_light_primary_color"
         android:textSize="@dimen/tv_one_textSize"
