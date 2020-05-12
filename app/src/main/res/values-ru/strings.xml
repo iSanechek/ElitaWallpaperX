@@ -5,10 +5,10 @@
     <string name="link_other_app">Наши приложения</string>
     <string name="share">Поделись!</string>
     <string name="warning_title">Предупреждение</string>
-    <string name="no_wallpapers_message">Черный фон экономит заряда аккумулятора.\nНаиболее эффективно на AMOLED дисплеях.</string>
+    <string name="no_wallpapers_message">Чёрный фон экономит заряд аккумулятора.\nНаиболее эффективно на AMOLED дисплеях.</string>
     <string name="ad_nw_yes_btn">Да</string>
     <string name="ad_nw_no_btn">Нет</string>
-    <string name="img_install_done">Сднлано</string>
+    <string name="img_install_done">Сделано</string>
     <string name="negative_button_clicked">Хорошо! Вы босс!</string>
     <string name="about_moto">Elite\nWallpapers</string>
     <string name="about_moto_second">Wallpapers</string>
@@ -21,7 +21,7 @@
 
     <!--New-->
     <string name="clear_wallpaper_title">Установить обои по умолчанию</string>
-    <string name="black_wallpaper_title">Установить чёные обои</string>
+    <string name="black_wallpaper_title">Установить чёрные обои</string>
     <string name="what_is_new_title">Что нового</string>
     <string name="about_info_title">Информация</string>
     <string name="menu_title">Меню</string>
@@ -45,7 +45,7 @@
     <string name="reset_title">Сбросить</string>
     <string name="done_title">Сделано</string>
     <string name="cancel_title" tools:ignore="ButtonCase">Отмена</string>
-    <string name="reset_to_default_wallpaper_msg">Сбросить к дефолтным обоям\nДефолтные обои - обои которые установлены были производителем.</string>
+    <string name="reset_to_default_wallpaper_msg">Обои по умолчанию\nэто обои которые установлены производителем.</string>
     <string name="reset_wallpaper_fail_msg">Сброс не удается. :-(</string>
     <string name="resolution_low_warning_msg">Вы выбрали слишком маленький фрагмент изображения, финальное качество будет очень низким</string>
     <string name="original_wallpaper_size_title">Оригинал</string>
@@ -58,10 +58,10 @@
     <string name="something_msg">ОЙ, что-то пошло не так.\nВернись позже.</string>
     <string name="no_ads_to_show_msg">К сожалению,\nпока нет объявлений для показа.</string>
     <string name="close_ads_msg">ОГО Вы не закрыли рекламу раньше времени\nСпасибо за поддержку!\nВозвращайтесь ещё</string>
-    <string name="ads_user_message">Привет! \nСпасибо за просмотр этого сообщения. \n\nМы, как и все, не любим рекламу и стараемся максимально защитить наших любимых пользователей от неё. \nМы так же любим наши проекты, и очень хотим развивать их в будущем… \nУважаемый пользователь, подари нам несколько секунд своего драгоценного времени. \n\nПожалуйста, посмотрите это рекламное видео.</string>
+    <string name="ads_user_message">Привет! \nСпасибо за просмотр этого сообщения. \n\nМы, как и все, не любим рекламу и стараемся максимально защитить наших любимых пользователей от неё. \nМы так же любим наши проекты, и очень хотим развивать их в будущем… \nУважаемый пользователь, подари нам несколько секунд своего драгоценного времени. \n\nПожалуйста, просмотрите это рекламное видео.</string>
     <string name="screen_size_title">Размер экрана</string>
     <string name="email_title">Обратная связь</string>
-    <string name="web_site_title">Website</string>
+    <string name="web_site_title">Наш сайт</string>
     <string name="gp_title" translatable="false">Google Play</string>
     <string name="about_app_title">О приложении</string>
     <string name="info_title">Информация</string>
