@@ -4,7 +4,7 @@
     <string name="set_wallpaper">Установить обои</string>
     <string name="link_other_app">Наши приложения</string>
     <string name="share">Поделись!</string>
-    <string name="warning_title">Предупреждение</string>
+    <string name="warning_title">Внимание</string>
     <string name="no_wallpapers_message">Чёрный фон экономит заряд аккумулятора.\nНаиболее эффективно на AMOLED дисплеях.</string>
     <string name="ad_nw_yes_btn">Да</string>
     <string name="ad_nw_no_btn">Нет</string>
@@ -20,8 +20,8 @@
 
 
     <!--New-->
-    <string name="clear_wallpaper_title">Установить обои по умолчанию</string>
-    <string name="black_wallpaper_title">Установить чёрные обои</string>
+    <string name="clear_wallpaper_title">Обои по умолчанию</string>
+    <string name="black_wallpaper_title">Убрать обои</string>
     <string name="what_is_new_title">Что нового</string>
     <string name="about_info_title">Информация</string>
     <string name="menu_title">Меню</string>
@@ -34,7 +34,7 @@
     <string name="bad_internet_msg">Ваше интернет-соединение очень плохое. Возвращайтесь позже!</string>
     <string name="ads_again_msg">Ух ты. Спасибо!\nБудем рады видеть Вас снова.</string>
     <string name="warning_message_not_supported_lock_screen">На некоторых устройствах не поддерживается установка обоев на экран блокировки!</string>
-    <string name="default_ration_message">Соотношение сторон установлено по умолчанию 16:9. Для изменения нажмите кнопку изменить, или позже Вы сможете изминить в настройках</string>
+    <string name="default_ration_message">Соотношение сторон установлено по умолчанию 16:9. чтобы выбрать другое нажмите кнопку изменить</string>
     <string name="select_text">Выбрать</string>
     <string name="value_update_message">Обновление значения</string>
     <string name="choice_screen_title">Выбор экрана</string>
@@ -45,7 +45,7 @@
     <string name="reset_title">Сбросить</string>
     <string name="done_title">Сделано</string>
     <string name="cancel_title" tools:ignore="ButtonCase">Отмена</string>
-    <string name="reset_to_default_wallpaper_msg">Обои по умолчанию\nэто обои которые установлены производителем.</string>
+    <string name="reset_to_default_wallpaper_msg">Обои по умолчанию\nэто обои установленные производителем.</string>
     <string name="reset_wallpaper_fail_msg">Сброс не удается. :-(</string>
     <string name="resolution_low_warning_msg">Вы выбрали слишком маленький фрагмент изображения, финальное качество будет очень низким</string>
     <string name="original_wallpaper_size_title">Оригинал</string>
