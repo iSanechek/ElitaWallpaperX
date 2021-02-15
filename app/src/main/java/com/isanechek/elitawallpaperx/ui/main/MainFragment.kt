@@ -56,8 +56,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MainFragment : Fragment(_layout.main_fragment_layout) {
 
-    private val ADS_KEY =
-        if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/5224354917" else "ca-app-pub-9548650574871415/9743318724"
+    private val adsKey = if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/5224354917" else "ca-app-pub-9548650574871415/9743318724"
     private lateinit var rewardedAd: RewardedAd
     private val vm: AppViewModel by sharedViewModel()
     private val pagerAdapter by lazy { MainPagerAdapter() }
@@ -526,7 +525,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
     private fun loadRewardedAd() {
         if (!(::rewardedAd.isInitialized) || !rewardedAd.isLoaded) {
-            rewardedAd = RewardedAd(requireContext(), ADS_KEY)
+            rewardedAd = RewardedAd(requireContext(), adsKey)
             rewardedAd.loadAd(AdRequest.Builder().build(), adsLoadListener)
         }
     }
