@@ -20,13 +20,20 @@
 
         <activity
             android:name=".MainActivity"
-            android:supportsPictureInPicture="false"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:supportsPictureInPicture="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.black.InstallBlackWallpaperActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:supportsPictureInPicture="false"
+            android:theme="@style/Theme.AppCompat.Translucent" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -46,6 +53,20 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9548650574871415~3526999391" />
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove" />
+
+        <receiver
+            android:name=".broadcast.ShortcutsBroadcast"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.isanechek.elitawallpaperx.BLACK_WALLPAPER" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

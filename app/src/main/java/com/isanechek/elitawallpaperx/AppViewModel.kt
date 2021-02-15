@@ -125,13 +125,19 @@ class AppViewModel(
 
     }
 
+    fun installRandomWallpaper() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.installRandomWallpaper()
+        }
+    }
+
     fun hideAdsScreen() {
         repository.showAnimation(false)
         repository.setTimeForUpdate(System.currentTimeMillis())
     }
 
     private fun checkTimeForShowAdsIcon() {
-        val delayTime = if (BuildConfig.DEBUG) TimeUnit.SECONDS.toMillis(30) else TimeUnit.DAYS.toMillis(1)
+        val delayTime = if (BuildConfig.DEBUG) TimeUnit.SECONDS.toMillis(30) else TimeUnit.HOURS.toMillis(6)
         if (repository.isTimeUpdate(delayTime)) {
             if (!repository.isShowAdsAnim()) {
                 repository.showAnimation(true)

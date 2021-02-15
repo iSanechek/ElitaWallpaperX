@@ -2,13 +2,14 @@
 
 package com.isanechek.elitawallpaperx
 
-import android.animation.Animator
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +43,7 @@ typealias _raw = R.raw
 typealias _dimen = R.dimen
 
 inline fun delay(milliseconds: Long, crossinline action: () -> Unit) {
-    Handler().postDelayed({
+    Handler(Looper.getMainLooper()).postDelayed({
         action()
     }, milliseconds)
 }
@@ -92,31 +93,10 @@ fun View.onClick(function: () -> Unit) {
     }
 }
 
-fun LottieAnimationView.animStartListener(callback: () -> Unit) {
-    addAnimatorListener(object : Animator.AnimatorListener {
-        override fun onAnimationRepeat(animation: Animator?) {}
-
-        override fun onAnimationEnd(animation: Animator?) {}
-
-        override fun onAnimationCancel(animation: Animator?) {}
-
-        override fun onAnimationStart(animation: Animator?) {
-            callback.invoke()
-        }
-    })
-}
-
 fun LottieAnimationView.update(@RawRes anim: Int) {
     with(this) {
         if (isAnimating) cancelAnimation()
         setAnimation(anim)
-        playAnimation()
-    }
-}
-
-fun LottieAnimationView.update() {
-    with(this) {
-        if (isAnimating) cancelAnimation()
         playAnimation()
     }
 }
@@ -203,4 +183,12 @@ fun Fragment.shortToast(@StringRes msgId: Int) {
 
 fun Fragment.shortToast(msg: String) {
     Toast.makeText(this.requireContext(), msg, Toast.LENGTH_SHORT).show()
+}
+
+fun Activity.shortToast(@StringRes msgId: Int) {
+    Toast.makeText(this, msgId, Toast.LENGTH_SHORT).show()
+}
+
+fun Activity.shortToast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }

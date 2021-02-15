@@ -4,8 +4,11 @@ import android.app.WallpaperManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.ParseException
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -42,6 +45,7 @@ interface AppRepository {
     fun isTimeUpdate(period: Long): Boolean
     fun setTimeForUpdate(time: Long)
     suspend fun loadWhatIsNewInfo(): LiveData<ExecuteResult<List<NewInfo>>>
+    suspend fun installRandomWallpaper()
 }
 
 class AppRepositoryImpl(
@@ -282,6 +286,25 @@ class AppRepositoryImpl(
                 emit(ExecuteResult.Error("Load info error!"))
             }
         }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override suspend fun installRandomWallpaper() {
+        val cache = preferences.getStringSet("data", emptySet<String>()) ?: emptySet()
+        if (cache.isNotEmpty()) {
+            val index = (0..cache.size).random()
+            debugLog { "SELECT INDEX $index" }
+            val path = cache.toList()[index]
+            debugLog { "SELECT PATH $path" }
+
+            val bitmap = BitmapFactory.decodeFile(path)
+            wallpaperManager.setBitmap(
+                bitmap,
+                null,
+                true,
+                WallpaperManager.FLAG_SYSTEM
+            )
+        }
+    }
 
 
     private fun String.fixPath(): String = "file:///android_asset/images/$this"

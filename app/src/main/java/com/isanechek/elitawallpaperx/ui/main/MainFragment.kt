@@ -155,6 +155,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
 
 
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onResume() {
         super.onResume()
         setupObserver()
@@ -184,7 +185,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
     }
 
     private fun setupObserver() {
-        vm.data.observe(viewLifecycleOwner, Observer { data ->
+        vm.data.observe(viewLifecycleOwner, { data ->
             when (data) {
                 is ExecuteResult.Error -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
@@ -202,10 +203,11 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     pagerAdapter.submit(data.data)
                     mainAdapter.submit(data.data)
                 }
+                else -> Unit
             }
         })
 
-        vm.resetWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
+        vm.resetWallpaperStatus.observe(viewLifecycleOwner, { status ->
             when (status) {
                 is ExecuteResult.Done -> {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
@@ -217,10 +219,11 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     shortToast(_string.reset_wallpaper_fail_msg)
                 }
+                else -> Unit
             }
         })
 
-        vm.installWallpaperStatus.observe(viewLifecycleOwner, Observer { status ->
+        vm.installWallpaperStatus.observe(viewLifecycleOwner, { status ->
             debugLog { "INSTALL $status" }
             when (status) {
                 is ExecuteResult.Done -> {
@@ -233,6 +236,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                     if (mf_toolbar_progress.isVisible) mf_toolbar_progress.isInvisible = true
                     shortToast(_string.reset_wallpaper_fail_msg)
                 }
+                else -> Unit
             }
         })
     }
@@ -261,7 +265,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
         val menuItems = listOf(
             ItemMenu(
                 id = "remove",
-                iconId = _drawable.image_remove,
+                iconId = _drawable.ic_baseline_broken_image_24,
                 titleId = _string.clear_wallpaper_title
             ),
             ItemMenu(
@@ -486,6 +490,7 @@ class MainFragment : Fragment(_layout.main_fragment_layout) {
                         shortToast(_string.something_msg)
                     }
                     is ExecuteResult.Loading -> Unit
+                    else -> Unit
                 }
             }
 

@@ -68,6 +68,10 @@
     <string name="send_us_email_msg">Share your ideas or concerns with us.</string>
     <string name="wallpaper_installing_title">installing</string>
     <string name="now_close_ads">You can close ads now.</string>
+    <string name="open_us_website">open website</string>
+    <string name="install_black_wallpaper_description">install black wallpaper</string>
+    <string name="random_shortcut_title">random</string>
+    <string name="random_shortcut_description">install random wallpaper</string>
 
     <string name="company_name">AVERD SOFT</string>
     <string name="averd_web" translatable="false">https://averd-soft.ru/en/</string>
